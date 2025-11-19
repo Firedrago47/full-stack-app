@@ -1,0 +1,91 @@
+prisma:cli:bin Failed to initialize the command state: Error: ENOENT: no such file or directory, open '/home/fire/.config/prisma-nodejs/commands.json' +1350ms
+prisma:config:defineConfig [default]: '{\n  "loadedFromFile": null,\n  "deprecatedPackageJson": null\n}' +1217ms
+prisma:config:defineConfig [config.schema]: 'prisma/schema.prisma' +1ms
+prisma:config:defineConfig [config.engine]: 'classic' +0ms
+prisma:config:defineConfig [config.datasource]: '{\n  "url": "psql"\n}' +1ms
+prisma:config:defineConfig [config.migrations]: '{\n  "path": "prisma/migrations"\n}' +0ms
+prisma:config:loadConfigFromFile Config file loaded in 122.23ms +3ms
+prisma:config:PrismaConfig Parsing PrismaConfigInternal: '{\n' +
+  '  "loadedFromFile": null,\n' +
+  '  "deprecatedPackageJson": null,\n' +
+  '  "schema": "prisma/schema.prisma",\n' +
+  '  "engine": "classic",\n' +
+  '  "datasource": {\n' +
+  '    "url": "psql"\n' +
+  '  },\n' +
+  '  "migrations": {\n' +
+  '    "path": "prisma/migrations"\n' +
+  '  }\n' +
+  '}' +10ms
+prisma:config:PrismaConfig Short-circuit: input is already a PrismaConfigInternal object +1ms
+Loaded Prisma config from prisma.config.ts.
+
+prisma:getSchema Reading schema from single file /home/fire/Documents/Projects/full-stack-app/prisma/schema.prisma +139ms
+prisma:getConfig Using getConfig Wasm +2ms
+prisma:cli Failed to read schema information. Using default values: '{\n  "name": "GetConfigError"\n}' +32ms
+prisma:engines binaries to download schema-engine, libquery-engine +1517ms
+prisma:getSchema Reading schema from single file /home/fire/Documents/Projects/full-stack-app/prisma/schema.prisma +3ms
+prisma:getSchema Reading schema from single file /home/fire/Documents/Projects/full-stack-app/prisma/schema.prisma +1ms
+prisma:get-platform Found distro info:
+{
+  "targetDistro": "debian",
+  "familyDistro": "arch",
+  "originalDistro": "arch"
+} +1ms
+prisma:get-platform Don't know any platform-specific paths for "arch" on x64 (x86_64) +1ms
+prisma:get-platform Falling back to "ldconfig" and other generic paths +0ms
+prisma:getConfig Using getConfig Wasm +15ms
+prisma:getConfig config data retrieved without errors in getConfig Wasm +9ms
+prisma:get-platform Found distro info:
+{
+  "targetDistro": "debian",
+  "familyDistro": "arch",
+  "originalDistro": "arch"
+} +2ms
+prisma:get-platform Don't know any platform-specific paths for "arch" on x64 (x86_64) +1ms
+prisma:get-platform Falling back to "ldconfig" and other generic paths +0ms
+prisma:get-platform Command "ldconfig -p | sed "s/.*=>s*//" | sed "s|.*/||" | grep libssl | sort | grep -v "libssl.so.0"" successfully returned "libssl3.so
+libssl.so
+libssl.so.3
+" +19ms
+prisma:get-platform Found libssl.so file using "ldconfig" or other generic paths: libssl3.so
+libssl.so
+libssl.so.3
+ +0ms
+prisma:get-platform The parsed libssl version is: 3.0.x +1ms
+prisma:get-platform Command "ldconfig -p | sed "s/.*=>s*//" | sed "s|.*/||" | grep libssl | sort | grep -v "libssl.so.0"" successfully returned "libssl3.so
+libssl.so
+libssl.so.3
+" +22ms
+prisma:get-platform Found libssl.so file using "ldconfig" or other generic paths: libssl3.so
+libssl.so
+libssl.so.3
+ +0ms
+prisma:get-platform The parsed libssl version is: 3.0.x +1ms
+prisma:cli:checkpoint runCheckpointClientCheck(): Execution time for getting info: 75.168361 ms +0ms
+prisma:cli:checkpoint runCheckpointClientCheck(): Execution time for "await checkpoint.check(data)": 195.8351419999999 ms +197ms
+Prisma config detected, skipping environment variable loading.
+prisma:getSchema Reading schema from single file /home/fire/Documents/Projects/full-stack-app/prisma/schema.prisma +310ms
+Prisma schema loaded from prisma/schema.prisma
+prisma:getConfig Using getConfig Wasm +1ms
+Error: GetConfigError: Prisma schema validation - (get-config wasm)
+Error code: P1012
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  prisma/schema.prisma:14
+   | 
+13 |   provider = "postgresql"
+14 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[Context: getConfig]
+
+Prisma CLI Version : 6.19.0
+    at /home/fire/Documents/Projects/full-stack-app/node_modules/prisma/build/index.js:267:1348
+    at e.with (/home/fire/Documents/Projects/full-stack-app/node_modules/prisma/build/index.js:240:31324)
+    at zc (/home/fire/Documents/Projects/full-stack-app/node_modules/prisma/build/index.js:267:1318)
+    at ew (/home/fire/Documents/Projects/full-stack-app/node_modules/prisma/build/index.js:307:1386)
+    at Ir (/home/fire/Documents/Projects/full-stack-app/node_modules/prisma/build/index.js:307:1091)
+    at async e.parse (/home/fire/Documents/Projects/full-stack-app/node_modules/prisma/build/index.js:3765:378)
+    at async e.parse (/home/fire/Documents/Projects/full-stack-app/node_modules/prisma/build/index.js:4084:1867)
+    at async D4t (/home/fire/Documents/Projects/full-stack-app/node_modules/prisma/build/index.js:4910:132)

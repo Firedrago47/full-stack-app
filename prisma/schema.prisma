@@ -1,0 +1,320 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Enums
+enum Role {
+  CUSTOMER
+  DRIVER
+  SHOP_OWNER
+  ADMIN
+}
+
+enum OrderStatus {
+  CREATED
+  CONFIRMED
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum RideStatus {
+  REQUESTED
+  ACCEPTED
+  STARTED
+  COMPLETED
+  CANCELLED
+}
+
+///// Models
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String
+  name      String?
+  phone     String?
+  role      Role      @default(CUSTOMER)
+  createdAt DateTime  @default(nconst onSubmit = async (data: LoginInput) => {
+    setServerError("");
+
+    // --- Login request ---
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      setServerError(json.error ?? "Invalid credentials");
+      return;
+    }
+
+    // --- Fetch user role after login ---
+    const meRes = await fetch("/api/auth/me", { method: "GET" });
+    const meJson = await meRes.json();
+
+    if (!meJson.user) {
+      setServerError("User session error");
+      return;
+    }
+
+    const role = meJson.user.role as
+      | "CUSTOMER"
+      | "DRIVER"
+      | "SHOP_OWNER"
+      | "ADMIN";
+
+    // --- Redirect based on role ---
+    const rolePath =
+      role === "CUSTOMER"
+        ? "/dashboard/customer"
+        : role === "DRIVER"
+        ? "/dashboard/driver"
+        : role === "SHOP_OWNER"
+        ? "/dashboard/shop"
+        : "/dashboard/admin";
+
+    router.push(rolePath);
+  };
+ow())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  // Relations
+  customerAddresses Address[] // addresses for customers
+  driverProfile     Driver?   @relation("UserDriver")
+  shopProfile       Shop?     @relation("UserShop")
+  orders            Order[]   @relation("CustomerOrders")
+  rides             Ride[]    @relation("CustomerRides")
+  ratingsGiven      Rating[]  @relation("RatingsGiven")
+
+  // optimistic locking (optional)
+  version Int @default(1)
+}
+
+model Driver {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  user          User      @relation("UserDriver", fields: [userId], references: [id], onDelete: Cascade)
+  licenseNumber String?
+  licenseDocUrl String?
+  vehicleNumber String?
+  vehicleRcUrl  String?
+  vehicleModel  String?
+  isActive      Boolean   @default(true)
+  isAvailable   Boolean   @default(true)
+  lastLatitude  Float?
+  lastLongitude Float?
+  lastSeenAt    DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  // Assigned orders & rides
+  ordersAssigned Order[] @relation("DriverAssignedOrders")
+  ridesAssigned  Ride[]  @relation("DriverRides")
+
+  @@index([isAvailable])
+  @@index([lastLatitude, lastLongitude])
+}
+
+model Shop {
+  id          String    @id @default(cuid())
+  ownerId     String    @unique
+  owner       User      @relation("UserShop", fields: [ownerId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  address     String
+  latitude    Float?
+  longitude   Float?
+  phone       String?
+  isOpen      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  items  Item[]
+  orders Order[] @relation("ShopOrders")
+
+  @@index([ownerId])
+  @@index([latitude, longitude])
+}
+
+model Item {
+  id          String    @id @default(cuid())
+  shopId      String
+  shop        Shop      @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  sku         String?
+  name        String
+  description String?
+  priceCents  Int
+  currency    String    @default("INR")
+  stock       Int       @default(0)
+  imageUrl    String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  orderItems OrderItem[]
+
+  // SKU uniqueness per shop: ensures different shops can use same sku
+  @@unique([shopId, sku])
+  @@index([shopId])
+}
+
+model Order {
+  id               String      @id @default(cuid())
+  customerId       String
+  customer         User        @relation("CustomerOrders", fields: [customerId], references: [id])
+  driverId         String?
+  driver           Driver?     @relation("DriverAssignedOrders", fields: [driverId], references: [id], onDelete: SetNull)
+  shopId           String?
+  shop             Shop?       @relation("ShopOrders", fields: [shopId], references: [id], onDelete: SetNull)
+  status           OrderStatus @default(CREATED)
+  totalCents       Int
+  currency         String      @default("INR")
+  deliveryFeeCents Int?
+  note             String?
+  otpHash          String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  pickedAt         DateTime?
+  deliveredAt      DateTime?
+  cancelledAt      DateTime?
+  deletedAt        DateTime?
+
+  items OrderItem[]
+
+  // one-to-one (optional) rating for this order
+  rating Rating? @relation("OrderToRating")
+
+  // audit / history of transitions
+  events OrderEvent[]
+
+  version Int @default(1)
+
+  @@index([customerId])
+  @@index([driverId])
+  @@index([shopId])
+  @@index([status, createdAt])
+}
+
+model OrderItem {
+  id             String   @id @default(cuid())
+  orderId        String
+  order          Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  itemId         String
+  item           Item     @relation(fields: [itemId], references: [id], onDelete: Restrict)
+  quantity       Int
+  unitPriceCents Int
+  createdAt      DateTime @default(now())
+}
+
+model Address {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label     String?
+  address   String
+  latitude  Float?
+  longitude Float?
+  phone     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([userId])
+  @@index([latitude, longitude])
+}
+
+model Rating {
+  id      String @id @default(cuid())
+  raterId String
+  rater   User   @relation("RatingsGiven", fields: [raterId], references: [id], onDelete: Cascade)
+
+  // orderId holds the foreign key to Order and is unique -> enforces one-to-one
+  orderId String? @unique
+  order   Order?  @relation("OrderToRating", fields: [orderId], references: [id], onDelete: Cascade)
+
+  score     Int
+  comment   String?
+  createdAt DateTime @default(now())
+  // NOTE: enforce score bounds (e.g., 1..5) at application level or DB CHECK constraint via raw migration.
+
+  @@index([raterId])
+}
+
+model OTP {
+  id        String    @id @default(cuid())
+  userId    String?
+  phone     String?
+  otpHash   String
+  purpose   String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([phone])
+  @@index([expiresAt])
+}
+
+model OrderEvent {
+  id        String       @id @default(cuid())
+  orderId   String
+  order     Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  from      OrderStatus?
+  to        OrderStatus
+  changedBy String? // userId or system actor
+  note      String?
+  createdAt DateTime     @default(now())
+
+  @@index([orderId])
+  @@index([createdAt])
+}
+
+model Ride {
+  id               String     @id @default(cuid())
+  customerId       String
+  customer         User       @relation("CustomerRides", fields: [customerId], references: [id])
+  driverId         String?
+  driver           Driver?    @relation("DriverRides", fields: [driverId], references: [id], onDelete: SetNull)
+  pickupLat        Float
+  pickupLng        Float
+  dropLat          Float?
+  dropLng          Float?
+  pickupAddress    String?
+  dropAddress      String?
+  fareCents        Int?
+  currency         String     @default("INR")
+  status           RideStatus @default(REQUESTED)
+  distanceMeters   Int?
+  estimatedTimeSec Int?
+  otpHash          String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  startedAt        DateTime?
+  completedAt      DateTime?
+  cancelledAt      DateTime?
+  deletedAt        DateTime?
+
+  version Int @default(1)
+
+  @@index([customerId])
+  @@index([driverId])
+  @@index([status, createdAt])
+}
