@@ -1,27 +1,40 @@
+// lib/auth/get-current-user.ts
 import { cookies } from "next/headers";
+import { verifyJwt } from "./jwt";
 import prisma from "@/lib/prisma";
-import { verifyJwt } from "@/lib/auth/jwt";
 
-export async function getCurrentUser() {
-  const cookieStore = await cookies();  
-  const token = cookieStore.get("session")?.value;
+export type CurrentUser = {
+  id: string;
+  email: string | null;
+  name: string | null;
+  role: "CUSTOMER" | "DRIVER" | "SHOP_OWNER" | "ADMIN";
+};
 
-  if (!token) return null;
+export async function getCurrentUser(): Promise<CurrentUser | null> {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("session")?.value;
+    if (!token) return null;
 
-  const payload = verifyJwt(token);
-  if (!payload) return null;
+    const payload = verifyJwt(token);
+    if (!payload?.sub) return null;
 
-  const user = await prisma.user.findUnique({
-    where: { id: payload.sub },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      role: true,
-    },
-  });
+    // Fetch minimal user info from DB
+    const user = await prisma.user.findUnique({
+      where: { id: payload.sub },
+      select: { id: true, email: true, name: true, role: true },
+    });
 
-  return user;
+    if (!user) return null;
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role as CurrentUser["role"],
+    };
+  } catch (err) {
+    console.error("getCurrentUser error:", err);
+    return null;
+  }
 }
-
-export type CurrentUser = Awaited<ReturnType<typeof getCurrentUser>>;
