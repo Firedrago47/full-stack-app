@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { RegisterSchema, RegisterInput, Role} from "@/lib/validation/auth";
+import { RegisterSchema, RegisterInput, Role } from "@/lib/validation/auth";
 import { AuthCard } from "@/components/auth/auth-card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -50,12 +50,17 @@ export default function RegisterPage() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <Label>Name</Label>
-          <Input {...form.register("name")} placeholder="John Doe" />
+          <Input {...form.register("name")} placeholder="YOGESH" />
+        </div>
+
+        <div>
+          <Label>Phone</Label>
+          <Input {...form.register("phone")} placeholder="+91 98765 43210" />
         </div>
 
         <div>
           <Label>Email</Label>
-          <Input type="email" {...form.register("email")} placeholder="email@example.com" />
+          <Input type="email" {...form.register("email")} placeholder="name@gmail.com" />
         </div>
 
         <div>

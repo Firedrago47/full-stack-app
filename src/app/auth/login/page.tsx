@@ -10,6 +10,7 @@ import { AuthCard } from "@/components/auth/auth-card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+// import { PasswordInput } from "@/components/ui/PasswordInput"; // optional, see below
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function LoginPage() {
 
   const { register, handleSubmit } = useForm<LoginInput>({
     resolver: zodResolver(LoginSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { identifier: "", password: "" },
   });
 
   const onSubmit = async (data: LoginInput) => {
@@ -31,10 +32,8 @@ export default function LoginPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-        // credentials: "include" // uncomment if you later rely on cookies cross-origin
       });
 
-      // Always attempt to parse JSON (catch non-JSON)
       let json: any;
       try {
         json = await res.json();
@@ -48,7 +47,6 @@ export default function LoginPage() {
       console.log("Login response", res.status, json);
 
       if (!res.ok) {
-        // If server returned detailed zod errors, flatten them or show message
         const msg =
           json?.error?.message ||
           (json?.error?.formErrors ? JSON.stringify(json.error.formErrors) : json?.error) ||
@@ -58,17 +56,14 @@ export default function LoginPage() {
         return;
       }
 
-      // Expect server to return user object on success
       const returnedUser = json.user;
       if (!returnedUser?.role) {
-        // If server didn't return user, show error and optionally request /me
         console.warn("Login succeeded but server didn't return user. Response:", json);
         setServerError("Login succeeded but could not determine user role");
         setLoading(false);
         return;
       }
 
-      // Determine path and redirect
       const role = returnedUser.role as "CUSTOMER" | "DRIVER" | "SHOP_OWNER" | "ADMIN";
       const path =
         role === "CUSTOMER"
@@ -92,12 +87,17 @@ export default function LoginPage() {
     <AuthCard title="Login">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <Label>Email</Label>
-          <Input type="email" {...register("email")} />
+          <Label>Phone or Email</Label>
+          <Input
+            type="text"
+            placeholder="you@example.com or +911234567890"
+            {...register("identifier")}
+          />
         </div>
 
         <div>
           <Label>Password</Label>
+          {/* Using plain Input to avoid prop contract mismatch */}
           <Input type="password" {...register("password")} />
         </div>
 

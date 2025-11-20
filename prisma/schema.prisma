@@ -45,52 +45,9 @@ model User {
   email     String    @unique
   password  String
   name      String?
-  phone     String?
+  phone     String?   @unique
   role      Role      @default(CUSTOMER)
-  createdAt DateTime  @default(nconst onSubmit = async (data: LoginInput) => {
-    setServerError("");
-
-    // --- Login request ---
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-
-    const json = await res.json();
-
-    if (!res.ok) {
-      setServerError(json.error ?? "Invalid credentials");
-      return;
-    }
-
-    // --- Fetch user role after login ---
-    const meRes = await fetch("/api/auth/me", { method: "GET" });
-    const meJson = await meRes.json();
-
-    if (!meJson.user) {
-      setServerError("User session error");
-      return;
-    }
-
-    const role = meJson.user.role as
-      | "CUSTOMER"
-      | "DRIVER"
-      | "SHOP_OWNER"
-      | "ADMIN";
-
-    // --- Redirect based on role ---
-    const rolePath =
-      role === "CUSTOMER"
-        ? "/dashboard/customer"
-        : role === "DRIVER"
-        ? "/dashboard/driver"
-        : role === "SHOP_OWNER"
-        ? "/dashboard/shop"
-        : "/dashboard/admin";
-
-    router.push(rolePath);
-  };
-ow())
+  createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 

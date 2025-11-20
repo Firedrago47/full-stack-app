@@ -1,43 +1,49 @@
+// src/app/api/auth/register/route.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import { RegisterSchema, RegisterInput } from "@/lib/validation/auth";
-import { PrismaClient } from "@prisma/client";
+import type { Role } from "@prisma/client";
+import { normalizePhone } from "@/lib/phone";
 
 export async function POST(req: Request) {
   const json = await req.json();
 
   const parsed = RegisterSchema.safeParse(json);
   if (!parsed.success) {
-    return NextResponse.json(
-      { error: parsed.error.flatten() },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
 
   const data: RegisterInput = parsed.data;
 
-  const existing = await prisma.user.findUnique({
-    where: { email: data.email },
-  });
+  const normalizedPhone = normalizePhone(data.phone);
+if (!normalizedPhone) {
+  return NextResponse.json({ error: "Invalid phone number" }, { status: 400 });
+}
+
+// Check for existing by email OR phone
+const existing = await prisma.user.findFirst({
+  where: {
+    OR: [
+      { email: data.email },
+      { phone: normalizedPhone }
+    ]
+  }
+});
 
   if (existing) {
-    return NextResponse.json(
-      { error: "Email already in use" },
-      { status: 409 }
-    );
+    return NextResponse.json({ error: "Email or PhoneNumber is already in use" }, { status: 409 });
   }
 
   const hashed = await bcrypt.hash(data.password, 10);
 
-  // Transaction ensures profile + user created together
-  const user = await prisma.$transaction(async (tx:PrismaClient) => {
+  const user = await prisma.$transaction(async (tx) => {
     const createdUser = await tx.user.create({
       data: {
         email: data.email,
         name: data.name,
-        phone: data.phone,
-        role: data.role,
+        phone: normalizedPhone,
+        role: data.role as Role,
         password: hashed,
       },
     });
@@ -66,8 +72,9 @@ export async function POST(req: Request) {
     return createdUser;
   });
 
-  return NextResponse.json(
-    { user: { id: user.id, role: user.role, email: user.email } },
+  // Make the response shape explicit so TS can validate it during build
+  return NextResponse.json<{ user: { id: string; role: Role; email: string } }>(
+    { user: { id: user.id, role: user.role as Role, email: user.email } },
     { status: 201 }
   );
 }
