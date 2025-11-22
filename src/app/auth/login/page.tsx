@@ -87,23 +87,23 @@ export default function LoginPage() {
     <AuthCard title="Login">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <Label>Phone or Email</Label>
+          <Label className="mb-2 font-bold">Phone or Email</Label>
           <Input
             type="text"
-            placeholder="you@example.com or +911234567890"
+            placeholder="Phone number or Email"
             {...register("identifier")}
           />
         </div>
 
         <div>
-          <Label>Password</Label>
+          <Label className="mb-2 font-bold">Password</Label>
           {/* Using plain Input to avoid prop contract mismatch */}
-          <Input type="password" {...register("password")} />
+          <Input type="password" placeholder="****" {...register("password")} />
         </div>
 
         {serverError && <p className="text-red-500 text-sm">{serverError}</p>}
 
-        <Button type="submit" className="w-full" disabled={loading}>
+        <Button type="submit" className="w-full font-semibold" disabled={loading}>
           {loading ? "Signing in..." : "Login"}
         </Button>
 

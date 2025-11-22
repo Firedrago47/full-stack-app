@@ -49,27 +49,27 @@ export default function RegisterPage() {
     <AuthCard title="Create Account">
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <Label>Name</Label>
+          <Label className="mb-2 font-semibold">Name</Label>
           <Input {...form.register("name")} placeholder="YOGESH" />
         </div>
 
         <div>
-          <Label>Phone</Label>
+          <Label className="mb-2 font-semibold">Phone</Label>
           <Input {...form.register("phone")} placeholder="+91 98765 43210" />
         </div>
 
         <div>
-          <Label>Email</Label>
+          <Label className="mb-2 font-semibold">Email</Label>
           <Input type="email" {...form.register("email")} placeholder="name@gmail.com" />
         </div>
 
         <div>
-          <Label>Password</Label>
-          <Input type="password" {...form.register("password")} />
+          <Label className="mb-2 font-semibold">Password</Label>
+          <Input type="password" placeholder="****" {...form.register("password")} />
         </div>
 
         <div>
-          <Label>Role</Label>
+          <Label className="mb-2 font-semibold">Role</Label>
           <Select
             onValueChange={(value) => form.setValue("role", value as Role)}
             defaultValue={form.getValues("role")}
@@ -88,12 +88,12 @@ export default function RegisterPage() {
         {role === "DRIVER" && (
           <>
             <div>
-              <Label>License Number</Label>
+              <Label className="mb-2 font-semibold">License Number</Label>
               <Input {...form.register("licenseNumber")} />
             </div>
 
             <div>
-              <Label>Vehicle Number</Label>
+              <Label className="mb-2 font-semibold">Vehicle Number</Label>
               <Input {...form.register("vehicleNumber")} />
             </div>
           </>
@@ -102,12 +102,12 @@ export default function RegisterPage() {
         {role === "SHOP_OWNER" && (
           <>
             <div>
-              <Label>Shop Name</Label>
+              <Label className="mb-2 font-semibold">Shop Name</Label>
               <Input {...form.register("shopName")} />
             </div>
 
             <div>
-              <Label>Shop Address</Label>
+              <Label className="mb-2 font-semibold">Shop Address</Label>
               <Input {...form.register("shopAddress")} />
             </div>
           </>
@@ -117,7 +117,7 @@ export default function RegisterPage() {
           <p className="text-red-500 text-sm">{serverError}</p>
         )}
 
-        <Button className="w-full" type="submit">
+        <Button className="w-full font-semibold" type="submit">
           Sign Up
         </Button>
 
