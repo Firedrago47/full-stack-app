@@ -1,5 +1,6 @@
 // components/DashboardTopbar.tsx
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 export default function DashboardTopbar() {
   return (
@@ -7,7 +8,10 @@ export default function DashboardTopbar() {
       <div className="text-xl font-bold">Dashboard</div>
       <div className="flex items-center gap-4">
         <Link href="/" className="text-sm text-red-600">Logout</Link>
-        <Link href="/profile" className="text-sm p-1 text-blue-600 border border-blue-500 rounded">Profile</Link>
+        <Button>
+
+        <Link href="/profile" className="font-bold">Profile</Link>
+        </Button>
       </div>
     </header>
   );
