@@ -1,0 +1,137 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { RegisterSchema, RegisterInput } from "@/lib/validation/auth";
+import { AuthCard } from "@/components/auth/auth-card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+
+export default function ShopRegisterPage() {
+  const router = useRouter();
+  const [serverError, setServerError] = useState("");
+
+  const form = useForm<RegisterInput>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      name: "",
+      phone: "",
+      email: "",
+      password: "",
+      role: "SHOP_OWNER",
+      shopName: "",
+      shopAddress: "",
+    },
+  });
+
+  const onSubmit = async (data: RegisterInput) => {
+    setServerError("");
+
+    const res = await fetch("/api/auth/register/shop", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      setServerError(err.error ?? "Registration failed");
+      return;
+    }
+
+    router.push("/shop/auth/login");
+  };
+
+  return (
+    <div className="min-h-screen flex bg-slate-50">
+      {/* LEFT SIDE — Hero section */}
+      <div className="hidden lg:flex flex-col justify-between bg-gradient-to-br from-green-600 to-emerald-700 text-white w-1/2 p-12">
+        <div>
+          <h1 className="text-4xl font-extrabold leading-tight">
+            Empower Your
+            <br />
+            Local Business
+          </h1>
+          <p className="mt-4 text-lg text-green-100 max-w-md">
+            Join thousands of shop owners who grow their business every day
+            using our platform.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <div className="p-4 bg-white/10 rounded-xl backdrop-blur-sm">
+            <h3 className="font-semibold">Easy Product Management</h3>
+            <p className="text-sm text-green-100">
+              Add, update, and track your inventory instantly.
+            </p>
+          </div>
+
+          <div className="p-4 bg-white/10 rounded-xl backdrop-blur-sm">
+            <h3 className="font-semibold">Secure Payments</h3>
+            <p className="text-sm text-green-100">
+              Integrated payments with fast settlements.
+            </p>
+          </div>
+        </div>
+
+        <p className="opacity-70 text-sm">© 2025 Shop Partner Portal</p>
+      </div>
+
+      {/* RIGHT SIDE — Auth Form */}
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <AuthCard title="Shop Owner Registration">
+            {/* PLACE YOUR EXISTING REGISTER FORM HERE */}
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <div>
+                <Label>Name</Label>
+                <Input {...form.register("name")} />
+              </div>
+
+              <div>
+                <Label>Phone</Label>
+                <Input {...form.register("phone")} />
+              </div>
+
+              <div>
+                <Label>Email</Label>
+                <Input type="email" {...form.register("email")} />
+              </div>
+
+              <div>
+                <Label>Password</Label>
+                <Input type="password" {...form.register("password")} />
+              </div>
+
+              <div>
+                <Label>Shop Name</Label>
+                <Input {...form.register("shopName")} />
+              </div>
+
+              <div>
+                <Label>Shop Address</Label>
+                <Input {...form.register("shopAddress")} />
+              </div>
+
+              {serverError && <p className="text-red-500">{serverError}</p>}
+
+              <Button className="w-full" type="submit">
+                Sign Up
+              </Button>
+
+              <p className="text-center text-sm text-muted-foreground">
+                Already have an account?{" "}
+                <a href="/shop/auth/login" className="text-blue-600 underline">
+                  Login
+                </a>
+              </p>
+            </form>
+          </AuthCard>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -11,11 +11,10 @@ export default function LandingPage() {
           <div className="font-semibold text-lg">Full-Stack Delivery</div>
         </div>
         <nav className="flex items-center gap-4">
-          <a href="/" className="text-sm text-slate-700 hover:text-slate-900">Home</a>
-          <a href="/dashboard/customer" className="text-sm text-slate-700 hover:text-slate-900">For Customers</a>
-          <a href="/dashboard/driver" className="text-sm text-slate-700 hover:text-slate-900">For Drivers</a>
-          <a href="/dashboard/shop" className="text-sm text-slate-700 hover:text-slate-900">For Shops</a>
-          <a href="/auth/login" className="ml-4 inline-flex items-center px-4 py-2 rounded-md bg-slate-900 text-white text-sm hover:opacity-90">Login</a>
+          <a href="/customer" className="text-sm text-slate-700 hover:text-slate-900">For Customers</a>
+          <a href="/driver" className="text-sm text-slate-700 hover:text-slate-900">For Drivers</a>
+          <a href="/shop" className="text-sm text-slate-700 hover:text-slate-900">For Shops</a>
+          <a href="/customer/auth/login" className="ml-4 inline-flex items-center px-4 py-2 rounded-md bg-slate-900 text-white text-sm hover:opacity-90">Login</a>
         </nav>
       </header>
 

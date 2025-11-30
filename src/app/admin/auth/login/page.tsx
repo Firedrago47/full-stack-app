@@ -72,7 +72,7 @@ export default function LoginPage() {
           ? "/dashboard/driver"
           : role === "SHOP_OWNER"
           ? "/dashboard/shop"
-          : "/dashboard/admin";
+          : "/admin/dashboard";
 
       router.push(path);
     } catch (err) {

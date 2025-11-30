@@ -10,7 +10,7 @@ export function AuthCard({
   children: React.ReactNode;
 }) {
   return (
-    <Card className="w-full max-w-sm mx-auto mt-20">
+    <Card className="w-full max-w-sm mx-auto mt-10">
       <CardHeader>
         <CardTitle className="text-center text-2xl font-semibold">{title}</CardTitle>
       </CardHeader>
