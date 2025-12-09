@@ -1,8 +1,11 @@
 import { getCurrentUser } from "@/lib/auth/current-user";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import DashboardShell from "@/components/dashboard/DashboardShell";
+import DashboardShell from "../components/DashboardShell";
 import ProtectedLayout from "@/components/ProtectedLayout";
+
+import ShopStats from "../components/ShopStats";
+import ShopQuickActions from "../components/ShopQuickActions";
+import ShopRecentOrders from "../components/ShopRecentOrders";
+import ShopStatusCard from "../components/ShopStatusCard";
 
 export default async function ShopDashboard() {
   const user = await getCurrentUser();
@@ -11,28 +14,24 @@ export default async function ShopDashboard() {
   return (
     <ProtectedLayout allowedRoles={["SHOP_OWNER"]}>
       <DashboardShell>
-        <div className="px-6 py-10 max-w-5xl mx-auto space-y-6">
-          <h1 className="text-3xl font-semibold">Shop Owner Dashboard</h1>
+        <div className="space-y-8 p-4">
+          <h1 className="text-3xl font-bold">Shop Dashboard</h1>
+          <p className="text-muted-foreground">
+            Manage items, view orders and track your shop performance.
+          </p>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Your Shop</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p>Shop name: Your Shop</p>
-              <p>Orders pending: 0</p>
-              <Button>Add Product</Button>
-            </CardContent>
-          </Card>
+          <ShopStatusCard />
+          <ShopStats />
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Orders</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>No orders yet</p>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <ShopRecentOrders />
+            </div>
+
+            <div>
+              <ShopQuickActions />
+            </div>
+          </div>
         </div>
       </DashboardShell>
     </ProtectedLayout>
