@@ -22,6 +22,7 @@ enum Role {
 }
 
 enum OrderStatus {
+  CART
   CREATED
   CONFIRMED
   PREPARING
@@ -142,7 +143,7 @@ model Order {
   driver           Driver?     @relation("DriverAssignedOrders", fields: [driverId], references: [id], onDelete: SetNull)
   shopId           String?
   shop             Shop?       @relation("ShopOrders", fields: [shopId], references: [id], onDelete: SetNull)
-  status           OrderStatus @default(CREATED)
+  status           OrderStatus @default(CART)
   totalCents       Int
   currency         String      @default("INR")
   deliveryFeeCents Int?

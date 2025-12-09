@@ -1,4 +1,5 @@
-// lib/auth/get-current-user.ts
+'use server'
+
 import { cookies } from "next/headers";
 import { verifyJwt } from "./jwt";
 import prisma from "@/lib/prisma";

@@ -31,7 +31,7 @@ export default function ShopRegisterPage() {
   const onSubmit = async (data: RegisterInput) => {
     setServerError("");
 
-    const res = await fetch("/api/auth/register/shop", {
+    const res = await fetch("/api/auth/register", {
       method: "POST",
       body: JSON.stringify(data),
     });
