@@ -21,18 +21,18 @@ export default function ItemList({ items = [] }: ItemListProps) {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {items.map((it) => (
         <Card key={it.id} className="flex flex-col">
-          <div className="relative h-28 w-full">
+          <div className="relative h-48 w-full">
             {it.imageUrl && (
               <Image
                 src={it.imageUrl}
                 alt={it.name}
                 fill
-                className="object-cover"
+                className="object-cover p-4 rounded-4xl"
               />
             )}
           </div>
-
-          <CardContent className="flex-1 py-4">
+            <div className="border"></div>
+          <CardContent className="flex-1 py-2">
             <h3 className="font-semibold">{it.name}</h3>
             <p className="text-sm text-muted-foreground">{it.description}</p>
             <p className="font-bold text-lg mt-2">₹{it.priceCents / 100}</p>
