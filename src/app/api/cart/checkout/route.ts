@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth/current-user";
-import { OrderStatus } from "@prisma/client";
+import { $Enums, OrderStatus } from "@prisma/client";
 
 export async function POST() {
   const user = await getCurrentUser();
-  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!user)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const cart = await prisma.order.findFirst({
-    where: { customerId: user.id, status: OrderStatus.CART },
+    where: { customerId: user.id, status: $Enums.OrderStatus.CART },
     include: { items: true },
   });
 
