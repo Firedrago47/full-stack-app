@@ -13,8 +13,8 @@ import {
 } from "lucide-react";
 
 const MENU = [
-  { name: "Overview", href: "/customer/dashboard", icon: Home },
-  { name: "My Orders", href: "/customer/orders", icon: ShoppingBag },
+  { name: "Overview", href: "/shop/dashboard", icon: Home },
+  { name: "Items", href: "/shop/items", icon: ShoppingBag },
   { name: "Favourites", href: "/customer/favourites", icon: Heart },
   { name: "Payments", href: "/customer/payments", icon: Wallet },
   { name: "Support", href: "/customer/support", icon: HelpCircle },
