@@ -33,8 +33,8 @@ export default async function CustomerDashboardPage() {
 
           {/* Items list + sidebar filters */}
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <aside className="lg:col-span-1 mx-3 space-y-4">
-              <div className="p-4 bg-white border rounded-xl">
+            <aside className="lg:col-span-1 mx-6 space-y-4">
+              <div className="p-4 bg-white border rounded-xl shadow-sm">
                 <h3 className="text-lg font-semibold">Filters</h3>
                 <div className="mt-3 space-y-2">
                   <label className="flex items-center gap-2">
@@ -49,7 +49,7 @@ export default async function CustomerDashboardPage() {
                 </div>
               </div>
 
-              <div className="p-4 bg-white border rounded-xl">
+              <div className="p-4 bg-white border rounded-xl shadow-sm">
                 <h3 className="text-lg font-semibold">Near you</h3>
                 <p className="text-sm text-muted-foreground mt-2">
                   Restaurants & shops delivering within 5km
