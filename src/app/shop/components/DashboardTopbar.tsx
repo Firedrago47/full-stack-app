@@ -1,10 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { ShoppingCart, Menu, Search } from "lucide-react";
-import { useCart } from "@/hooks/use-cart";
+import { Menu, Search } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -18,8 +15,6 @@ import {
 import DashboardSidebar from "../components/DashboardSidebar";
 
 export default function DashboardTopbar() {
-  const [cartOpen, setCartOpen] = useState(false);
-  const { items } = useCart();
 
   return (
     <>
@@ -71,16 +66,6 @@ export default function DashboardTopbar() {
           <button className="md:hidden p-2 rounded hover:bg-gray-100">
             <Search size={20} />
           </button>
-
-          {/* Cart Icon */}
-          <Button variant="ghost" onClick={() => setCartOpen(true)} className="relative">
-            <ShoppingCart size={22} />
-            {items.length > 0 && (
-              <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center">
-                {items.length}
-              </span>
-            )}
-          </Button>
 
           {/* Profile Avatar */}
           <Link href="/customer/profile">
