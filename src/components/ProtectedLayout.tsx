@@ -23,7 +23,7 @@ export default async function ProtectedLayout({
   if (allowedRoles && !allowedRoles.includes(user.role)) {
     // authenticated but wrong role
     // choose safe location — home or role-specific landing
-    redirect("/auth/login");
+    redirect("/customer/auth/login");
   }
 
   return <>{children}</>;

@@ -78,31 +78,31 @@ export default function CustomerRegisterPage() {
       {/* RIGHT AUTH FORM */}
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-md">
-          <AuthCard title="Create Customer Account">
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <AuthCard title="Create Account">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-1">
               <div>
-                <Label>Name</Label>
-                <Input {...form.register("name")} />
+                <Label className="mb-2 font-semibold ">Name</Label>
+                <Input {...form.register("name")} placeholder="Name"/>
               </div>
 
               <div>
-                <Label>Phone</Label>
-                <Input {...form.register("phone")} placeholder="+91…" />
+                <Label className="mb-2 font-semibold">Phone</Label>
+                <Input {...form.register("phone")} placeholder="9876543210" />
               </div>
 
               <div>
-                <Label>Email</Label>
-                <Input type="email" {...form.register("email")} />
+                <Label className="mb-2 font-semibold ">Email</Label>
+                <Input type="email" {...form.register("email")} placeholder="example@gmail.com"/>
               </div>
 
               <div>
-                <Label>Password</Label>
-                <Input type="password" {...form.register("password")} />
+                <Label className="mb-2 font-semibold ">Password</Label>
+                <Input type="password" {...form.register("password")} placeholder="••••••••"/>
               </div>
 
               {serverError && <p className="text-red-500">{serverError}</p>}
 
-              <Button className="w-full" type="submit">
+              <Button className="w-full font-semibold " type="submit">
                 Sign Up
               </Button>
 

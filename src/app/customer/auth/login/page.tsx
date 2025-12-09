@@ -92,8 +92,8 @@ export default function CustomerLoginPage() {
       {/* RIGHT AUTH FORM */}
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-md">
-          <AuthCard title="Customer Login">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <AuthCard title="Login">
+            <form onSubmit={handleSubmit(onSubmit)} className="p-2 space-y-4">
               <div>
                 <Label className="mb-2 font-bold">Email or Phone</Label>
                 <Input
@@ -107,7 +107,7 @@ export default function CustomerLoginPage() {
                 <Label className="mb-2 font-bold">Password</Label>
                 <Input
                   type="password"
-                  placeholder="••••••"
+                  placeholder="••••••••"
                   {...register("password")}
                 />
               </div>
