@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ProtectedLayout from "@/components/ProtectedLayout";
-import DashboardSidebar from "../components/DashboardSidebar";
+import DashboardTopbar from "../components/DashboardTopbar";
 
 const mockOrders = [
   {
@@ -41,8 +41,8 @@ const mockOrders = [
 export default function CustomerOrdersPage() {
   return (
     <ProtectedLayout allowedRoles={["CUSTOMER"]}>
-      <div className="flex">
-        <DashboardSidebar />
+      <div>
+        <DashboardTopbar />
         <div className="flex-col flex-1 max-w-4xl mx-auto p-6 space-y-6">
           <h1 className="text-2xl font-bold">My Orders</h1>
           <p className="text-sm text-muted-foreground">
