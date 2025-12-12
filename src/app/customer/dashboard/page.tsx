@@ -25,7 +25,10 @@ export default async function CustomerDashboardPage() {
         <div className="space-y-6">
           {/* Categories */}
           <Suspense fallback={<div>Loading...</div>}>
+          <div className="item-center">
+
             <CategoryCarousel />
+          </div>
           </Suspense>
 
           {/* Featured */}

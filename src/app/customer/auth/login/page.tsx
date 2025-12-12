@@ -59,7 +59,7 @@ export default function CustomerLoginPage() {
   return (
     <div className="min-h-screen flex bg-slate-50">
       {/* LEFT HERO */}
-      <div className="hidden lg:flex flex-col justify-between bg-gradient-to-br from-blue-600 to-indigo-700 text-white w-1/2 p-12">
+      <div className="hidden lg:flex flex-col rounded-r-4xl justify-between bg-gradient-to-br from-blue-600 to-indigo-700 text-white w-1/2 p-12">
         <div>
           <h1 className="text-4xl font-extrabold leading-tight">
             Welcome Back,

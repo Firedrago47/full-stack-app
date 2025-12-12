@@ -13,30 +13,74 @@ const categories = [
 export default function CategoryCarousel() {
   const params = useSearchParams();
   const router = useRouter();
-
   const selected = params.get("category");
 
   return (
-    <div className="overflow-x-auto py-2">
-      <div className="flex gap-8 px-2">
+    <div className="w-full">
+      {/* MOBILE CAROUSEL */}
+      <div className="md:hidden sm:grid grid-cols-2 mx-auto py-2">
+        <div className="flex items-center gap-6 px-4">
+          {categories.map((c) => {
+            const isActive = selected === c.id;
+
+            return (
+              <button
+                key={c.id}
+                onClick={() => router.push(`/customer/dashboard?category=${c.id}`)}
+                className="flex flex-col items-center min-w-[90px] space-y-2"
+              >
+                {/* Circle Image */}
+                <div
+                  className={cn(
+                    "flex items-center h-18 w-18 rounded-full overflow-hidden shadow-sm border transition-transform",
+                    isActive
+                      ? "border-primary scale-110 shadow-md"
+                      : "border-gray-200"
+                  )}
+                >
+                  <Image
+                    src={c.image}
+                    alt={c.title}
+                    width={80}
+                    height={80}
+                    className="object-cover h-full w-full"
+                  />
+                </div>
+
+                {/* Title */}
+                <p
+                  className={cn(
+                    "text-sm font-semibold text-center",
+                    isActive ? "text-primary" : "text-gray-800"
+                  )}
+                >
+                  {c.title}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* DESKTOP GRID — 3 ITEMS CENTERED */}
+      <div className="hidden md:grid grid-cols-3 gap-6 max-w-6xl mx-auto py-2">
         {categories.map((c) => {
           const isActive = selected === c.id;
 
           return (
             <button
               key={c.id}
-              onClick={() => router.push(`/customer/dashboard?category=${c.id}`)}
+              onClick={() =>
+                router.push(`/customer/dashboard?category=${c.id}`)
+              }
               className={cn(
-                "flex items-center ml-2 gap-6 min-w-[400px] rounded-xl px-4 py-3 shadow-sm transition-all text-left",
-                "hover:shadow-md active:scale-[0.98] border",
-
+                "flex items-center gap-4 rounded-xl px-4 py-2 shadow-sm border transition-all",
                 isActive
                   ? "border-primary bg-primary/10 shadow-md"
-                  : "border-gray-200 bg-white"
+                  : "border-gray-200 bg-white hover:shadow-md"
               )}
             >
-              {/* IMAGE */}
-              <div className="h-14 w-14 flex-shrink-0 rounded-full overflow-hidden bg-gray-100">
+              <div className="h-16 w-16 rounded-full overflow-hidden bg-gray-100">
                 <Image
                   src={c.image}
                   alt={c.title}
@@ -46,21 +90,17 @@ export default function CategoryCarousel() {
                 />
               </div>
 
-              {/* TEXT */}
-              <div className="flex flex-col">
-                <span
-                  className={cn(
-                    "text-[15px] font-medium",
-                    isActive ? "text-primary" : "text-gray-800"
-                  )}
-                >
-                  {c.title}
-                </span>
-
-                <span className="text-xs text-gray-500">
-                  Tap to explore
-                </span>
-              </div>
+             <div>
+                  <p
+                    className={cn(
+                      "text-[15px] font-medium",
+                      isActive ? "text-primary" : "text-gray-900"
+                    )}
+                  >
+                    {c.title}
+                  </p>
+                  <p className="text-xs text-gray-500">Tap to explore</p>
+                </div>
             </button>
           );
         })}

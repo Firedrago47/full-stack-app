@@ -25,7 +25,7 @@ export default function ShopLandingPage() {
           <div className="mt-6 flex gap-4">
             <Button
               size="lg"
-              className="px-8"
+              className="px-8 shadow-md"
               onClick={() => (window.location.href = "/shop/auth/register")}
             >
               Register Shop
@@ -33,7 +33,7 @@ export default function ShopLandingPage() {
             <Button
               size="lg"
               variant="outline"
-              className="px-8"
+              className="px-8 shadow-md"
               onClick={() => (window.location.href = "/shop/auth/login")}
             >
               Login

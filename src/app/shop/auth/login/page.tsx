@@ -58,7 +58,7 @@ export default function ShopLoginPage() {
   return (
     <div className="min-h-screen flex bg-slate-50">
       {/* LEFT HERO */}
-      <div className="hidden lg:flex flex-col justify-between bg-gradient-to-br from-emerald-500 to-green-600 text-white w-1/2 p-12">
+      <div className="hidden lg:flex flex-col justify-between bg-gradient-to-br rounded-r-4xl from-emerald-500 to-green-600 text-white w-1/2 p-12">
         <div>
           <h1 className="text-4xl font-extrabold leading-tight">
             Welcome Back,
@@ -92,7 +92,7 @@ export default function ShopLoginPage() {
       {/* RIGHT FORM */}
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-md">
-          <AuthCard title="Shop Owner Login">
+          <AuthCard title="Login">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <Label className="mb-2 font-bold">Email or Phone</Label>
@@ -107,7 +107,7 @@ export default function ShopLoginPage() {
                 <Label className="mb-2 font-bold">Password</Label>
                 <Input
                   type="password"
-                  placeholder="••••••"
+                  placeholder="•••••••••"
                   {...register("password")}
                 />
               </div>

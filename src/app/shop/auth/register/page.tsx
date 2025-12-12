@@ -48,7 +48,7 @@ export default function ShopRegisterPage() {
   return (
     <div className="min-h-screen flex bg-slate-50">
       {/* LEFT SIDE — Hero section */}
-      <div className="hidden lg:flex flex-col justify-between bg-gradient-to-br from-green-600 to-emerald-700 text-white w-1/2 p-12">
+      <div className="hidden lg:flex flex-col justify-between rounded-r-4xl bg-gradient-to-br from-green-600 to-emerald-700 text-white w-1/2 p-12">
         <div>
           <h1 className="text-4xl font-extrabold leading-tight">
             Empower Your
@@ -83,36 +83,36 @@ export default function ShopRegisterPage() {
       {/* RIGHT SIDE — Auth Form */}
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
-          <AuthCard title="Shop Owner Registration">
+          <AuthCard title="Registration">
             {/* PLACE YOUR EXISTING REGISTER FORM HERE */}
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <div>
-                <Label>Name</Label>
+                <Label className="font-semibold mb-2">Name</Label>
                 <Input {...form.register("name")} />
               </div>
 
               <div>
-                <Label>Phone</Label>
+                <Label className="font-semibold mb-2">Phone</Label>
                 <Input {...form.register("phone")} />
               </div>
 
               <div>
-                <Label>Email</Label>
+                <Label className="font-semibold mb-2">Email</Label>
                 <Input type="email" {...form.register("email")} />
               </div>
 
               <div>
-                <Label>Password</Label>
+                <Label className="font-semibold mb-2">Password</Label>
                 <Input type="password" {...form.register("password")} />
               </div>
 
               <div>
-                <Label>Shop Name</Label>
+                <Label className="font-semibold mb-2">Shop Name</Label>
                 <Input {...form.register("shopName")} />
               </div>
 
               <div>
-                <Label>Shop Address</Label>
+                <Label className="font-semibold mb-2">Shop Address</Label>
                 <Input {...form.register("shopAddress")} />
               </div>
 

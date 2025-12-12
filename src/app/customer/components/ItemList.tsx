@@ -21,7 +21,7 @@ export default function ItemList({ items = [] }: ItemListProps) {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {items.map((it) => (
         <Card key={it.id} className="flex flex-col">
-          <div className="relative h-48 w-full">
+          <div className="relative h-55 w-full">
             {it.imageUrl && (
               <Image
                 src={it.imageUrl}
