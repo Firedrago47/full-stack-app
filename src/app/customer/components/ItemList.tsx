@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 interface ItemListProps {
-  items?: Item[]; // make optional
+  items?: Item[]; 
 }
 
 export default function ItemList({ items = [] }: ItemListProps) {

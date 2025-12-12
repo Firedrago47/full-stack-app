@@ -120,6 +120,7 @@ model Item {
   name        String
   description String?
   priceCents  Int
+  category    String?
   currency    String    @default("INR")
   stock       Int       @default(0)
   imageUrl    String?
