@@ -49,63 +49,69 @@ export async function POST(req: Request) {
   if (!itemId)
     return NextResponse.json({ error: "itemId required" }, { status: 400 });
 
-  const result = await prisma.$transaction(async (tx) => {
-    const item = await tx.item.findUnique({ where: { id: itemId } });
-    if (!item) throw new Error("Item not found");
+  const item = await prisma.item.findUnique({
+    where: { id: itemId },
+  });
 
-    let cart = await tx.order.findFirst({
-      where: { customerId: user.id, status: OrderStatus.CART },
-      include: {
-        shop: true,
-        items: true,
-      },
+  if (!item)
+    return NextResponse.json({ error: "Item not found" }, { status: 404 });
+
+  let cart = await prisma.order.findFirst({
+    where: { customerId: user.id, status: OrderStatus.CART },
+    include: { shop: true },
+  });
+
+  // Remove empty carts
+  if (cart) {
+    const itemCount = await prisma.orderItem.count({
+      where: { orderId: cart.id },
     });
 
-    // Delete empty cart
-    if (cart && cart.items.length === 0) {
-      await tx.order.delete({ where: { id: cart.id } });
+    if (itemCount === 0) {
+      await prisma.order.delete({ where: { id: cart.id } });
       cart = null;
     }
+  }
 
-    // Conflict: existing cart belongs to a different shop
-    if (cart && cart.shopId !== item.shopId) {
-      return {
+  // Check shop conflict (OUTSIDE transaction)
+  if (cart && cart.shopId !== item.shopId) {
+    return NextResponse.json(
+      {
         conflict: true,
         existingShop: cart.shop?.name,
-      };
-    }
+      },
+      { status: 409 }
+    );
+  }
 
-    // Create a new cart
-    if (!cart) {
-      cart = await tx.order.create({
-        data: {
-          customerId: user.id,
-          shopId: item.shopId,
-          status: OrderStatus.CART,
-          totalCents: DELIVERY_FEE,
-          deliveryFeeCents: DELIVERY_FEE,
-        },
-        include: {
-          shop: true,
-          items: true,
-        },
-      });
-    }
+  const result = await prisma.$transaction(async (tx) => {
+    // Create new cart if needed
+    const activeCart = cart
+      ? cart
+      : await tx.order.create({
+          data: {
+            customerId: user.id,
+            shopId: item.shopId,
+            status: OrderStatus.CART,
+            totalCents: DELIVERY_FEE,
+            deliveryFeeCents: DELIVERY_FEE,
+          },
+        });
 
     // Add or update item
-    const existingItem = await tx.orderItem.findFirst({
-      where: { orderId: cart.id, itemId },
+    const existing = await tx.orderItem.findFirst({
+      where: { orderId: activeCart.id, itemId },
     });
 
-    if (existingItem) {
+    if (existing) {
       await tx.orderItem.update({
-        where: { id: existingItem.id },
-        data: { quantity: existingItem.quantity + quantity },
+        where: { id: existing.id },
+        data: { quantity: existing.quantity + quantity },
       });
     } else {
       await tx.orderItem.create({
         data: {
-          orderId: cart.id,
+          orderId: activeCart.id,
           itemId,
           quantity,
           unitPriceCents: item.priceCents,
@@ -113,29 +119,29 @@ export async function POST(req: Request) {
       });
     }
 
-    // Recalculate totals
-    const items = await tx.orderItem.findMany({
-      where: { orderId: cart.id },
-    });
-
-    const itemsTotal = items.reduce(
-      (total, it) => total + it.quantity * it.unitPriceCents,
-      0
-    );
-
-    await tx.order.update({
-      where: { id: cart.id },
-      data: {
-        totalCents: itemsTotal + DELIVERY_FEE,
-        deliveryFeeCents: DELIVERY_FEE,
-      },
-    });
-
-    return { ok: true };
+    return { orderId: activeCart.id };
   });
 
-  return NextResponse.json(result);
+  const orderItems = await prisma.orderItem.findMany({
+    where: { orderId: result.orderId },
+  });
+
+  const itemsTotal = orderItems.reduce(
+    (sum, it) => sum + it.quantity * it.unitPriceCents,
+    0
+  );
+
+  await prisma.order.update({
+    where: { id: result.orderId },
+    data: {
+      totalCents: itemsTotal + DELIVERY_FEE,
+      deliveryFeeCents: DELIVERY_FEE,
+    },
+  });
+
+  return NextResponse.json({ ok: true });
 }
+
 
 export async function PATCH(req: Request) {
   const user = await getCurrentUser();

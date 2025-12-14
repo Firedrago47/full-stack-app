@@ -1,6 +1,4 @@
 
-import { Suspense } from "react";
-import ProtectedLayout from "@/components/ProtectedLayout";
 import DashboardShell from "../components/DashboardShell";
 import CategoryCarousel from "../components/CategoryCarousel";
 
@@ -10,7 +8,6 @@ import ItemsSection from "../components/ItemsSection";
 
 export default async function CustomerDashboardPage(){
   return (
-    <ProtectedLayout allowedRoles={["CUSTOMER"]}>
       <DashboardShell>
         <div className="space-y-6">
           <CategoryCarousel />
@@ -41,6 +38,5 @@ export default async function CustomerDashboardPage(){
           </div>
         </div>
       </DashboardShell>
-    </ProtectedLayout>
   );
 }
