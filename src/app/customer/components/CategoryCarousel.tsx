@@ -3,21 +3,27 @@
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { DashboardCategory } from "@/types/category";
 
-const categories = [
-  { id: "groceries", title: "Groceries", image: "/images/cat-groceries.png" },
+function isDashboardCategory(value: string | null): value is DashboardCategory {
+  return value === "food" || value === "groceries" || value === "taxi";
+}
+const categories: { id: DashboardCategory; title: string; image: string }[] = [
   { id: "food", title: "Food Delivery", image: "/images/cat-food.png" },
+  { id: "groceries", title: "Groceries", image: "/images/cat-groceries.png" },
   { id: "taxi", title: "Taxis & Rides", image: "/images/cat-taxi.png" },
 ];
 
 export default function CategoryCarousel() {
   const params = useSearchParams();
   const router = useRouter();
-  const selected = params.get("category");
+
+  const raw = params.get("category");
+  const selected: DashboardCategory = isDashboardCategory(raw) ? raw : "food";
 
   return (
     <div className="w-full">
-      {/* MOBILE CAROUSEL */}
+      {/* MOBILE */}
       <div className="md:hidden sm:grid grid-cols-2 mx-auto py-2">
         <div className="flex items-center gap-6 px-4">
           {categories.map((c) => {
@@ -29,13 +35,10 @@ export default function CategoryCarousel() {
                 onClick={() => router.push(`/customer/dashboard?category=${c.id}`)}
                 className="flex flex-col items-center min-w-[90px] space-y-2"
               >
-                {/* Circle Image */}
                 <div
                   className={cn(
                     "flex items-center h-18 w-18 rounded-full overflow-hidden shadow-sm border transition-transform",
-                    isActive
-                      ? "border-primary scale-110 shadow-md"
-                      : "border-gray-200"
+                    isActive ? "border-primary scale-110 shadow-md" : "border-gray-200"
                   )}
                 >
                   <Image
@@ -47,7 +50,6 @@ export default function CategoryCarousel() {
                   />
                 </div>
 
-                {/* Title */}
                 <p
                   className={cn(
                     "text-sm font-semibold text-center",
@@ -62,7 +64,7 @@ export default function CategoryCarousel() {
         </div>
       </div>
 
-      {/* DESKTOP GRID — 3 ITEMS CENTERED */}
+      {/* DESKTOP */}
       <div className="hidden md:grid grid-cols-3 gap-6 max-w-6xl mx-auto py-2">
         {categories.map((c) => {
           const isActive = selected === c.id;
@@ -70,9 +72,7 @@ export default function CategoryCarousel() {
           return (
             <button
               key={c.id}
-              onClick={() =>
-                router.push(`/customer/dashboard?category=${c.id}`)
-              }
+              onClick={() => router.push(`/customer/dashboard?category=${c.id}`)}
               className={cn(
                 "flex items-center gap-4 rounded-xl px-4 py-2 shadow-sm border transition-all",
                 isActive
@@ -90,17 +90,17 @@ export default function CategoryCarousel() {
                 />
               </div>
 
-             <div>
-                  <p
-                    className={cn(
-                      "text-[15px] font-medium",
-                      isActive ? "text-primary" : "text-gray-900"
-                    )}
-                  >
-                    {c.title}
-                  </p>
-                  <p className="text-xs text-gray-500">Tap to explore</p>
-                </div>
+              <div>
+                <p
+                  className={cn(
+                    "text-[15px] font-medium",
+                    isActive ? "text-primary" : "text-gray-900"
+                  )}
+                >
+                  {c.title}
+                </p>
+                <p className="text-xs text-gray-500">Tap to explore</p>
+              </div>
             </button>
           );
         })}

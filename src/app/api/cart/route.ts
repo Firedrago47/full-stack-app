@@ -56,9 +56,23 @@ export async function POST(req: Request) {
   const shopId = item.shopId;
 
   let cart = await prisma.order.findFirst({
-    where: { customerId: user.id, status: OrderStatus.CART },
-    include: { shop: true },
-  });
+  where: { customerId: user.id, status: OrderStatus.CART },
+  include: {
+    shop: true,
+    items: {
+      include: {
+        item: true,
+      },
+    },
+  },
+});
+
+
+// If cart exists but has zero items → delete it
+if (cart && cart.items.length === 0) {
+  await prisma.order.delete({ where: { id: cart.id } });
+  cart = null;
+}
 
   if (cart && cart.shopId !== shopId) {
     return NextResponse.json(
@@ -81,7 +95,12 @@ export async function POST(req: Request) {
         totalCents: DELIVERY_FEE,
         deliveryFeeCents: DELIVERY_FEE,
       },
-      include: { shop: true },
+      include: { shop: true, items: {
+      include: {
+        item: true,
+      },
+    },
+  },
     });
   }
 

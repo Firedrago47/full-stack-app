@@ -21,6 +21,17 @@ enum Role {
   ADMIN
 }
 
+enum ServiceCategory {
+  FOOD
+  GROCERY
+  TAXI
+}
+
+enum ItemSource {
+  SHOP
+  WAREHOUSE
+}
+
 enum OrderStatus {
   CART
   CREATED
@@ -113,27 +124,24 @@ model Shop {
 }
 
 model Item {
-  id          String    @id @default(cuid())
-  shopId      String
-  shop        Shop      @relation(fields: [shopId], references: [id], onDelete: Cascade)
-  sku         String?
+  id          String          @id @default(cuid())
+  source      ItemSource      @default(SHOP)
+  shopId      String?
+  shop        Shop?           @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  service     ServiceCategory   @default(FOOD)
   name        String
   description String?
   priceCents  Int
-  category    String?
-  currency    String    @default("INR")
-  stock       Int       @default(0)
   imageUrl    String?
-  isActive    Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime?
+  stock       Int             @default(0)
+  category    String?
+  currency    String          @default("INR")
+  isActive    Boolean         @default(true)
 
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  deletedAt  DateTime?
   orderItems OrderItem[]
-
-  // SKU uniqueness per shop: ensures different shops can use same sku
-  @@unique([shopId, sku])
-  @@index([shopId])
 }
 
 model Order {
@@ -174,14 +182,16 @@ model Order {
 }
 
 model OrderItem {
-  id             String   @id @default(cuid())
-  orderId        String
-  order          Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  itemId         String
-  item           Item     @relation(fields: [itemId], references: [id], onDelete: Restrict)
+  id      String  @id @default(cuid())
+  orderId String
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  itemId  String?
+  item    Item?   @relation(fields: [itemId], references: [id], onDelete: Restrict)
+
+  source         ItemSource @default(SHOP)
   quantity       Int
   unitPriceCents Int
-  createdAt      DateTime @default(now())
+  createdAt      DateTime   @default(now())
 }
 
 model Address {
