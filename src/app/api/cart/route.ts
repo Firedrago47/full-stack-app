@@ -49,84 +49,92 @@ export async function POST(req: Request) {
   if (!itemId)
     return NextResponse.json({ error: "itemId required" }, { status: 400 });
 
-  const item = await prisma.item.findUnique({ where: { id: itemId } });
-  if (!item)
-    return NextResponse.json({ error: "Item not found" }, { status: 404 });
+  const result = await prisma.$transaction(async (tx) => {
+    const item = await tx.item.findUnique({ where: { id: itemId } });
+    if (!item) throw new Error("Item not found");
 
-  const shopId = item.shopId;
-
-  let cart = await prisma.order.findFirst({
-  where: { customerId: user.id, status: OrderStatus.CART },
-  include: {
-    shop: true,
-    items: {
+    let cart = await tx.order.findFirst({
+      where: { customerId: user.id, status: OrderStatus.CART },
       include: {
-        item: true,
+        shop: true,
+        items: true,
       },
-    },
-  },
-});
+    });
 
+    // Delete empty cart
+    if (cart && cart.items.length === 0) {
+      await tx.order.delete({ where: { id: cart.id } });
+      cart = null;
+    }
 
-// If cart exists but has zero items → delete it
-if (cart && cart.items.length === 0) {
-  await prisma.order.delete({ where: { id: cart.id } });
-  cart = null;
-}
-
-  if (cart && cart.shopId !== shopId) {
-    return NextResponse.json(
-      {
+    // Conflict: existing cart belongs to a different shop
+    if (cart && cart.shopId !== item.shopId) {
+      return {
         conflict: true,
-        message: "Cart has items from another shop",
         existingShop: cart.shop?.name,
-      },
-      { status: 409 }
-    );
-  }
+      };
+    }
 
-  // Create new cart if no cart
-  if (!cart) {
-    cart = await prisma.order.create({
+    // Create a new cart
+    if (!cart) {
+      cart = await tx.order.create({
+        data: {
+          customerId: user.id,
+          shopId: item.shopId,
+          status: OrderStatus.CART,
+          totalCents: DELIVERY_FEE,
+          deliveryFeeCents: DELIVERY_FEE,
+        },
+        include: {
+          shop: true,
+          items: true,
+        },
+      });
+    }
+
+    // Add or update item
+    const existingItem = await tx.orderItem.findFirst({
+      where: { orderId: cart.id, itemId },
+    });
+
+    if (existingItem) {
+      await tx.orderItem.update({
+        where: { id: existingItem.id },
+        data: { quantity: existingItem.quantity + quantity },
+      });
+    } else {
+      await tx.orderItem.create({
+        data: {
+          orderId: cart.id,
+          itemId,
+          quantity,
+          unitPriceCents: item.priceCents,
+        },
+      });
+    }
+
+    // Recalculate totals
+    const items = await tx.orderItem.findMany({
+      where: { orderId: cart.id },
+    });
+
+    const itemsTotal = items.reduce(
+      (total, it) => total + it.quantity * it.unitPriceCents,
+      0
+    );
+
+    await tx.order.update({
+      where: { id: cart.id },
       data: {
-        customerId: user.id,
-        shopId,
-        status: OrderStatus.CART,
-        totalCents: DELIVERY_FEE,
+        totalCents: itemsTotal + DELIVERY_FEE,
         deliveryFeeCents: DELIVERY_FEE,
       },
-      include: { shop: true, items: {
-      include: {
-        item: true,
-      },
-    },
-  },
     });
-  }
 
-  const existing = await prisma.orderItem.findFirst({
-    where: { orderId: cart.id, itemId },
+    return { ok: true };
   });
 
-  if (existing) {
-    await prisma.orderItem.update({
-      where: { id: existing.id },
-      data: { quantity: existing.quantity + quantity },
-    });
-  } else {
-    await prisma.orderItem.create({
-      data: {
-        orderId: cart.id,
-        itemId,
-        quantity,
-        unitPriceCents: item.priceCents,
-      },
-    });
-  }
-
-  await recalcOrderTotals(cart.id);
-
-  return NextResponse.json({ ok: true });
+  return NextResponse.json(result);
 }
 
 export async function PATCH(req: Request) {
