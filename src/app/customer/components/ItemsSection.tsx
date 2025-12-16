@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useItems } from "@/hooks/use-items";
 import ItemList from "./ItemList";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function resolveCategory(value: string | null) {
   if (value === "groceries") return "groceries";
@@ -16,7 +17,5 @@ export default function ItemsSection() {
 
   const { items, isLoading } = useItems(category);
 
-  if (isLoading) return <p>Loading...</p>;
-
-  return <ItemList items={items} />;
+  return <ItemList items={items} isLoading={isLoading}/>;
 }

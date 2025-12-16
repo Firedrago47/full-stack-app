@@ -5,20 +5,47 @@ import { useCart } from "@/hooks/use-cart";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { ItemWithSource } from "@/types/item";
+import { Skeleton } from "@/components/ui/skeleton";
 
-interface ItemListProps {
+export default function ItemList({
+  items,
+  isLoading,
+}: {
   items: ItemWithSource[];
-}
-
-export default function ItemList({ items }: ItemListProps) {
+  isLoading: boolean;
+}) {
   const { addToCart } = useCart();
 
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <Card className="flex flex-col rounded-xl overflow-hidden border shadow-sm" key={i}>
+            {/* Image Skeleton */}
+            <Skeleton className="h-44 w-full" />
+
+            <CardContent className="p-3 space-y-3 flex-1 flex flex-col">
+              {/* Title */}
+              <Skeleton className="h-4 w-3/4" />
+
+              <div className="mt-auto space-y-2">
+                {/* Price */}
+                <Skeleton className="h-5 w-16" />
+                {/* Button */}
+                <Skeleton className="h-9 w-full rounded-md" />
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    );
+  }
   if (!items || items.length === 0) {
     return <p className="text-muted-foreground text-sm">No items available</p>;
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
       {items.map((item) => (
         <Card
           key={item.id}
