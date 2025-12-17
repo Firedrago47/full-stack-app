@@ -1,3 +1,5 @@
+import ProtectedLayout from "@/components/ProtectedLayout";
+
 // app/dashboard/layout.tsx
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -7,5 +9,5 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <ProtectedLayout allowedRoles={["SHOP_OWNER"]}>{children}</ProtectedLayout>;
 }

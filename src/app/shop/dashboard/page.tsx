@@ -1,6 +1,5 @@
 import { getCurrentUser } from "@/lib/auth/current-user";
 import DashboardShell from "../components/DashboardShell";
-import ProtectedLayout from "@/components/ProtectedLayout";
 
 import ShopStats from "../components/ShopStats";
 import ShopQuickActions from "../components/ShopQuickActions";
@@ -12,7 +11,6 @@ export default async function ShopDashboard() {
   if (!user) return null;
 
   return (
-    <ProtectedLayout allowedRoles={["SHOP_OWNER"]}>
       <DashboardShell>
         <div className="space-y-8 p-4">
           <h1 className="text-3xl font-bold">Shop Dashboard</h1>
@@ -34,6 +32,5 @@ export default async function ShopDashboard() {
           </div>
         </div>
       </DashboardShell>
-    </ProtectedLayout>
   );
 }

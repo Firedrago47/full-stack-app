@@ -21,7 +21,7 @@ export default async function ShopItemsPage() {
 
       {!shop ? (
         <div className="p-6 text-red-500 font-medium">
-          ❗ No shop is linked to this account.  
+          No shop is linked to this account.  
           Please contact support.
         </div>
       ) : (

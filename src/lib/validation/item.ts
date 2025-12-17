@@ -8,4 +8,13 @@ export const CreateItemSchema = z.object({
   imageUrl: z.string().url().optional().or(z.literal("")),
 });
 
-export type CreateItemInput = z.infer<typeof CreateItemSchema>;
+export type ItemInput = z.infer<typeof CreateItemSchema>;
+
+export const UpdateItemSchema = z.object({
+  name: z.string().min(1).optional(),
+  priceCents: z.number().int().positive().optional(),
+  stock: z.number().int().min(0).optional(),
+  imageUrl: z.string().url().nullable().optional(),
+});
+
+export type UpdateItemInput = z.infer<typeof UpdateItemSchema>;

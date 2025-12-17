@@ -21,17 +21,13 @@ export default function ItemList({
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {Array.from({ length: 10 }).map((_, i) => (
           <Card className="flex flex-col rounded-xl overflow-hidden border shadow-sm" key={i}>
-            {/* Image Skeleton */}
             <Skeleton className="h-44 w-full" />
 
             <CardContent className="p-3 space-y-3 flex-1 flex flex-col">
-              {/* Title */}
               <Skeleton className="h-4 w-3/4" />
 
               <div className="mt-auto space-y-2">
-                {/* Price */}
                 <Skeleton className="h-5 w-16" />
-                {/* Button */}
                 <Skeleton className="h-9 w-full rounded-md" />
               </div>
             </CardContent>
@@ -45,7 +41,7 @@ export default function ItemList({
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4">
       {items.map((item) => (
         <Card
           key={item.id}
@@ -70,12 +66,12 @@ export default function ItemList({
                 </p>
               ) : (
                 <p className="text-xs text-green-600 font-medium">
-                  Warehouse Item
+                  
                 </p>
               )}
             </div>
 
-            <div className="mt-3">
+            <div className="mt-1">
               <p className="font-bold text-lg mb-2">
                 ₹{(item.priceCents / 100).toFixed(2)}
               </p>

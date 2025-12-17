@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   CreateItemSchema,
-  CreateItemInput,
+  ItemInput,
 } from "@/lib/validation/item";
 
 interface Props {
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default function AddItemDialog({ open, onOpenChange, shopId }: Props) {
-  const [form, setForm] = useState<CreateItemInput>({
+  const [form, setForm] = useState<ItemInput>({
     shopId,
     name: "",
     priceCents: undefined as unknown as number,
@@ -51,7 +51,7 @@ export default function AddItemDialog({ open, onOpenChange, shopId }: Props) {
     window.location.reload();
   };
 
-  const updateField = (field: keyof CreateItemInput, value: string) => {
+  const updateField = (field: keyof ItemInput, value: string) => {
     if (field === "priceCents" || field === "stock") {
       const num = value === "" ? undefined : Number(value);
       setForm((prev) => ({ ...prev, [field]: num as number }));

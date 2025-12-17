@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Item } from "@prisma/client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,13 @@ export default function EditItemDialog({ open, onOpenChange, item }: Props) {
   const [stock, setStock] = useState(item.stock);
   const [imageUrl, setImageUrl] = useState(item.imageUrl ?? "");
 
+  useEffect(() => {
+    setName(item.name);
+    setPrice(item.priceCents);
+    setStock(item.stock);
+    setImageUrl(item.imageUrl ?? "");
+  }, [item]);
+
   const handleSave = async () => {
     await fetch(`/api/shop/items/${item.id}`, {
       method: "PATCH",
@@ -25,7 +32,6 @@ export default function EditItemDialog({ open, onOpenChange, item }: Props) {
     });
 
     onOpenChange();
-    window.location.reload();
   };
 
   return (
