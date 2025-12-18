@@ -39,100 +39,73 @@ export async function GET() {
   return NextResponse.json({ cart });
 }
 
-// ADD / UPDATE CART
 export async function POST(req: Request) {
   const user = await getCurrentUser();
   if (!user)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { itemId, quantity = 1 } = await req.json();
-  if (!itemId)
-    return NextResponse.json({ error: "itemId required" }, { status: 400 });
+  if (!itemId || quantity < 1)
+    return NextResponse.json({ error: "Invalid input" }, { status: 400 });
 
+  // 1️⃣ Fetch item (read-only)
   const item = await prisma.item.findUnique({
     where: { id: itemId },
+    select: { id: true, shopId: true, priceCents: true },
   });
 
   if (!item)
     return NextResponse.json({ error: "Item not found" }, { status: 404 });
 
+  // 2️⃣ Get or create cart (NO transaction)
   let cart = await prisma.order.findFirst({
     where: { customerId: user.id, status: OrderStatus.CART },
-    include: { shop: true },
   });
 
-  // Remove empty carts
-  if (cart) {
-    const itemCount = await prisma.orderItem.count({
-      where: { orderId: cart.id },
-    });
-
-    if (itemCount === 0) {
-      await prisma.order.delete({ where: { id: cart.id } });
-      cart = null;
-    }
-  }
-
-  // Check shop conflict (OUTSIDE transaction)
-  if (cart && cart.shopId !== item.shopId) {
-    return NextResponse.json(
-      {
-        conflict: true,
-        existingShop: cart.shop?.name,
+  if (!cart) {
+    cart = await prisma.order.create({
+      data: {
+        customerId: user.id,
+        shopId: item.shopId,
+        status: OrderStatus.CART,
+        totalCents: DELIVERY_FEE,
+        deliveryFeeCents: DELIVERY_FEE,
       },
-      { status: 409 }
-    );
+    });
   }
 
-  const result = await prisma.$transaction(async (tx) => {
-    // Create new cart if needed
-    const activeCart = cart
-      ? cart
-      : await tx.order.create({
-          data: {
-            customerId: user.id,
-            shopId: item.shopId,
-            status: OrderStatus.CART,
-            totalCents: DELIVERY_FEE,
-            deliveryFeeCents: DELIVERY_FEE,
-          },
-        });
-
-    // Add or update item
-    const existing = await tx.orderItem.findFirst({
-      where: { orderId: activeCart.id, itemId },
-    });
-
-    if (existing) {
-      await tx.orderItem.update({
-        where: { id: existing.id },
-        data: { quantity: existing.quantity + quantity },
-      });
-    } else {
-      await tx.orderItem.create({
-        data: {
-          orderId: activeCart.id,
-          itemId,
-          quantity,
-          unitPriceCents: item.priceCents,
-        },
-      });
-    }
-
-    return { orderId: activeCart.id };
+  // 3️⃣ Atomic upsert (uses @@unique constraint)
+  await prisma.orderItem.upsert({
+    where: {
+      orderId_itemId: {
+        orderId: cart.id,
+        itemId: item.id,
+      },
+    },
+    update: {
+      quantity: { increment: quantity },
+    },
+    create: {
+      orderId: cart.id,
+      itemId: item.id,
+      quantity,
+      unitPriceCents: item.priceCents,
+    },
   });
 
-  const orderItems = await prisma.orderItem.findMany({
-    where: { orderId: result.orderId },
+  // 4️⃣ Recalculate total (simple, fast)
+  const items = await prisma.orderItem.findMany({
+    where: { orderId: cart.id },
+    select: { quantity: true, unitPriceCents: true },
   });
 
-  const itemsTotal = orderItems.reduce(
-    (sum, it) => sum + it.quantity * it.unitPriceCents,
+  const itemsTotal = items.reduce(
+    (sum, i) => sum + i.quantity * i.unitPriceCents,
     0
   );
 
   await prisma.order.update({
-    where: { id: result.orderId },
+    where: { id: cart.id },
     data: {
       totalCents: itemsTotal + DELIVERY_FEE,
       deliveryFeeCents: DELIVERY_FEE,

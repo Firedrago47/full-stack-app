@@ -183,16 +183,21 @@ model Order {
 
 model OrderItem {
   id      String  @id @default(cuid())
+
   orderId String
   order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  itemId  String?
-  item    Item?   @relation(fields: [itemId], references: [id], onDelete: Restrict)
+
+  itemId  String
+  item    Item    @relation(fields: [itemId], references: [id], onDelete: Restrict)
 
   source         ItemSource @default(SHOP)
   quantity       Int
   unitPriceCents Int
   createdAt      DateTime   @default(now())
+
+  @@unique([orderId, itemId], name: "orderId_itemId")
 }
+
 
 model Address {
   id        String    @id @default(cuid())
