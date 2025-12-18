@@ -51,6 +51,19 @@ export function useCart() {
     await mutate();
   }
 
+  async function checkout() {
+    const res = await fetch("/api/cart/checkout",{
+      method : "POST",
+    });
+    const data = await res.json();
+    if(!res.ok){
+      return {ok:false,error:data.error ?? "Checkout Failed"};
+    }
+
+    mutate();
+    return {ok:true,order:data.order};
+  }
+
   return {
     cart,
     items,
@@ -59,5 +72,6 @@ export function useCart() {
     addToCart,
     updateQuantity,
     removeItem,
+    checkout,
   };
 }

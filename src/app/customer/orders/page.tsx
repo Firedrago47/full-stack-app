@@ -1,109 +1,121 @@
-// app/dashboard/customer/orders/page.tsx
-export const dynamic = "force-dynamic";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import ProtectedLayout from "@/components/ProtectedLayout";
 import DashboardTopbar from "../components/DashboardTopbar";
-
-const mockOrders = [
-  {
-    id: "ORD12345",
-    shop: "FreshMart Store",
-    image: "/images/shop-placeholder.jpg",
-    status: "Delivered",
-    date: "Today • 3:15 PM",
-    items: "Milk, Vegetables, Snacks",
-    amount: "₹420",
-  },
-  {
-    id: "ORD12346",
-    shop: "Tasty Kitchen",
-    image: "/images/food-placeholder.jpg",
-    status: "On the way",
-    date: "Today • 12:50 PM",
-    items: "Biryani, Coke",
-    amount: "₹299",
-  },
-  {
-    id: "ORD12347",
-    shop: "Quick Ride Taxi",
-    image: "/images/taxi-banner.jpg",
-    status: "Completed",
-    date: "Yesterday • 9:10 PM",
-    items: "Ride to Main Street",
-    amount: "₹180",
-  },
-];
+import { useOrders, cancelOrder } from "@/hooks/use-orders";
+import { OrderStatus } from "@prisma/client";
+import { useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CustomerOrdersPage() {
+  const { orders, isLoading, refresh } = useOrders();
+  const [canceling, setCanceling] = useState<string | null>(null);
+
+  const handleCancel = async (orderId: string) => {
+    setCanceling(orderId);
+    await cancelOrder(orderId);
+    await refresh(); // reload orders
+    setCanceling(null);
+  };
+
   return (
-    <ProtectedLayout allowedRoles={["CUSTOMER"]}>
       <div>
         <DashboardTopbar />
+
         <div className="flex-col flex-1 max-w-4xl mx-auto p-6 space-y-6">
           <h1 className="text-2xl font-bold">My Orders</h1>
           <p className="text-sm text-muted-foreground">
             Track your food, grocery and ride orders here.
           </p>
 
+          {/* Loading Skeleton */}
+          {isLoading && (
+            <div className="space-y-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-white border rounded-xl p-4 flex gap-4">
+                  <Skeleton className="h-24 w-24 rounded-lg" />
+                  <div className="flex-1 space-y-3">
+                    <Skeleton className="h-4 w-1/3" />
+                    <Skeleton className="h-3 w-2/3" />
+                    <Skeleton className="h-3 w-1/2" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {!isLoading && orders.length === 0 && (
+            <p className="text-center text-muted-foreground">No orders yet.</p>
+          )}
+
           <div className="space-y-4">
-            {mockOrders.map((order) => (
-              <Link
+            {orders.map((order) => (
+              <div
                 key={order.id}
-                href={`/dashboard/customer/orders/${order.id}`}
                 className="bg-white border rounded-xl p-4 flex gap-4 hover:shadow-md transition"
               >
-                {/* Thumbnail */}
-                <div className="relative w-24 h-24 rounded-lg overflow-hidden">
-                  <Image
-                    src={order.image}
-                    alt={order.shop}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
 
-                {/* Order Details */}
+                {/* Details */}
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-base">{order.shop}</h3>
+                    <h3 className="font-semibold text-base">
+                      {order.shop?.name ?? "Shop"}
+                    </h3>
                     <span className="font-semibold text-sm">
-                      {order.amount}
+                      ₹{order.totalCents / 100}
                     </span>
                   </div>
 
                   <Badge
+                    className="mt-1 capitalize"
                     variant={
-                      order.status === "Delivered" ? "default" : "secondary"
+                      order.status === OrderStatus.DELIVERED
+                        ? "default"
+                        : order.status === OrderStatus.CREATED
+                        ? "secondary"
+                        : "outline"
                     }
-                    className="mt-1"
                   >
-                    {order.status}
+                    {order.status.toLowerCase()}
                   </Badge>
 
-                  <p className="text-sm text-muted-foreground mt-2">
-                    {order.items}
+                  <p className="text-sm text-muted-foreground mt-2 line-clamp-1">
+                    {order.items.map((i) => i.item.name).join(", ")}
                   </p>
 
                   <p className="text-xs text-muted-foreground mt-1">
-                    {order.date}
+                    {new Date(order.createdAt).toLocaleString()}
                   </p>
+
+                  {/* Cancel Button */}
+                  {order.status === OrderStatus.CREATED && (
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      className="mt-3"
+                      onClick={() => handleCancel(order.id)}
+                      disabled={canceling === order.id}
+                    >
+                      {canceling === order.id ? "Cancelling..." : "Cancel Order"}
+                    </Button>
+                  )}
                 </div>
 
                 {/* View Button */}
-                <div className="flex items-center">
-                  <Button variant="outline" size="sm">
-                    View
-                  </Button>
+                <div className="">
+                  <Link href={`/customer/orders/${order.id}`}>
+                    <Button variant="outline" size="sm">
+                      View
+                    </Button>
+                  </Link>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
       </div>
-    </ProtectedLayout>
   );
 }

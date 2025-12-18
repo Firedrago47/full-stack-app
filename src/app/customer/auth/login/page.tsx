@@ -39,8 +39,7 @@ export default function CustomerLoginPage() {
         setLoading(false);
         return;
       }
-
-      // Must be customer
+      
       if (json.user?.role !== "CUSTOMER") {
         setServerError("This login is only for customers.");
         setLoading(false);

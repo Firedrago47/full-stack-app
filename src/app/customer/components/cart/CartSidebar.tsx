@@ -15,7 +15,7 @@ interface CartSidebarProps {
 }
 
 export default function CartSidebar({ open, onOpenChange }: CartSidebarProps) {
-  const { items, updateQuantity, removeItem, cart } = useCart();
+  const { items, updateQuantity, removeItem, cart,checkout } = useCart();
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
@@ -90,7 +90,7 @@ export default function CartSidebar({ open, onOpenChange }: CartSidebarProps) {
         </div>
 
         <div className="p-4">
-          <Button className="w-full">Checkout</Button>
+          <Button className="w-full" onClick={() => checkout()}>Checkout</Button>
         </div>
       </DrawerContent>
     </Drawer>
