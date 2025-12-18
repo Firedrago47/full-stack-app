@@ -18,7 +18,7 @@ export default function ItemList({
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4">
         {Array.from({ length: 10 }).map((_, i) => (
           <Card className="flex flex-col rounded-xl overflow-hidden border shadow-sm" key={i}>
             <Skeleton className="h-44 w-full" />
