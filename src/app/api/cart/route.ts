@@ -48,7 +48,6 @@ export async function POST(req: Request) {
   if (!itemId || quantity < 1)
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
 
-  // 1️⃣ Fetch item (read-only)
   const item = await prisma.item.findUnique({
     where: { id: itemId },
     select: { id: true, shopId: true, priceCents: true },
@@ -57,7 +56,6 @@ export async function POST(req: Request) {
   if (!item)
     return NextResponse.json({ error: "Item not found" }, { status: 404 });
 
-  // 2️⃣ Get or create cart (NO transaction)
   let cart = await prisma.order.findFirst({
     where: { customerId: user.id, status: OrderStatus.CART },
   });
@@ -74,7 +72,6 @@ export async function POST(req: Request) {
     });
   }
 
-  // 3️⃣ Atomic upsert (uses @@unique constraint)
   await prisma.orderItem.upsert({
     where: {
       orderId_itemId: {
@@ -93,7 +90,6 @@ export async function POST(req: Request) {
     },
   });
 
-  // 4️⃣ Recalculate total (simple, fast)
   const items = await prisma.orderItem.findMany({
     where: { orderId: cart.id },
     select: { quantity: true, unitPriceCents: true },

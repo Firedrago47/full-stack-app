@@ -9,6 +9,7 @@ import { useOrders, cancelOrder } from "@/hooks/use-orders";
 import { OrderStatus } from "@prisma/client";
 import { useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ArrowRight } from "lucide-react";
 
 export default function CustomerOrdersPage() {
   const { orders, isLoading, refresh } = useOrders();
@@ -107,8 +108,8 @@ export default function CustomerOrdersPage() {
                 {/* View Button */}
                 <div className="">
                   <Link href={`/customer/orders/${order.id}`}>
-                    <Button variant="outline" size="sm">
-                      View
+                    <Button variant="outline" className="cursor-pointer" size="sm">
+                      <ArrowRight/>
                     </Button>
                   </Link>
                 </div>

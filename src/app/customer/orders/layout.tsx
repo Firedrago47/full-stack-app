@@ -8,6 +8,10 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>    <ProtectedLayout allowedRoles={["CUSTOMER"]}>
-  {children}</ProtectedLayout></>;
+  return (
+    <>
+      {" "}
+      <ProtectedLayout allowedRoles={["CUSTOMER"]}>{children}</ProtectedLayout>
+    </>
+  );
 }

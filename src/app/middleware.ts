@@ -29,7 +29,7 @@ export function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    const rolePath = url.split("/")[2]; // customer | driver | shop
+    const rolePath = url.split("/")[2]; 
     if (payload.role.toLowerCase() !== rolePath) {
       return NextResponse.redirect(
         new URL(`/dashboard/${payload.role.toLowerCase()}`, req.url)
