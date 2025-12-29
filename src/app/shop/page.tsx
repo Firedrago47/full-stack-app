@@ -9,7 +9,7 @@ export default function ShopLandingPage() {
     <div className="min-h-screen bg-gradient-to-b from-white to-slate-50">
 
       {/* -------------------- HERO -------------------- */}
-      <section className="px-6 md:px-16 pt-24 pb-16 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <section className="min-h-screen px-6 md:px-16 pt-24 pb-16 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
         {/* TEXT */}
         <div>
