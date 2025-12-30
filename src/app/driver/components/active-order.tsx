@@ -10,11 +10,14 @@ interface ActiveRideProps {
     id: string;
     status: RideStatus;
     pickup: {
-      name: string;
       address: string;
+      lat: number;
+      lng: number;
     };
     drop: {
-      address: string;
+      address: string | null;
+      lat: number | null;
+      lng: number | null;
     };
   };
   onAccept: () => void;
@@ -54,10 +57,7 @@ export default function ActiveRide({
         </div>
 
         <Badge
-          className={cn(
-            "text-xs font-medium",
-            STATUS_STYLES[ride.status]
-          )}
+          className={cn("text-xs font-medium", STATUS_STYLES[ride.status])}
         >
           {STATUS_LABELS[ride.status]}
         </Badge>
@@ -68,22 +68,19 @@ export default function ActiveRide({
         {/* Pickup */}
         <div>
           <p className="text-sm font-semibold">Pickup</p>
-          <p className="text-sm">{ride.pickup.name}</p>
+          <p className="text-sm">{ride.pickup.address}</p>
           <p className="text-xs text-muted-foreground">
-            {ride.pickup.address}
+            Lat: {ride.pickup.lat}, Lng: {ride.pickup.lng}
           </p>
         </div>
 
-        {/* Visual Divider */}
-        <div className="flex items-center gap-2">
-          <div className="h-6 w-px bg-border ml-1" />
-        </div>
+        <div className="h-6 border-l border-dashed ml-1" />
 
         {/* Drop */}
         <div>
           <p className="text-sm font-semibold">Drop</p>
-          <p className="text-xs text-muted-foreground">
-            {ride.drop.address}
+          <p className="text-sm">
+            {ride.drop.address ?? "Drop location not set"}
           </p>
         </div>
       </div>
@@ -91,27 +88,20 @@ export default function ActiveRide({
       {/* Actions */}
       <div className="p-4 border-t">
         {ride.status === RideStatus.REQUESTED && (
-          <Button
-            className="w-full py-6 text-base"
-            onClick={onAccept}
-          >
+          <Button className="w-full py-6 text-base" onClick={onAccept}>
             Accept Ride
           </Button>
         )}
 
         {ride.status === RideStatus.ACCEPTED && (
-          <Button
-            className="w-full py-6 text-base"
-            onClick={onStart}
-          >
+          <Button className="w-full py-6 text-base" onClick={onStart}>
             Start Ride
           </Button>
         )}
 
         {ride.status === RideStatus.STARTED && (
           <Button
-            className="w-full py-6 text-base"
-            variant="success"
+            className="w-full py-6 text-base bg-green-600 hover:bg-green-700 text-white"
             onClick={onComplete}
           >
             Complete Ride
