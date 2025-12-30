@@ -9,6 +9,7 @@ import {
   startRide,
   completeRide,
 } from "./action";
+import DashboardShell from "../components/DashboardShell";
 
 
 export default async function DriverDashboardPage() {
@@ -17,20 +18,22 @@ export default async function DriverDashboardPage() {
   // No active ride → show empty state
   if (!data.activeRide) {
     return (
-      <div className="p-4">
+      <DashboardShell>
+      
         <StatusBar
           isAvailable={data.driver.isAvailable}
           todayEarningsCents={data.driver.todayEarningsCents}
         />
         <EmptyState />
-      </div>
+      </DashboardShell>
     );
   }
 
   const { driver, activeRide } = data;
 
   return (
-    <div className="space-y-4 p-4">
+    <DashboardShell> 
+
       {/* Driver status + earnings */}
       <StatusBar
         isAvailable={driver.isAvailable}
@@ -56,6 +59,6 @@ export default async function DriverDashboardPage() {
 
       {/* Map placeholder */}
       <DriverMap />
-    </div>
+  </DashboardShell>
   );
 }
