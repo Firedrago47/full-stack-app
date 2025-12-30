@@ -1,11 +1,18 @@
-// app/dashboard/layout.tsx
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-export default function DashboardLayout({
+
+import ProtectedLayout from "@/components/ProtectedLayout";
+
+
+export default async function DriverLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <ProtectedLayout allowedRoles={["DRIVER"]}>{children}</ProtectedLayout>
+    </>
+  );
 }

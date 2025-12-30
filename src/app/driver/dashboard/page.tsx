@@ -1,41 +1,61 @@
-import { getCurrentUser } from "@/lib/auth/current-user";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import ProtectedLayout from "@/components/ProtectedLayout";
-import DashboardShell from "@/components/dashboard/DashboardShell";
+import StatusBar from "../components/status-bar";
+import DriverMap from "../components/driver-map";
+import EmptyState from "../components/empty-state";
+import { getDriverDashboardData } from "@/lib/driver/get-dashboard-data";
+import ActiveRide from "../components/active-order";
 
-export default async function DriverDashboard() {
-  const user = await getCurrentUser();
-  if (!user) return null;
+import {
+  acceptRide,
+  startRide,
+  completeRide,
+} from "./action";
+
+
+export default async function DriverDashboardPage() {
+  const data = await getDriverDashboardData();
+
+  // No active ride → show empty state
+  if (!data.activeRide) {
+    return (
+      <div className="p-4">
+        <StatusBar
+          isAvailable={data.driver.isAvailable}
+          todayEarningsCents={data.driver.todayEarningsCents}
+        />
+        <EmptyState />
+      </div>
+    );
+  }
+
+  const { driver, activeRide } = data;
 
   return (
-    <ProtectedLayout allowedRoles={["DRIVER"]}>
-      <DashboardShell>
-        <div className="px-6 py-10 max-w-4xl mx-auto space-y-6">
-          <h1 className="text-3xl font-semibold">Driver Dashboard</h1>
+    <div className="space-y-4 p-4">
+      {/* Driver status + earnings */}
+      <StatusBar
+        isAvailable={driver.isAvailable}
+        todayEarningsCents={driver.todayEarningsCents}
+      />
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Your Status</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p>
-                Status: <strong>Available</strong>
-              </p>
-              <Button>Toggle Availability</Button>
-            </CardContent>
-          </Card>
+      {/* Active ride card */}
+      <ActiveRide
+        ride={activeRide}
+        onAccept={async () => {
+          "use server";
+          await acceptRide(activeRide.id);
+        }}
+        onStart={async () => {
+          "use server";
+          await startRide(activeRide.id);
+        }}
+        onComplete={async () => {
+          "use server";
+          await completeRide(activeRide.id);
+        }}
+      />
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Incoming Orders</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>No orders assigned</p>
-            </CardContent>
-          </Card>
-        </div>
-      </DashboardShell>
-    </ProtectedLayout>
+      {/* Map placeholder */}
+      <DriverMap />
+    </div>
   );
 }
