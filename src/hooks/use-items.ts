@@ -7,17 +7,31 @@ interface ItemsResponse {
   items: DashboardItem[];
 }
 
-const fetcher = (url: string) => fetch(url).then(res => res.json());
+const fetcher = async (url: string): Promise<ItemsResponse> => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed to fetch items");
+  return res.json();
+};
 
-export function useItems(category: DashboardCategory) {
+/**
+ * useItems
+ *
+ * - Always callable (no conditional hooks)
+ * - When category is null → NO FETCH (Taxi case)
+ */
+export function useItems(
+  category: DashboardCategory | null
+) {
+  const shouldFetch = category !== null;
+
   const { data, error, isLoading } = useSWR<ItemsResponse>(
-    `/api/items?category=${category}`,
+    shouldFetch ? `/api/items?category=${category}` : null,
     fetcher
   );
 
   return {
     items: data?.items ?? [],
-    isLoading,
+    isLoading: shouldFetch ? isLoading : false,
     error,
   };
 }
