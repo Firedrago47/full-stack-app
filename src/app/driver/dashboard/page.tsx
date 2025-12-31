@@ -19,7 +19,6 @@ export default async function DriverDashboardPage() {
   if (!data.activeRide) {
     return (
       <DashboardShell>
-      
         <StatusBar
           isAvailable={data.driver.isAvailable}
           todayEarningsCents={data.driver.todayEarningsCents}

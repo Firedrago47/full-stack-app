@@ -122,7 +122,7 @@ export default function ShopRegisterPage() {
                 Sign Up
               </Button>
 
-              <p className="text-center text-sm text-muted-foreground">
+              <p className="mb-2 text-center text-sm text-muted-foreground">
                 Already have an account?{" "}
                 <a href="/shop/auth/login" className="text-blue-600 underline">
                   Login

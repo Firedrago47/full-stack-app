@@ -93,7 +93,7 @@ export default function ShopLoginPage() {
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-md">
           <AuthCard title="Login">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="p-2 space-y-4">
               <div>
                 <Label className="mb-2 font-bold">Email or Phone</Label>
                 <Input
@@ -124,7 +124,7 @@ export default function ShopLoginPage() {
                 {loading ? "Signing in..." : "Login"}
               </Button>
 
-              <p className="text-center text-sm text-muted-foreground">
+              <p className="mb-2 text-center text-sm text-muted-foreground">
                 Don’t have an account?{" "}
                 <a
                   href="/shop/auth/register"

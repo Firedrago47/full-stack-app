@@ -117,7 +117,7 @@ export default function DriverRegisterPage() {
                 Sign Up
               </Button>
 
-              <p className="text-center text-sm text-muted-foreground">
+              <p className="mb-2 text-center text-sm text-muted-foreground">
                 Already have an account?{" "}
                 <a
                   href="/driver/auth/login"

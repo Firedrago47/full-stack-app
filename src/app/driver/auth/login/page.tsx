@@ -125,7 +125,7 @@ export default function DriverLoginPage() {
                 {loading ? "Signing in..." : "Login"}
               </Button>
 
-              <p className="text-center text-sm text-muted-foreground">
+              <p className="mb-2 text-center text-sm text-muted-foreground">
                 Don’t have an account?{" "}
                 <a
                   href="/driver/auth/register"
