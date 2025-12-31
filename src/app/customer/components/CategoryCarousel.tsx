@@ -11,7 +11,7 @@ function isDashboardCategory(value: string | null): value is DashboardCategory {
 const categories: { id: DashboardCategory; title: string; image: string }[] = [
   { id: "food", title: "Food Delivery", image: "/images/cat-food.png" },
   { id: "groceries", title: "Groceries", image: "/images/cat-groceries.png" },
-  { id: "taxi", title: "Taxis & Rides", image: "/images/cat-taxi.png" },
+  { id: "taxi", title: "Taxis & Rides", image: "/images/vehicle-car.png" },
 ];
 
 export default function CategoryCarousel() {

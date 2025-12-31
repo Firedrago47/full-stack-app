@@ -11,7 +11,7 @@ const VEHICLES: {
   image: string;
 }[] = [
   { type: "BIKE", title: "Bike", image: "/images/vehicle-bike.png" },
-  { type: "AUTO", title: "Auto", image: "/images/vehicle-auto.png" },
+  { type: "AUTO", title: "Auto", image: "/images/cat-taxi.png" },
   { type: "CAR", title: "Car", image: "/images/vehicle-car.png" },
 ];
 
@@ -40,11 +40,11 @@ export default function TaxiVehicleSelector({ selected, onSelect }: Props) {
             <Image
               src={v.image}
               alt={v.title}
-              width={80}
-              height={80}
+              width={100}
+              height={100}
               className="object-contain"
             />
-            <p className="font-medium">{v.title}</p>
+            <p className="font-semibold">{v.title}</p>
           </button>
         );
       })}
