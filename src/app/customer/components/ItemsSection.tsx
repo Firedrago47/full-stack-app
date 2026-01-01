@@ -5,6 +5,7 @@ import { useItems } from "@/hooks/use-items";
 import ItemList from "./ItemList";
 import TaxiVehicleSelector from "./TaxiVehicleSelector";
 import { useState } from "react";
+import Filter from "./Filter";
 
 type Category = "food" | "groceries" | "taxi";
 type VehicleType = "BIKE" | "AUTO" | "CAR";
@@ -19,10 +20,8 @@ export default function ItemsSection() {
   const params = useSearchParams();
   const category = resolveCategory(params.get("category"));
 
-  // ✅ ALL hooks must be called BEFORE any return
   const [vehicle, setVehicle] = useState<VehicleType | undefined>(undefined);
 
-  // 🚨 Always call the hook — but make it a NO-OP for taxi
   const { items, isLoading } = useItems(
     category === "taxi" ? null : category
   );
@@ -46,5 +45,7 @@ export default function ItemsSection() {
   }
 
   /* ---------------- FOOD / GROCERY UI ---------------- */
-  return <ItemList items={items} isLoading={isLoading} />;
+  return (
+      <ItemList items={items} isLoading={isLoading} />
+);
 }
