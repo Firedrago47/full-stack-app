@@ -6,6 +6,7 @@ import ItemList from "./ItemList";
 import TaxiVehicleSelector from "./TaxiVehicleSelector";
 import { useState } from "react";
 import Filter from "./Filter";
+import TaxiRidePanel from "./TaxiRidePanel";
 
 type Category = "food" | "groceries" | "taxi";
 type VehicleType = "BIKE" | "AUTO" | "CAR";
@@ -30,10 +31,7 @@ export default function ItemsSection() {
   if (category === "taxi") {
     return (
       <div className="space-y-6">
-        <TaxiVehicleSelector
-          selected={vehicle}
-          onSelect={setVehicle}
-        />
+        <TaxiRidePanel/>
 
         {vehicle && (
           <p className="text-sm text-muted-foreground">

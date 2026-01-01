@@ -4,6 +4,7 @@ import CategoryCarousel from "../components/CategoryCarousel";
 
 import ItemsSection from "../components/ItemsSection";
 import Filter from "../components/Filter";
+import LeftPanel from "../components/LeftPanel";
 
 
 
@@ -15,7 +16,7 @@ export default async function CustomerDashboardPage(){
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             
-            <Filter/>
+            <LeftPanel/>
             {/* Items */}
             <section className="lg:col-span-3 space-y-4">
               <ItemsSection />
