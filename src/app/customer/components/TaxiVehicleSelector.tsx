@@ -22,7 +22,7 @@ interface Props {
 
 export default function TaxiVehicleSelector({ selected, onSelect }: Props) {
   return (
-    <div className="grid grid-rows-5 gap-4">
+    <div className="ml-6 grid grid-rows-5 gap-4">
       {VEHICLES.map((v) => {
         const active = selected === v.type;
 
