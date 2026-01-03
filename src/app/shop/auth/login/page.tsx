@@ -98,7 +98,6 @@ export default function ShopLoginPage() {
                 <Label className="mb-2 font-bold">Email or Phone</Label>
                 <Input
                   type="text"
-                  placeholder="Phone or Email"
                   {...register("identifier")}
                 />
               </div>
@@ -107,7 +106,6 @@ export default function ShopLoginPage() {
                 <Label className="mb-2 font-bold">Password</Label>
                 <Input
                   type="password"
-                  placeholder="•••••••••"
                   {...register("password")}
                 />
               </div>

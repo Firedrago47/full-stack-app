@@ -88,32 +88,32 @@ export default function ShopRegisterPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <Label className="font-semibold mb-2">Name</Label>
-                <Input placeholder="Name"{...form.register("name")} />
+                <Input {...form.register("name")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Phone</Label>
-                <Input type="tel" placeholder="+91 | " {...form.register("phone")} />
+                <Input {...form.register("phone")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Email</Label>
-                <Input type="email" placeholder="abc@gmail"{...form.register("email")} />
+                <Input type="email" {...form.register("email")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Password</Label>
-                <Input type="password" placeholder="••••••"{...form.register("password")} />
+                <Input type="password" {...form.register("password")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Shop Name</Label>
-                <Input placeholder="abc shop"{...form.register("shopName")} />
+                <Input {...form.register("shopName")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Shop Address</Label>
-                <Input placeholder="1/2c xyz,in" {...form.register("shopAddress")} />
+                <Input {...form.register("shopAddress")} />
               </div>
 
               {serverError && <p className="text-red-500">{serverError}</p>}

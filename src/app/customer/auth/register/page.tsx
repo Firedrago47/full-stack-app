@@ -82,22 +82,22 @@ export default function CustomerRegisterPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-1">
               <div>
                 <Label className="mb-2 font-semibold ">Name</Label>
-                <Input {...form.register("name")} placeholder="Name"/>
+                <Input {...form.register("name")} />
               </div>
 
               <div>
                 <Label className="mb-2 font-semibold">Phone</Label>
-                <Input {...form.register("phone")} placeholder="9876543210" />
+                <Input {...form.register("phone")} />
               </div>
 
               <div>
                 <Label className="mb-2 font-semibold ">Email</Label>
-                <Input type="email" {...form.register("email")} placeholder="example@gmail.com"/>
+                <Input type="email" {...form.register("email")} />
               </div>
 
               <div>
                 <Label className="mb-2 font-semibold ">Password</Label>
-                <Input type="password" {...form.register("password")} placeholder="••••••••"/>
+                <Input type="password" {...form.register("password")}/>
               </div>
 
               {serverError && <p className="text-red-500">{serverError}</p>}
@@ -106,7 +106,7 @@ export default function CustomerRegisterPage() {
                 Sign Up
               </Button>
 
-              <p className="text-center text-sm text-muted-foreground">
+              <p className="mb-2 text-center text-sm text-muted-foreground">
                 Already have an account?{" "}
                 <a
                   href="/customer/auth/login"

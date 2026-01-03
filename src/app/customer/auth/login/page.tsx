@@ -97,7 +97,6 @@ export default function CustomerLoginPage() {
                 <Label className="mb-2 font-bold">Email or Phone</Label>
                 <Input
                   type="text"
-                  placeholder="example@gmail.com / 9876543210"
                   {...register("identifier")}
                 />
               </div>
@@ -106,7 +105,6 @@ export default function CustomerLoginPage() {
                 <Label className="mb-2 font-bold">Password</Label>
                 <Input
                   type="password"
-                  placeholder="••••••••"
                   {...register("password")}
                 />
               </div>
@@ -123,7 +121,7 @@ export default function CustomerLoginPage() {
                 {loading ? "Signing in..." : "Login"}
               </Button>
 
-              <p className="text-center text-sm text-muted-foreground">
+              <p className="mb-2 text-center text-sm text-muted-foreground">
                 Don’t have an account?{" "}
                 <a
                   href="/customer/auth/register"
