@@ -13,7 +13,13 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json());
 export function useCart() {
   const { data, mutate, isLoading, error } = useSWR<{ cart: Cart | null }>(
     "/api/cart",
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
+      dedupingInterval: 60_000,
+    }
   );
 
   const cart = data?.cart ?? null;

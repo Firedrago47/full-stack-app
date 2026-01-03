@@ -21,7 +21,7 @@ export default function TaxiMap({ pickup, drop }: TaxiMapProps) {
     <MapContainer
       center={[center.lat, center.lng]}
       zoom={13}
-      className="h-80 w-full rounded-lg"
+      className="h-80 w-full rounded-xl"
     >
       <TileLayer
         attribution='&copy; OpenStreetMap contributors'

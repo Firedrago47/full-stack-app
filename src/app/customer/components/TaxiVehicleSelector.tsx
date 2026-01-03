@@ -10,9 +10,9 @@ const VEHICLES: {
   title: string;
   image: string;
 }[] = [
-  { type: "BIKE", title: "Two-Wheelers/Bike", image: "/images/vehicle-bike.png" },
-  { type: "AUTO", title: "Three-Wheelers/Auto", image: "/images/cat-taxi.png" },
-  { type: "CAR", title: "Four-Wheelers/Car", image: "/images/vehicle-car.png" },
+  { type: "BIKE", title: "Two-Wheelers | Bike", image: "/images/vehicle-bike.png" },
+  { type: "AUTO", title: "Three-Wheelers | Auto", image: "/images/cat-taxi.png" },
+  { type: "CAR", title: "Four-Wheelers | Car", image: "/images/vehicle-car.png" },
 ];
 
 interface Props {
@@ -44,7 +44,7 @@ export default function TaxiVehicleSelector({ selected, onSelect }: Props) {
               height={50}
               className="ml-4 object-contain"
             />
-            <p className="flex-1 mr-6 font-semibold text-sm">{v.title}</p>
+            <p className="flex-1 mr-6 text-sm">{v.title}</p>
           </button>
         );
       })}
