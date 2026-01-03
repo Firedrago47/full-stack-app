@@ -31,7 +31,7 @@ export default function TaxiVehicleSelector({ selected, onSelect }: Props) {
             key={v.type}
             onClick={() => onSelect(v.type)}
             className={cn(
-              "h-20 rounded-xl border p-4 flex flex-row items-center gap-4 transition",
+              "h-20 rounded-xl bg-white border p-4 flex flex-row items-center gap-4 transition",
               active
                 ? "border-primary bg-primary/10 shadow-md"
                 : "border-gray-200 hover:shadow-sm"
