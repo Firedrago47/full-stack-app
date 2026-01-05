@@ -3,16 +3,16 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-type VehicleType = "BIKE" | "AUTO" | "CAR";
+type VehicleType = "BIKES" | "AUTOS" | "CARS";
 
 const VEHICLES: {
   type: VehicleType;
   title: string;
   image: string;
 }[] = [
-  { type: "BIKE", title: "Two-Wheelers | Bike", image: "/images/vehicle-bike.png" },
-  { type: "AUTO", title: "Three-Wheelers | Auto", image: "/images/cat-taxi.png" },
-  { type: "CAR", title: "Four-Wheelers | Car", image: "/images/vehicle-car.png" },
+  { type: "BIKES", title: "Two-Wheelers | Bike", image: "/images/vehicle-bike.png" },
+  { type: "AUTOS", title: "Three-Wheelers | Auto", image: "/images/cat-taxi.png" },
+  { type: "CARS", title: "Four-Wheelers | Car", image: "/images/vehicle-car.png" },
 ];
 
 interface Props {

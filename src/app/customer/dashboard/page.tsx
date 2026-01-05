@@ -1,10 +1,7 @@
 
 import DashboardShell from "../components/DashboardShell";
 import CategoryCarousel from "../components/CategoryCarousel";
-
-import ItemsSection from "../components/ItemsSection";
-import Filter from "../components/Filter";
-import LeftPanel from "../components/LeftPanel";
+import DashboardContent from "../components/DashboardContent";
 
 
 
@@ -13,15 +10,7 @@ export default async function CustomerDashboardPage(){
       <DashboardShell>
         <div className="space-y-6">
           <CategoryCarousel />
-
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            
-            <LeftPanel/>
-            {/* Items */}
-            <section className="lg:col-span-3 space-y-4">
-              <ItemsSection />
-            </section>
-          </div>
+          <DashboardContent/>
         </div>
       </DashboardShell>
   );

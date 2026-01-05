@@ -2,62 +2,64 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import TaxiMap from "./TaxiMap";
+import LocationAutocomplete from "./LocationAutocomplete";
 
-export default function TaxiRidePanel() {
-  const [pickup, setPickup] = useState("");
-  const [drop, setDrop] = useState("");
+type VehicleType = "BIKES" | "AUTOS" | "CARS";
+interface Props {
+  vehicle?: VehicleType;
+}
 
-  // TEMP: static coordinates (replace with geocoding later)
-  const pickupCoords = pickup
-    ? { lat: 12.9716, lng: 77.5946 }
-    : undefined;
+type Location = {
+  address: string;
+  lat: number;
+  lng: number;
+};
 
-  const dropCoords = drop
-    ? { lat: 12.9352, lng: 77.6245 }
-    : undefined;
+export default function TaxiRidePanel({ vehicle }: Props) {
+  const [pickup, setPickup] = useState<Location | null>(null);
+  const [drop, setDrop] = useState<Location | null>(null);
 
   return (
     <aside className="lg:col-span-1 mx-6 space-y-4">
+      <div className="bg-white border rounded-xl shadow-sm p-4 space-y-4">
+        <h3 className="text-lg font-semibold">
+          {vehicle ? `Book a ${vehicle}` : "Select a vehicle"}
+        </h3>
+        <div className="flex flex-row">
+          <TaxiMap pickup={pickup ?? undefined} drop={drop ?? undefined} />
+          <div className="flex flex-col p-4">
+            <LocationAutocomplete
+              label="Pickup location"
+              value={pickup?.address ?? ""}
+              onSelect={(place) => {
+                setPickup(place);
+              }}
+            />
 
-      <div className="flex flex-row p-4 bg-white border rounded-xl shadow-sm space-y-4">
-      <div className="flex flex-col w-full">
-        <h3 className="mb-2 text-lg font-semibold">Book a Ride</h3>
+            <LocationAutocomplete
+              label="Drop location"
+              value={drop?.address ?? ""}
+              onSelect={(place) => {
+                setDrop(place);
+              }}
+            />
+            
+          {!vehicle ? (
+            <p className="p-4 text-sm text-muted-foreground">
+              Select a vehicle to continue
+            </p> ) : (
+            <Button
+              className="mt-4 w-full"
+              disabled={!vehicle || !pickup || !drop}
+            >
+              Find {vehicle ?? "Rides"}
+            </Button>
+          )}
 
-        {/* REAL MAP */}
-        <TaxiMap pickup={pickupCoords} drop={dropCoords} />
+
+          </div>
         </div>
-
-      <div className="flex flex-col p-4">
-
-        {/* Pickup */}
-        <div className="mt-2 space-y-2">
-          <label className="text-sm font-medium">Pickup location</label>
-          <Input
-            placeholder="Enter pickup location"
-            value={pickup}
-            onChange={(e) => setPickup(e.target.value)}
-          />
-        </div>
-
-        {/* Drop */}
-        <div className="mt-2 space-y-2">
-          <label className="text-sm font-medium">Drop location</label>
-          <Input
-            placeholder="Enter drop location"
-            value={drop}
-            onChange={(e) => setDrop(e.target.value)}
-          />
-        </div>
-
-        <Button
-          className="mt-4"
-          disabled={!pickup || !drop}
-        >
-          Find Rides
-        </Button>
-      </div>
       </div>
     </aside>
   );

@@ -2,12 +2,11 @@
 
 import { useSearchParams } from "next/navigation";
 import Filter from "./Filter";
-import TaxiRidePanel from "./TaxiRidePanel";
 import TaxiVehicleSelector from "./TaxiVehicleSelector";
 import { useState } from "react";
 
 type Category = "food" | "groceries" | "taxi";
-type VehicleType = "BIKE" | "AUTO" | "CAR";
+type VehicleType = "BIKES" | "AUTOS" | "CARS";
 
 
 function resolveCategory(value: string | null): Category {
