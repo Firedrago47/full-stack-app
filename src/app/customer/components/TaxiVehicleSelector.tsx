@@ -22,7 +22,7 @@ interface Props {
 
 export default function TaxiVehicleSelector({ selected, onSelect }: Props) {
   return (
-    <div className="ml-6 grid grid-rows-5 gap-4">
+    <div className="ml-6 flex flex-col gap-4">
       {VEHICLES.map((v) => {
         const active = selected === v.type;
 
@@ -31,7 +31,7 @@ export default function TaxiVehicleSelector({ selected, onSelect }: Props) {
             key={v.type}
             onClick={() => onSelect(v.type)}
             className={cn(
-              "h-20 rounded-xl bg-white border p-4 flex flex-row items-center gap-4 transition",
+              "h-20 rounded-xl bg-white border p-4 flex flex-row items-center gap-4 shadow-sm transition",
               active
                 ? "border-primary bg-primary/10 shadow-md"
                 : "border-gray-200 hover:shadow-sm"
@@ -40,8 +40,8 @@ export default function TaxiVehicleSelector({ selected, onSelect }: Props) {
             <Image
               src={v.image}
               alt={v.title}
-              width={50}
-              height={50}
+              width={55}
+              height={55}
               className="ml-4 object-contain"
             />
             <p className="flex-1 mr-6 text-sm">{v.title}</p>
