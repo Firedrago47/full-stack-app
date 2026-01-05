@@ -10,7 +10,7 @@ export default function StatusBar({
   todayEarningsCents,
 }: StatusBarProps) {
   return (
-    <div className="flex items-center justify-between p-4 rounded-xl border bg-white shadow-sm">
+    <div className="flex items-center justify-between p-4 mx-4 rounded-xl border bg-white shadow-sm">
       <div>
         <p className="text-sm text-muted-foreground">Today’s Earnings</p>
         <p className="text-xl font-semibold">

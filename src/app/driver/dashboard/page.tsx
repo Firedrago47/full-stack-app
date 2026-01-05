@@ -1,5 +1,5 @@
 import StatusBar from "../components/status-bar";
-import DriverMap from "../components/driver-map";
+import DriverMap from "../components/DriverMap";
 import EmptyState from "../components/empty-state";
 import { getDriverDashboardData } from "@/lib/driver/get-dashboard-data";
 import ActiveRide from "../components/active-order";
