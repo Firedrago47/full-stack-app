@@ -82,32 +82,32 @@ export default function DriverRegisterPage() {
           <AuthCard title="Driver Registration">
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <div>
-                <Label>Name</Label>
+                <Label className="font-semibold mb-2">Name</Label>
                 <Input {...form.register("name")} />
               </div>
 
               <div>
-                <Label>Phone</Label>
+                <Label className="font-semibold mb-2">Phone</Label>
                 <Input {...form.register("phone")} />
               </div>
 
               <div>
-                <Label>Email</Label>
+                <Label className="font-semibold mb-2">Email</Label>
                 <Input type="email" {...form.register("email")} />
               </div>
 
               <div>
-                <Label>Password</Label>
+                <Label className="font-semibold mb-2">Password</Label>
                 <Input type="password" {...form.register("password")} />
               </div>
 
               <div>
-                <Label>License Number</Label>
+                <Label className="font-semibold mb-2">License Number</Label>
                 <Input {...form.register("licenseNumber")} />
               </div>
 
               <div>
-                <Label>Vehicle Number</Label>
+                <Label className="font-semibold mb-2">Vehicle Number</Label>
                 <Input {...form.register("vehicleNumber")} />
               </div>
 
