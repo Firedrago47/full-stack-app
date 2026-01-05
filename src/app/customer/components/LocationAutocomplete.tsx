@@ -31,10 +31,11 @@ export default function LocationAutocomplete({
   }, [value]);
 
   return (
-    <div className="relative space-y-1">
-      <label className="text-sm font-medium">{label}</label>
+    <div className="relative space-y-4">
+      <label className=" text-sm font-medium">{label}</label>
 
       <Input
+        className="mt-1"
         value={input}
         placeholder={`Enter ${label.toLowerCase()}`}
         onChange={(e) => {

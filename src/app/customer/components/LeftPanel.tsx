@@ -2,7 +2,6 @@
 
 import { useSearchParams } from "next/navigation";
 import Filter from "./Filter";
-import TaxiVehicleSelector from "./TaxiVehicleSelector";
 import { useState } from "react";
 
 type Category = "food" | "groceries" | "taxi";
@@ -21,8 +20,7 @@ const [vehicle, setVehicle] = useState<VehicleType | undefined>(undefined);
   const category = resolveCategory(params.get("category"));
 
   if (category === "taxi") {
-    return <TaxiVehicleSelector selected={vehicle}
-          onSelect={setVehicle} />;
+    return null;
   }
 
   return <Filter />;
