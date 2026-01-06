@@ -37,7 +37,8 @@ export default async function DriverDashboardPage() {
       <StatusBar
         isAvailable={driver.isAvailable}
         todayEarningsCents={driver.todayEarningsCents}
-      />
+        />
+      <div className="flex flex-row">
 
       {/* Active ride card */}
       <ActiveRide
@@ -54,10 +55,12 @@ export default async function DriverDashboardPage() {
           "use server";
           await completeRide(activeRide.id);
         }}
-      />
+        />
 
       {/* Map placeholder */}
       <DriverMap />
+      
+        </div>
   </DashboardShell>
   );
 }
