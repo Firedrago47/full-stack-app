@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth/current-user";
-import { RideStatus } from "@prisma/client";
+import { RideStatus, Ride } from "@prisma/client";
 
 export type DriverDashboardData = {
   driver: {
@@ -8,7 +8,7 @@ export type DriverDashboardData = {
     isAvailable: boolean;
     todayEarningsCents: number;
   };
-  activeRide: null | {
+  activeRide: {
     id: string;
     status: RideStatus;
     pickup: {
@@ -21,14 +21,13 @@ export type DriverDashboardData = {
       lat: number | null;
       lng: number | null;
     };
-  };
+  } | null;
 };
 
 export async function getDriverDashboardData(): Promise<DriverDashboardData> {
   const user = await getCurrentUser();
   if (!user) throw new Error("Unauthorized");
 
-  // 1️⃣ Driver
   const driver = await prisma.driver.findUnique({
     where: { userId: user.id },
     select: {
@@ -37,42 +36,73 @@ export async function getDriverDashboardData(): Promise<DriverDashboardData> {
     },
   });
 
-  if (!driver) throw new Error("Forbidden") ;
+  if (!driver) throw new Error("Forbidden");
 
-  // 2️⃣ Active ride (direct from Ride table)
+  // 1️⃣ Active ride already assigned to this driver
   const activeRide = await prisma.ride.findFirst({
     where: {
       driverId: driver.id,
       status: {
-        in: [
-          RideStatus.REQUESTED,
-          RideStatus.ACCEPTED,
-          RideStatus.STARTED,
-        ],
+        in: [RideStatus.ACCEPTED, RideStatus.STARTED],
       },
     },
-    orderBy: {
-      createdAt: "asc",
-    },
-    select: {
-      id: true,
-      status: true,
-      pickupLat: true,
-      pickupLng: true,
-      pickupAddress: true,
-      dropLat: true,
-      dropLng: true,
-      dropAddress: true,
-    },
+    orderBy: { createdAt: "desc" },
   });
 
-  // 3️⃣ Today earnings (simple, correct)
+  if (activeRide) {
+    return {
+      driver: {
+        ...driver,
+        todayEarningsCents: await getTodayEarnings(driver.id),
+      },
+      activeRide: mapRide(activeRide),
+    };
+  }
+
+  // 2️⃣ Incoming customer request (unassigned)
+  const incomingRide = await prisma.ride.findFirst({
+    where: {
+      status: RideStatus.REQUESTED,
+      driverId: null,
+    },
+    orderBy: { createdAt: "asc" }, // FIFO
+  });
+
+  return {
+    driver: {
+      ...driver,
+      todayEarningsCents: await getTodayEarnings(driver.id),
+    },
+    activeRide: incomingRide ? mapRide(incomingRide) : null,
+  };
+}
+
+/* -------------------------------- helpers -------------------------------- */
+
+function mapRide(ride: Ride) {
+  return {
+    id: ride.id,
+    status: ride.status,
+    pickup: {
+      address: ride.pickupAddress ?? "Pickup location",
+      lat: ride.pickupLat,
+      lng: ride.pickupLng,
+    },
+    drop: {
+      address: ride.dropAddress,
+      lat: ride.dropLat,
+      lng: ride.dropLng,
+    },
+  };
+}
+
+async function getTodayEarnings(driverId: string): Promise<number> {
   const startOfDay = new Date();
   startOfDay.setHours(0, 0, 0, 0);
 
-  const todayEarnings = await prisma.ride.aggregate({
+  const result = await prisma.ride.aggregate({
     where: {
-      driverId: driver.id,
+      driverId,
       status: RideStatus.COMPLETED,
       completedAt: {
         gte: startOfDay,
@@ -83,27 +113,5 @@ export async function getDriverDashboardData(): Promise<DriverDashboardData> {
     },
   });
 
-  return {
-    driver: {
-      id: driver.id,
-      isAvailable: driver.isAvailable,
-      todayEarningsCents: todayEarnings._sum.fareCents ?? 0,
-    },
-    activeRide: activeRide
-      ? {
-          id: activeRide.id,
-          status: activeRide.status,
-          pickup: {
-            address: activeRide.pickupAddress ?? "Pickup location",
-            lat: activeRide.pickupLat,
-            lng: activeRide.pickupLng,
-          },
-          drop: {
-            address: activeRide.dropAddress,
-            lat: activeRide.dropLat,
-            lng: activeRide.dropLng,
-          },
-        }
-      : null,
-  };
+  return result._sum.fareCents ?? 0;
 }
