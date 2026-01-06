@@ -4,13 +4,8 @@ import EmptyState from "../components/empty-state";
 import { getDriverDashboardData } from "@/lib/driver/get-dashboard-data";
 import ActiveRide from "../components/active-order";
 
-import {
-  acceptRide,
-  startRide,
-  completeRide,
-} from "./action";
+import { acceptRide, startRide, completeRide } from "./action";
 import DashboardShell from "../components/DashboardShell";
-
 
 export default async function DriverDashboardPage() {
   const data = await getDriverDashboardData();
@@ -31,36 +26,34 @@ export default async function DriverDashboardPage() {
   const { driver, activeRide } = data;
 
   return (
-    <DashboardShell> 
-
+    <DashboardShell>
       {/* Driver status + earnings */}
       <StatusBar
         isAvailable={driver.isAvailable}
         todayEarningsCents={driver.todayEarningsCents}
+      />
+      <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Active ride card */}
+        <ActiveRide
+          ride={activeRide}
+          onAccept={async () => {
+            "use server";
+            await acceptRide(activeRide.id);
+          }}
+          onStart={async () => {
+            "use server";
+            await startRide(activeRide.id);
+          }}
+          onComplete={async () => {
+            "use server";
+            await completeRide(activeRide.id);
+          }}
         />
-      <div className="flex flex-row">
 
-      {/* Active ride card */}
-      <ActiveRide
-        ride={activeRide}
-        onAccept={async () => {
-          "use server";
-          await acceptRide(activeRide.id);
-        }}
-        onStart={async () => {
-          "use server";
-          await startRide(activeRide.id);
-        }}
-        onComplete={async () => {
-          "use server";
-          await completeRide(activeRide.id);
-        }}
-        />
-
-      {/* Map placeholder */}
-      <DriverMap />
-      
+        <div className="bg-white shadow-sm border rounded-xl p-2">
+          <DriverMap />
         </div>
-  </DashboardShell>
+      </div>
+    </DashboardShell>
   );
 }

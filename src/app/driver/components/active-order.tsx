@@ -64,7 +64,7 @@ export default function ActiveRide({
       </div>
 
       {/* Body */}
-      <div className="p-4 space-y-4">
+      <div className="p-4 space-y-2">
         {/* Pickup */}
         <div>
           <p className="text-sm font-semibold">Pickup</p>
@@ -74,7 +74,7 @@ export default function ActiveRide({
           </p>
         </div>
 
-        <div className="h-6 border-l border-dashed ml-1" />
+        <div className="h-4 border-l border-dashed border-blue ml-1" />
 
         {/* Drop */}
         <div>
