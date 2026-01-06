@@ -52,17 +52,19 @@ export default function TaxiSection() {
         <div className="bg-white border rounded-xl p-4 shadow-sm space-y-4">
           <h3 className="text-lg font-semibold">Trip Details</h3>
 
-          <LocationAutocomplete
+          <div className="border-l pl-4 pr-4 space-y-6 border-dashed border-black ml-1" >
+
+          <LocationAutocomplete 
             label="Pickup location"
             value={pickup?.address ?? ""}
             onSelect={setPickup}
-          />
-
+            />
           <LocationAutocomplete
             label="Drop location"
             value={drop?.address ?? ""}
             onSelect={setDrop}
-          />
+            />
+            </div>
         </div>
 
         {/* RIGHT: Map */}
