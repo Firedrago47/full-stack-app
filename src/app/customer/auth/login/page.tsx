@@ -10,6 +10,7 @@ import { AuthCard } from "@/components/auth/auth-card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function CustomerLoginPage() {
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function CustomerLoginPage() {
         setLoading(false);
         return;
       }
-      
+
       if (json.user?.role !== "CUSTOMER") {
         setServerError("This login is only for customers.");
         setLoading(false);
@@ -95,30 +96,27 @@ export default function CustomerLoginPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="p-2 space-y-4">
               <div>
                 <Label className="mb-2 font-bold">Email or Phone</Label>
-                <Input
-                  type="text"
-                  {...register("identifier")}
-                />
+                <Input type="text" {...register("identifier")} />
               </div>
 
               <div>
                 <Label className="mb-2 font-bold">Password</Label>
-                <Input
-                  type="password"
-                  {...register("password")}
-                />
+                <Input type="password" {...register("password")} />
               </div>
 
               {serverError && (
                 <p className="text-red-500 text-sm">{serverError}</p>
               )}
 
-              <Button
-                type="submit"
-                className="w-full font-semibold"
-                disabled={loading}
-              >
-                {loading ? "Signing in..." : "Login"}
+              <Button type="submit" disabled={loading} className="w-full">
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner className="h-4 w-4" />
+                    Logging in…
+                  </span>
+                ) : (
+                  "Login"
+                )}
               </Button>
 
               <p className="mb-2 text-center text-sm text-muted-foreground">
