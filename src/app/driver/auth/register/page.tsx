@@ -10,10 +10,13 @@ import { AuthCard } from "@/components/auth/auth-card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function DriverRegisterPage() {
   const router = useRouter();
   const [serverError, setServerError] = useState("");
+    const [loading, setLoading] = useState(false);
+
 
   const form = useForm<RegisterInput>({
     resolver: zodResolver(RegisterSchema),
@@ -30,6 +33,7 @@ export default function DriverRegisterPage() {
 
   const onSubmit = async (data: RegisterInput) => {
     setServerError("");
+    setLoading(true);
     const res = await fetch("/api/auth/register/", {
       method: "POST",
       body: JSON.stringify(data),
@@ -38,16 +42,18 @@ export default function DriverRegisterPage() {
     if (!res.ok) {
       const err = await res.json();
       setServerError(err.error ?? "Registration failed");
+      setLoading(false);
       return;
     }
 
     router.push("/driver/auth/login");
+    setLoading(false);
   };
 
   return (
     <div className="min-h-screen flex bg-slate-50">
       {/* LEFT HERO */}
-      <div className="hidden lg:flex flex-col justify-between bg-gradient-to-br from-yellow-500 to-orange-600 text-white w-1/2 p-12">
+      <div className="hidden lg:flex flex-col rounded-r-4xl justify-between bg-gradient-to-br from-yellow-500 to-orange-600 text-white w-1/2 p-12">
         <div>
           <h1 className="text-4xl font-extrabold leading-tight">
             Become a Delivery Partner
@@ -83,38 +89,45 @@ export default function DriverRegisterPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <Label className="font-semibold mb-2">Name</Label>
-                <Input {...form.register("name")} />
+                <Input placeholder="Enter the Name"{...form.register("name")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Phone</Label>
-                <Input {...form.register("phone")} />
+                <Input placeholder="Enter the Phone Number" {...form.register("phone")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Email</Label>
-                <Input type="email" {...form.register("email")} />
+                <Input type="email" placeholder="Enter the Email"{...form.register("email")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Password</Label>
-                <Input type="password" {...form.register("password")} />
+                <Input type="password" placeholder="Enter the Password"{...form.register("password")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">License Number</Label>
-                <Input {...form.register("licenseNumber")} />
+                <Input placeholder="Enter the License Number"{...form.register("licenseNumber")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Vehicle Number</Label>
-                <Input {...form.register("vehicleNumber")} />
+                <Input placeholder="Enter the Vehicle Number"{...form.register("vehicleNumber")} />
               </div>
 
               {serverError && <p className="text-red-500">{serverError}</p>}
 
-              <Button className="w-full" type="submit">
-                Sign Up
+              <Button type="submit" disabled={loading} className="w-full">
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner className="h-4 w-4" />
+                    Signing up…
+                  </span>
+                ) : (
+                  "Login"
+                )}
               </Button>
 
               <p className="mb-2 text-center text-sm text-muted-foreground">

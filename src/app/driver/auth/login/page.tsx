@@ -10,6 +10,7 @@ import { AuthCard } from "@/components/auth/auth-card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function DriverLoginPage() {
   const router = useRouter();
@@ -59,7 +60,7 @@ export default function DriverLoginPage() {
   return (
     <div className="min-h-screen flex bg-slate-50">
       {/* LEFT HERO */}
-      <div className="hidden lg:flex flex-col justify-between bg-gradient-to-br from-yellow-500 to-orange-600 text-white w-1/2 p-12">
+      <div className="hidden lg:flex flex-col rounded-r-4xl justify-between bg-gradient-to-br from-yellow-500 to-orange-600 text-white w-1/2 p-12">
         <div>
           <h1 className="text-4xl font-extrabold leading-tight">
             Welcome Back,
@@ -99,6 +100,7 @@ export default function DriverLoginPage() {
                 <Label className="mb-2 font-bold">Email or Phone</Label>
                 <Input
                   type="text"
+                  placeholder="Enter the Email or Phone"
                   {...register("identifier")}
                 />
               </div>
@@ -107,6 +109,7 @@ export default function DriverLoginPage() {
                 <Label className="mb-2 font-bold">Password</Label>
                 <Input
                   type="password"
+                  placeholder="Enter the Password"
                   {...register("password")}
                 />
               </div>
@@ -115,12 +118,15 @@ export default function DriverLoginPage() {
                 <p className="text-red-500 text-sm">{serverError}</p>
               )}
 
-              <Button
-                type="submit"
-                className="w-full font-semibold"
-                disabled={loading}
-              >
-                {loading ? "Signing in..." : "Login"}
+              <Button type="submit" disabled={loading} className="w-full">
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner className="h-4 w-4" />
+                    Logging in…
+                  </span>
+                ) : (
+                  "Login"
+                )}
               </Button>
 
               <p className="mb-2 text-center text-sm text-muted-foreground">

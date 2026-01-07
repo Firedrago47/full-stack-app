@@ -10,10 +10,14 @@ import { AuthCard } from "@/components/auth/auth-card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { fa } from "zod/v4/locales";
 
 export default function ShopRegisterPage() {
   const router = useRouter();
   const [serverError, setServerError] = useState("");
+    const [loading, setLoading] = useState(false);
+
 
   const form = useForm<RegisterInput>({
     resolver: zodResolver(RegisterSchema),
@@ -30,7 +34,7 @@ export default function ShopRegisterPage() {
 
   const onSubmit = async (data: RegisterInput) => {
     setServerError("");
-
+    setLoading(true);
     const res = await fetch("/api/auth/register", {
       method: "POST",
       body: JSON.stringify(data),
@@ -39,10 +43,12 @@ export default function ShopRegisterPage() {
     if (!res.ok) {
       const err = await res.json();
       setServerError(err.error ?? "Registration failed");
+      setLoading(false);
       return;
     }
-
+    
     router.push("/shop/auth/login");
+    setLoading(false);
   };
 
   return (
@@ -88,38 +94,45 @@ export default function ShopRegisterPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <Label className="font-semibold mb-2">Name</Label>
-                <Input {...form.register("name")} />
+                <Input placeholder="Enter the Name"{...form.register("name")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Phone</Label>
-                <Input {...form.register("phone")} />
+                <Input placeholder="Enter the Phone Number"{...form.register("phone")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Email</Label>
-                <Input type="email" {...form.register("email")} />
+                <Input type="email" placeholder="Enter the Email"{...form.register("email")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Password</Label>
-                <Input type="password" {...form.register("password")} />
+                <Input type="password" placeholder="Enter the Password"{...form.register("password")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Shop Name</Label>
-                <Input {...form.register("shopName")} />
+                <Input placeholder="Enter the Shop Name"{...form.register("shopName")} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Shop Address</Label>
-                <Input {...form.register("shopAddress")} />
+                <Input placeholder="Enter the Address"{...form.register("shopAddress")} />
               </div>
 
               {serverError && <p className="text-red-500">{serverError}</p>}
 
-              <Button className="w-full" type="submit">
-                Sign Up
+              <Button type="submit" disabled={loading} className="w-full">
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner className="h-4 w-4" />
+                    Signing up…
+                  </span>
+                ) : (
+                  "Login"
+                )}
               </Button>
 
               <p className="mb-2 text-center text-sm text-muted-foreground">

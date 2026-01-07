@@ -10,6 +10,7 @@ import { AuthCard } from "@/components/auth/auth-card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ShopLoginPage() {
   const router = useRouter();
@@ -98,6 +99,7 @@ export default function ShopLoginPage() {
                 <Label className="mb-2 font-bold">Email or Phone</Label>
                 <Input
                   type="text"
+                  placeholder="Enter the Email or Phone"
                   {...register("identifier")}
                 />
               </div>
@@ -106,6 +108,7 @@ export default function ShopLoginPage() {
                 <Label className="mb-2 font-bold">Password</Label>
                 <Input
                   type="password"
+                  placeholder="Enter the Password"
                   {...register("password")}
                 />
               </div>
@@ -114,12 +117,15 @@ export default function ShopLoginPage() {
                 <p className="text-red-500 text-sm">{serverError}</p>
               )}
 
-              <Button
-                type="submit"
-                className="w-full font-semibold"
-                disabled={loading}
-              >
-                {loading ? "Signing in..." : "Login"}
+              <Button type="submit" disabled={loading} className="w-full">
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner className="h-4 w-4" />
+                    Logging in…
+                  </span>
+                ) : (
+                  "Login"
+                )}
               </Button>
 
               <p className="mb-2 text-center text-sm text-muted-foreground">

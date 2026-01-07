@@ -96,12 +96,12 @@ export default function CustomerLoginPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="p-2 space-y-4">
               <div>
                 <Label className="mb-2 font-bold">Email or Phone</Label>
-                <Input type="text" {...register("identifier")} />
+                <Input type="text" placeholder="Enter Email or Phone"{...register("identifier")} />
               </div>
 
               <div>
                 <Label className="mb-2 font-bold">Password</Label>
-                <Input type="password" {...register("password")} />
+                <Input type="password" placeholder="Enter the Password"{...register("password")} />
               </div>
 
               {serverError && (
