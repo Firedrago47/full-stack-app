@@ -7,6 +7,7 @@ import VehicleOptions from "./VehicleOptions";
 import RideRequest from "./RideRequest";
 import { createRide } from "@/app/actions/create-ride";
 import { useRouter } from "next/navigation";
+import { cancelRide } from "@/app/actions/cancel-ride";
 
 export type VehicleType = "BIKE" | "AUTO" | "CAR";
 
@@ -45,12 +46,17 @@ export default function TaxiSection() {
       setDrawerOpen(true);
     } finally {
       setBooking(false);
+      setVehicle(null);
     }
   }
 
   function handleConfirmed() {
     if (!rideId) return;
-    router.replace(`/customer/rides/${rideId}`);
+
+    const id = rideId;
+    setRideId(null);
+    setDrawerOpen(false);
+    router.replace(`/customer/rides/${id}`);
   }
 
   return (
@@ -100,11 +106,18 @@ export default function TaxiSection() {
       </div>
 
       {/* DRAWER */}
+
       <RideRequest
         open={drawerOpen}
         rideId={rideId ?? undefined}
         onConfirmed={handleConfirmed}
-        onOpenChange={setDrawerOpen}
+        onOpenChange={(open) => {
+          if (!open && rideId) {
+            cancelRide(rideId);
+            setRideId(null);
+          }
+          setDrawerOpen(open);
+        }}
       />
     </>
   );

@@ -43,7 +43,7 @@ export async function getDriverDashboardData(): Promise<DriverDashboardData> {
     where: {
       driverId: driver.id,
       status: {
-        in: [RideStatus.ACCEPTED, RideStatus.STARTED],
+        notIn: [RideStatus.COMPLETED, RideStatus.CANCELLED],
       },
     },
     orderBy: { createdAt: "desc" },
