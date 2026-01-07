@@ -31,7 +31,7 @@ export default function LocationAutocomplete({
   }, [value]);
 
   return (
-    <div className="relative space-y-4">
+    <div className="relative space-y-2">
       <label className=" text-sm font-medium">{label}</label>
 
       <Input

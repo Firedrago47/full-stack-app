@@ -17,7 +17,6 @@ export async function acceptRide(rideId: string): Promise<void> {
   if (!driver) throw new Error("Forbidden");
   if (!driver.isAvailable) throw new Error("Driver is offline");
 
-  // ✅ Atomic accept (prevents double-accept)
   const ride = await prisma.ride.updateMany({
     where: {
       id: rideId,
@@ -54,24 +53,40 @@ export async function startRide(rideId: string): Promise<void> {
 
   if (!driver) throw new Error("Forbidden");
 
-  const updated = await prisma.ride.updateMany({
-    where: {
-      id: rideId,
-      driverId: driver.id,
-      status: RideStatus.ACCEPTED,
+  // 1️⃣ Fetch ride
+  const ride = await prisma.ride.findUnique({
+    where: { id: rideId },
+    select: {
+      status: true,
+      driverId: true,
     },
+  });
+
+  if (!ride) throw new Error("Ride not found");
+
+  // 2️⃣ Ownership check
+  if (ride.driverId !== driver.id) {
+    throw new Error("Ride not assigned to driver");
+  }
+
+  // 3️⃣ Status validation
+  if (ride.status !== RideStatus.CONFIRMED) {
+    throw new Error("Ride not confirmed by customer");
+  }
+
+  // 4️⃣ Update ride
+  await prisma.ride.update({
+    where: { id: rideId },
     data: {
       status: RideStatus.STARTED,
       startedAt: new Date(),
     },
   });
 
-  if (updated.count === 0) {
-    throw new Error("Ride cannot be started");
-  }
-
   revalidatePath("/driver/dashboard");
 }
+
+
 export async function completeRide(rideId: string): Promise<void> {
   const user = await getCurrentUser();
   if (!user) throw new Error("Unauthorized");

@@ -9,6 +9,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useRideStatus } from "@/hooks/use-ride-status";
+import { useTransition } from "react";
+import { confirmRide } from "@/app/actions/confirm-ride";
 
 interface Props {
   open: boolean;
@@ -17,7 +19,8 @@ interface Props {
 }
 
 export default function RideRequest({ open, onOpenChange, rideId }: Props) {
-  const { data } = useRideStatus(rideId);
+  const { data } = useRideStatus(rideId,open);
+  const [pending, startTransition] = useTransition();
 
   const status = data?.ride?.status;
 
@@ -49,10 +52,23 @@ export default function RideRequest({ open, onOpenChange, rideId }: Props) {
               <p className="text-sm text-muted-foreground">
                 Driver ID: {data.ride.driver.id.slice(0, 6)}
               </p>
-              <p className="text-sm">Name: {data.ride.driver.user.name}</p>
+              <p className="text-sm">
+                Name: {data.ride.driver.user.name}
+              </p>
             </div>
 
-            <Button className="w-full">Confirm Ride</Button>
+            <Button
+              className="w-full"
+              disabled={pending}
+              onClick={() =>
+                startTransition(async () => {
+                  await confirmRide(data.ride.id);
+                  onOpenChange(false);
+                })
+              }
+            >
+              {pending ? "Confirming…" : "Confirm Ride"}
+            </Button>
           </div>
         )}
       </DrawerContent>

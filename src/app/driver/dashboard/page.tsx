@@ -2,7 +2,7 @@ import StatusBar from "../components/status-bar";
 import DriverMap from "../components/DriverMap";
 import EmptyState from "../components/empty-state";
 import { getDriverDashboardData } from "@/lib/driver/get-dashboard-data";
-import ActiveRide from "../components/active-order";
+import ActiveRide from "../components/ActiveRide";
 
 import { acceptRide, startRide, completeRide } from "./action";
 import DashboardShell from "../components/DashboardShell";

@@ -45,6 +45,7 @@ enum OrderStatus {
 enum RideStatus {
   REQUESTED
   ACCEPTED
+  CONFIRMED
   STARTED
   COMPLETED
   CANCELLED
