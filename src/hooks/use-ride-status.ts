@@ -5,12 +5,28 @@ import { RideStatus } from "@prisma/client";
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
 
-export function useRideStatus(rideId?: string, enabled = true) {
+export function useRideStatus(rideId?: string) {
   return useSWR(
-    enabled && rideId ? `/api/rides/${rideId}` : null,
+    rideId ? `/api/rides/${rideId}` : null,
     fetcher,
     {
-      refreshInterval: enabled ? 3000 : 0,
+      refreshInterval: (data) => {
+        const status: RideStatus | undefined = data?.ride?.status;
+
+        if (!status) return 3000;
+
+        if (
+          status === RideStatus.COMPLETED ||
+          status === RideStatus.CANCELLED
+        ) {
+          return 0;
+        }
+
+        return 3000;
+      },
+
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
     }
   );
 }

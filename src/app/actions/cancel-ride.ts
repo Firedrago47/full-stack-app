@@ -1,3 +1,4 @@
+// app/actions/cancel-ride.ts
 "use server";
 
 import prisma from "@/lib/prisma";
@@ -5,24 +6,28 @@ import { getCurrentUser } from "@/lib/auth/current-user";
 import { RideStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-export async function confirmRide(rideId: string) {
+export async function cancelRide(rideId: string) {
   const user = await getCurrentUser();
   if (!user) throw new Error("Unauthorized");
 
-  const updated = await prisma.ride.updateMany({
+  await prisma.ride.updateMany({
     where: {
       id: rideId,
       customerId: user.id,
-      status: RideStatus.ACCEPTED,
+      status: {
+        in: [
+          RideStatus.REQUESTED,
+          RideStatus.ACCEPTED,
+        ],
+      },
     },
     data: {
-      status: RideStatus.CONFIRMED,
+      status: RideStatus.CANCELLED,
+      cancelledAt: new Date(),
     },
   });
 
-  if (updated.count === 0) {
-    throw new Error("Ride cannot be confirmed");
-  }
-
+  // refresh driver + customer dashboards
   revalidatePath("/driver/dashboard");
+  revalidatePath("/customer/dashboard");
 }

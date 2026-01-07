@@ -8,21 +8,29 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { useRideStatus } from "@/hooks/use-ride-status";
 import { useTransition } from "react";
+import { useRideStatus } from "@/hooks/use-ride-status";
 import { confirmRide } from "@/app/actions/confirm-ride";
+import { RideStatus } from "@prisma/client";
 
 interface Props {
   open: boolean;
-  onOpenChange: (v: boolean) => void;
   rideId?: string;
+  onOpenChange: (open: boolean) => void;
+  onConfirmed: () => void;
 }
 
-export default function RideRequest({ open, onOpenChange, rideId }: Props) {
-  const { data } = useRideStatus(rideId,open);
+export default function RideRequest({
+  open,
+  rideId,
+  onOpenChange,
+  onConfirmed,
+}: Props) {
+  const { data, isLoading } = useRideStatus(rideId);
   const [pending, startTransition] = useTransition();
 
-  const status = data?.ride?.status;
+  const ride = data?.ride;
+  const status = ride?.status;
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
@@ -31,9 +39,17 @@ export default function RideRequest({ open, onOpenChange, rideId }: Props) {
           <DrawerTitle>Booking Ride</DrawerTitle>
         </DrawerHeader>
 
+        {/* LOADING */}
+        {isLoading && (
+          <Centered>
+            <Loader2 className="h-8 w-8 animate-spin" />
+            <p className="text-sm text-muted-foreground">Loading ride…</p>
+          </Centered>
+        )}
+
         {/* FINDING DRIVER */}
-        {status === "REQUESTED" && (
-          <div className="p-6 flex flex-col items-center gap-4">
+        {status === RideStatus.REQUESTED && (
+          <Centered>
             <Loader2 className="h-8 w-8 animate-spin" />
             <p className="text-sm text-muted-foreground">
               Finding a nearby driver…
@@ -41,19 +57,19 @@ export default function RideRequest({ open, onOpenChange, rideId }: Props) {
             <p className="text-xs text-muted-foreground">
               This may take up to 1 minute
             </p>
-          </div>
+          </Centered>
         )}
 
         {/* DRIVER ACCEPTED */}
-        {status === "ACCEPTED" && (
+        {status === RideStatus.ACCEPTED && ride?.driver && (
           <div className="p-6 space-y-4">
-            <div className="border rounded-lg p-4">
+            <div className="border rounded-lg p-4 space-y-1">
               <p className="font-semibold">Driver Assigned</p>
               <p className="text-sm text-muted-foreground">
-                Driver ID: {data.ride.driver.id.slice(0, 6)}
+                Driver ID: {ride.driver.id.slice(0, 6)}
               </p>
               <p className="text-sm">
-                Name: {data.ride.driver.user.name}
+                Name: {ride.driver.user.name}
               </p>
             </div>
 
@@ -62,8 +78,8 @@ export default function RideRequest({ open, onOpenChange, rideId }: Props) {
               disabled={pending}
               onClick={() =>
                 startTransition(async () => {
-                  await confirmRide(data.ride.id);
-                  onOpenChange(false);
+                  await confirmRide(ride.id);
+                  onConfirmed(); // parent handles redirect
                 })
               }
             >
@@ -71,7 +87,24 @@ export default function RideRequest({ open, onOpenChange, rideId }: Props) {
             </Button>
           </div>
         )}
+
+        {/* FALLBACK */}
+        {!status && !isLoading && (
+          <Centered>
+            <p className="text-sm text-muted-foreground">
+              Waiting for ride status…
+            </p>
+          </Centered>
+        )}
       </DrawerContent>
     </Drawer>
+  );
+}
+
+function Centered({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="p-6 flex flex-col items-center gap-3 text-center">
+      {children}
+    </div>
   );
 }

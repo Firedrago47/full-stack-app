@@ -1,59 +1,14 @@
-import StatusBar from "../components/status-bar";
-import DriverMap from "../components/DriverMap";
-import EmptyState from "../components/empty-state";
-import { getDriverDashboardData } from "@/lib/driver/get-dashboard-data";
-import ActiveRide from "../components/ActiveRide";
-
-import { acceptRide, startRide, completeRide } from "./action";
+// app/driver/dashboard/page.tsx
 import DashboardShell from "../components/DashboardShell";
+import DriverDashboardClient from "../components/DriverDashboardClient";
+import { getDriverDashboardData } from "@/lib/driver/get-dashboard-data";
 
 export default async function DriverDashboardPage() {
-  const data = await getDriverDashboardData();
-
-  // No active ride → show empty state
-  if (!data.activeRide) {
-    return (
-      <DashboardShell>
-        <StatusBar
-          isAvailable={data.driver.isAvailable}
-          todayEarningsCents={data.driver.todayEarningsCents}
-        />
-        <EmptyState />
-      </DashboardShell>
-    );
-  }
-
-  const { driver, activeRide } = data;
+  const initialData = await getDriverDashboardData();
 
   return (
     <DashboardShell>
-      {/* Driver status + earnings */}
-      <StatusBar
-        isAvailable={driver.isAvailable}
-        todayEarningsCents={driver.todayEarningsCents}
-      />
-      <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Active ride card */}
-        <ActiveRide
-          ride={activeRide}
-          onAccept={async () => {
-            "use server";
-            await acceptRide(activeRide.id);
-          }}
-          onStart={async () => {
-            "use server";
-            await startRide(activeRide.id);
-          }}
-          onComplete={async () => {
-            "use server";
-            await completeRide(activeRide.id);
-          }}
-        />
-
-        <div className="bg-white shadow-sm border rounded-xl p-2">
-          <DriverMap />
-        </div>
-      </div>
+      <DriverDashboardClient initialData={initialData} />
     </DashboardShell>
   );
 }
