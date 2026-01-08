@@ -1,10 +1,5 @@
-import { Suspense } from "react";
-import CustomerExplorePage from "./components/CustomerExplore";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <CustomerExplorePage />
-    </Suspense>
-  );
+export default function CustomerPage() {
+  redirect("/customer/explore");
 }

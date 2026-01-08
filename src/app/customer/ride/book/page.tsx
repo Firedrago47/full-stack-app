@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import TaxiMap from "@/app/customer/components/TaxiMap";
 import LocationAutocomplete from "@/app/customer/shared/location/LocationAutocomplete";
 import VehicleOptions from "@/app/customer/ride/components/VehicleOptions";
 import RideRequest from "@/app/customer/ride/components/RideRequest";
