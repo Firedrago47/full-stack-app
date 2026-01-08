@@ -2,18 +2,23 @@
 
 import useSWR from "swr";
 import { RideStatus } from "@prisma/client";
+import type { RideStatusResponse } from "@/types/ride";
 
-const fetcher = (url: string) => fetch(url).then(r => r.json());
+const fetcher = async <T>(url: string): Promise<T> => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error("Failed to fetch ride status");
+  }
+  return res.json();
+};
 
 export function useRideStatus(rideId?: string) {
-  return useSWR(
+  return useSWR<RideStatusResponse>(
     rideId ? `/api/rides/${rideId}` : null,
     fetcher,
     {
       refreshInterval: (data) => {
-        const status: RideStatus | undefined = data?.ride?.status;
-
-        if (!status) return 3000;
+        const status = data?.ride.status;
 
         if (
           status === RideStatus.COMPLETED ||
@@ -24,7 +29,6 @@ export function useRideStatus(rideId?: string) {
 
         return 3000;
       },
-
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
     }

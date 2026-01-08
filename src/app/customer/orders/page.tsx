@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import DashboardTopbar from "../components/DashboardTopbar";
+import DashboardTopbar from "../shared/layout/DashboardTopbar";
 import { useOrders, cancelOrder } from "@/hooks/use-orders";
 import { OrderStatus } from "@prisma/client";
 import { useState } from "react";

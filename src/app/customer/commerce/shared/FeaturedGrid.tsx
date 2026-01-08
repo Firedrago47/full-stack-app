@@ -3,10 +3,20 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import type { DashboardCategory } from "@/types/category";
 
-const PROMOS = {
-  groceries: [
+type Promo = {
+  id: number;
+  title: string;
+  subtitle: string;
+  image: string;
+};
+
+const PROMOS: Record<
+  DashboardCategory | "default",
+  Promo[]
+> = {
+  grocery: [
     {
       id: 1,
       title: "20% off fresh veggies",
@@ -48,7 +58,7 @@ const PROMOS = {
     },
   ],
 
-  taxi: [
+  ride: [
     {
       id: 1,
       title: "20% off on Airport rides",
@@ -91,16 +101,21 @@ const PROMOS = {
   ],
 };
 
-export default function FeaturedGrid() {
-  const params = useSearchParams();
-  const category = params.get("category") || "default";
+interface Props {
+  category?: DashboardCategory;
+}
 
-  const promos = PROMOS[category as keyof typeof PROMOS] ?? PROMOS.default;
+export default function FeaturedGrid({ category }: Props) {
+  const promos =
+    (category && PROMOS[category]) ?? PROMOS.default;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {promos.map((p) => (
-        <Card key={p.id} className="overflow-hidden hover:shadow-lg transition">
+        <Card
+          key={p.id}
+          className="overflow-hidden hover:shadow-lg transition"
+        >
           <div className="relative h-44 w-full">
             <Image
               src={p.image}
@@ -114,7 +129,9 @@ export default function FeaturedGrid() {
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="text-lg font-semibold">{p.title}</h3>
-                <p className="text-sm text-muted-foreground">{p.subtitle}</p>
+                <p className="text-sm text-muted-foreground">
+                  {p.subtitle}
+                </p>
               </div>
               <Badge variant="secondary">Hot</Badge>
             </div>

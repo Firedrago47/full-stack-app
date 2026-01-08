@@ -8,4 +8,4 @@ export type GroceryItem = Prisma.ItemGetPayload<{}>;
 
 export type DashboardItem = FoodItem | GroceryItem;
 
-export type DashboardCategory = "food" | "groceries" | "taxi";
+export type DashboardCategory = "food" | "grocery" | "ride";

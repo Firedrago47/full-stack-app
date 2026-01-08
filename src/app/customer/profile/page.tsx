@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import DashboardTopbar from "../components/DashboardTopbar";
+import DashboardTopbar from "../shared/layout/DashboardTopbar";
 
 export const dynamic = "force-dynamic";
 

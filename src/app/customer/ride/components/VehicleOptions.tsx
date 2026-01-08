@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { VehicleType } from "./TaxiSection";
+import type { VehicleType } from "@/types/ride";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 

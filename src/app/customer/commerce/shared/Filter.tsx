@@ -2,22 +2,15 @@
 
 import { useSearchParams } from "next/navigation";
 
-type Category = "food" | "groceries" | "taxi";
+type Category = "food" | "grocery";
 
-function resolveCategory(value: string | null): Category {
-  if (value === "groceries") return "groceries";
-  if (value === "taxi") return "taxi";
-  return "food";
-}
 
-export default function Filter() {
-  const params = useSearchParams();
-  const category = resolveCategory(params.get("category"));
-
-  if (category === "taxi") {
-    return null;
-  }
-
+export default function Filter({
+  category,
+}: {
+  category: Category;
+}) {
+  
   return (
     <aside className="lg:col-span-1 mx-6 space-y-4">
       <div className="p-4 bg-white border rounded-xl shadow-sm">
@@ -45,7 +38,7 @@ export default function Filter() {
           )}
 
           {/* GROCERY FILTERS */}
-          {category === "groceries" && (
+          {category === "grocery" && (
             <>
               <label className="flex items-center gap-2">
                 <input type="checkbox" />

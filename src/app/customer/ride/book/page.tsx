@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import TaxiMap from "./TaxiMap";
-import LocationAutocomplete from "./LocationAutocomplete";
-import VehicleOptions from "./VehicleOptions";
-import RideRequest from "./RideRequest";
-import { createRide } from "@/app/actions/create-ride";
 import { useRouter } from "next/navigation";
-import { cancelRide } from "@/app/actions/cancel-ride";
 
-export type VehicleType = "BIKE" | "AUTO" | "CAR";
+import TaxiMap from "@/app/customer/components/TaxiMap";
+import LocationAutocomplete from "@/app/customer/shared/location/LocationAutocomplete";
+import VehicleOptions from "@/app/customer/ride/components/VehicleOptions";
+import RideRequest from "@/app/customer/ride/components/RideRequest";
+
+import { createRide } from "@/app/actions/create-ride";
+import { cancelRide } from "@/app/actions/cancel-ride";
+import type { VehicleType } from "@/types/ride";
+import DashboardShell from "../../shared/layout/DashboardShell";
 
 type Location = {
   address: string;
@@ -17,7 +19,7 @@ type Location = {
   lng: number;
 };
 
-export default function TaxiSection() {
+export default function RideBookingPage() {
   const router = useRouter();
 
   const [pickup, setPickup] = useState<Location | null>(null);
@@ -52,17 +54,17 @@ export default function TaxiSection() {
 
   function handleConfirmed() {
     if (!rideId) return;
-
     const id = rideId;
+
     setRideId(null);
     setDrawerOpen(false);
-    router.replace(`/customer/rides/${id}`);
+    router.replace(`/customer/ride/${id}`);
   }
 
   return (
-    <>
+    <DashboardShell>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* LEFT */}
+        {/* Trip details */}
         <div className="bg-white border rounded-xl p-4 shadow-sm">
           <h3 className="text-lg font-semibold mb-6">Trip Details</h3>
 
@@ -88,12 +90,12 @@ export default function TaxiSection() {
           </div>
         </div>
 
-        {/* MAP */}
+        {/* Map */}
         <div className="bg-white shadow-sm border rounded-xl p-4">
           <TaxiMap pickup={pickup ?? undefined} drop={drop ?? undefined} />
         </div>
 
-        {/* VEHICLES */}
+        {/* Vehicles */}
         <div className="lg:col-span-2">
           <VehicleOptions
             disabled={!pickup || !drop}
@@ -105,11 +107,10 @@ export default function TaxiSection() {
         </div>
       </div>
 
-      {/* DRAWER */}
-
+      {/* Booking drawer */}
       <RideRequest
         open={drawerOpen}
-        rideId={rideId ?? undefined}
+        rideId={rideId ?? null}
         onConfirmed={handleConfirmed}
         onOpenChange={(open) => {
           if (!open && rideId) {
@@ -119,6 +120,6 @@ export default function TaxiSection() {
           setDrawerOpen(open);
         }}
       />
-    </>
+    </DashboardShell>
   );
 }

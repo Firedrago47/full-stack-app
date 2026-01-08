@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Menu, Search } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
-import CartSidebar from "./cart/CartSidebar";
+import CartSidebar from "@/app/customer/commerce/shared/cart/CartSidebar";
 import Link from "next/link";
 
 import {
@@ -16,7 +16,7 @@ import {
   SheetHeader,
 } from "@/components/ui/sheet";
 
-import DashboardSidebar from "../components/DashboardSidebar";
+import DashboardSidebar from "@/app/customer/shared/layout/DashboardSidebar";
 
 export default function DashboardTopbar() {
   const [cartOpen, setCartOpen] = useState(false);

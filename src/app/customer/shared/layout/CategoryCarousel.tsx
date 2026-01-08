@@ -1,25 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { DashboardCategory } from "@/types/category";
+import type { DashboardCategory } from "@/types/category";
 
-function isDashboardCategory(value: string | null): value is DashboardCategory {
-  return value === "food" || value === "groceries" || value === "taxi";
-}
-const categories: { id: DashboardCategory; title: string; image: string }[] = [
+type CarouselCategory = DashboardCategory | "default";
+
+const categories: {
+  id: DashboardCategory;
+  title: string;
+  image: string;
+}[] = [
   { id: "food", title: "Food Delivery", image: "/images/cat-food.png" },
-  { id: "groceries", title: "Groceries", image: "/images/cat-groceries.png" },
-  { id: "taxi", title: "Taxis & Rides", image: "/images/vehicle-car.png" },
+  { id: "grocery", title: "Groceries", image: "/images/cat-groceries.png" },
+  { id: "ride", title: "Taxis & Rides", image: "/images/vehicle-car.png" },
 ];
 
-export default function CategoryCarousel() {
-  const params = useSearchParams();
-  const router = useRouter();
+interface Props {
+  active?: CarouselCategory; 
+}
 
-  const raw = params.get("category");
-  const selected: DashboardCategory = isDashboardCategory(raw) ? raw : "food";
+export default function CategoryCarousel({ active = "default" }: Props) {
+  const router = useRouter();
 
   return (
     <div className="w-full">
@@ -27,18 +30,20 @@ export default function CategoryCarousel() {
       <div className="md:hidden sm:grid grid-cols-2 mx-auto py-2">
         <div className="flex items-center gap-6 px-4">
           {categories.map((c) => {
-            const isActive = selected === c.id;
+            const isActive = active === c.id;
 
             return (
               <button
                 key={c.id}
-                onClick={() => router.push(`/customer/dashboard?category=${c.id}`)}
+                onClick={() => router.push(`/customer/dashboard/${c.id}`)}
                 className="flex flex-col items-center min-w-[90px] space-y-2"
               >
                 <div
                   className={cn(
                     "flex items-center h-18 w-18 rounded-full overflow-hidden shadow-sm border transition-transform",
-                    isActive ? "border-primary scale-110 shadow-md" : "border-gray-200"
+                    isActive
+                      ? "border-primary scale-110 shadow-md"
+                      : "border-gray-200"
                   )}
                 >
                   <Image
@@ -67,12 +72,12 @@ export default function CategoryCarousel() {
       {/* DESKTOP */}
       <div className="hidden md:grid grid-cols-3 gap-6 max-w-6xl mx-auto py-2">
         {categories.map((c) => {
-          const isActive = selected === c.id;
+          const isActive = active === c.id;
 
           return (
             <button
               key={c.id}
-              onClick={() => router.push(`/customer/dashboard?category=${c.id}`)}
+              onClick={() => router.push(`/customer/dashboard/${c.id}`)}
               className={cn(
                 "flex items-center gap-4 rounded-xl px-4 py-2 shadow-sm border transition-all",
                 isActive

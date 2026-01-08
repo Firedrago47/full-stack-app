@@ -6,6 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { ItemWithSource } from "@/types/item";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ItemList({
   items,
@@ -15,7 +17,8 @@ export default function ItemList({
   isLoading: boolean;
 }) {
   const { addToCart } = useCart();
-
+  const [loading, setLoading] = useState(false);
+  
   if (isLoading) {
     return (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4">
@@ -81,7 +84,14 @@ export default function ItemList({
                 className="w-full"
                 onClick={() => addToCart(item.id)}
               >
-                Add to Cart
+               {loading ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner className="h-4 w-4" />
+                    Adding to cart
+                  </span>
+                ) : (
+                  "Add to Cart"
+                )}
               </Button>
             </div>
           </CardContent>
