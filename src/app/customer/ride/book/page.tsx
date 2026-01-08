@@ -63,7 +63,7 @@ export default function RideBookingPage() {
 
   return (
     <DashboardShell>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-8">
         {/* Trip details */}
         <div className="bg-white border rounded-xl p-4 shadow-sm">
           <h3 className="text-lg font-semibold mb-6">Trip Details</h3>
