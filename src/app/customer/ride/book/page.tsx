@@ -69,13 +69,14 @@ export default function RideBookingPage() {
           <h3 className="text-lg font-semibold mb-6">Trip Details</h3>
 
           <div className="flex ml-2 gap-4">
-            <div className="flex flex-col items-center pt-4 pb-6">
+            {/* Timeline */}
+            <div className="flex flex-col items-center pt-1">
               <div className="h-3 w-3 rounded-full bg-green-600" />
               <div className="flex-1 w-px border-l-2 border-dashed border-gray-400 my-2" />
               <div className="h-3 w-3 rounded-full bg-red-600" />
             </div>
 
-            <div className="flex flex-col gap-4 mr-4 flex-1">
+            <div className="flex flex-col gap-6 mr-6 flex-1">
               <LocationAutocomplete
                 label="Pickup location"
                 value={pickup?.address ?? ""}

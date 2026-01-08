@@ -14,20 +14,12 @@ import { useRideStatus } from "@/hooks/use-ride-status";
 import { confirmRide } from "@/app/actions/confirm-ride";
 import { RideStatus } from "@prisma/client";
 
-/* ---------------------------------- */
-/* Types */
-/* ---------------------------------- */
-
 interface Props {
   open: boolean;
   rideId: string | null;
   onOpenChange: (open: boolean) => void;
   onConfirmed: () => void;
 }
-
-/* ---------------------------------- */
-/* Status config */
-/* ---------------------------------- */
 
 const STATUS_UI: Record<
   RideStatus,
@@ -65,10 +57,6 @@ const STATUS_UI: Record<
     showSpinner: false,
   },
 };
-
-/* ---------------------------------- */
-/* Component */
-/* ---------------------------------- */
 
 export default function RideRequest({
   open,
@@ -153,10 +141,6 @@ export default function RideRequest({
     </Drawer>
   );
 }
-
-/* ---------------------------------- */
-/* Helpers */
-/* ---------------------------------- */
 
 function Loading() {
   return (
