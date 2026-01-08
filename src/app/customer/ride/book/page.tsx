@@ -12,6 +12,7 @@ import { createRide } from "@/app/actions/create-ride";
 import { cancelRide } from "@/app/actions/cancel-ride";
 import type { VehicleType } from "@/types/ride";
 import DashboardShell from "../../shared/layout/DashboardShell";
+import RideLiveMap from "../components/RideLiveMap";
 
 type Location = {
   address: string;
@@ -76,7 +77,7 @@ export default function RideBookingPage() {
               <div className="h-3 w-3 rounded-full bg-red-600" />
             </div>
 
-            <div className="flex flex-col gap-6 mr-6 flex-1">
+            <div className="flex flex-col gap-4 mr-6 flex-1">
               <LocationAutocomplete
                 label="Pickup location"
                 value={pickup?.address ?? ""}
@@ -92,8 +93,8 @@ export default function RideBookingPage() {
         </div>
 
         {/* Map */}
-        <div className="bg-white shadow-sm border rounded-xl p-4">
-          <TaxiMap pickup={pickup ?? undefined} drop={drop ?? undefined} />
+        <div className="bg-white shadow-sm border rounded-xl p-2">
+          <RideLiveMap pickup={pickup ?? undefined} drop={drop ?? undefined} />
         </div>
 
         {/* Vehicles */}
