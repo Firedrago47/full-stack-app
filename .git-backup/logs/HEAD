@@ -1,0 +1,83 @@
+0000000000000000000000000000000000000000 0a7ce081d428503092e6504b1ad103da388f9894 Deep <deepanrajpmk@gmail.com> 1763579460 +0530	commit (initial): first commit
+0a7ce081d428503092e6504b1ad103da388f9894 0000000000000000000000000000000000000000 Deep <deepanrajpmk@gmail.com> 1763579460 +0530	Branch: renamed refs/heads/main to refs/heads/main
+0a7ce081d428503092e6504b1ad103da388f9894 0a7ce081d428503092e6504b1ad103da388f9894 Deep <deepanrajpmk@gmail.com> 1763579460 +0530	Branch: renamed refs/heads/main to refs/heads/main
+0a7ce081d428503092e6504b1ad103da388f9894 e5a2dba03564a80980982f093bffab2626ea7ace Deep <deepanrajpmk@gmail.com> 1763579511 +0530	commit: first commit
+e5a2dba03564a80980982f093bffab2626ea7ace 0000000000000000000000000000000000000000 Deep <deepanrajpmk@gmail.com> 1763579511 +0530	Branch: renamed refs/heads/main to refs/heads/main
+e5a2dba03564a80980982f093bffab2626ea7ace e5a2dba03564a80980982f093bffab2626ea7ace Deep <deepanrajpmk@gmail.com> 1763579511 +0530	Branch: renamed refs/heads/main to refs/heads/main
+e5a2dba03564a80980982f093bffab2626ea7ace 864e38e29d9c8457e251a5fb6ae9c3a9131e559a Deep <deepanrajpmk@gmail.com> 1763579801 +0530	commit: feat:login and signup full-stack imp
+864e38e29d9c8457e251a5fb6ae9c3a9131e559a 50ffbdddeb4a48f11fd0025799f0368ed7498f16 Deep <deepanrajpmk@gmail.com> 1763624998 +0530	commit: fix:phone login and build fixes
+50ffbdddeb4a48f11fd0025799f0368ed7498f16 8dd70ddbbc8f583d8c3340360e73dcc60add3c05 Deep <deepanrajpmk@gmail.com> 1763625499 +0530	commit: fix:build fixes
+8dd70ddbbc8f583d8c3340360e73dcc60add3c05 735950a3fd1b8e28e8f02215902877de282689e8 Deep <deepanrajpmk@gmail.com> 1763655318 +0530	commit: feat:dashboard pages with jwt
+735950a3fd1b8e28e8f02215902877de282689e8 3b29f466e1c0c3e402662b1d388c791d1697fe7e Deep <deepanrajpmk@gmail.com> 1763655560 +0530	commit: style:metadata update
+3b29f466e1c0c3e402662b1d388c791d1697fe7e 4bc341992e0d8cdec937f88de904fe6d2f15187d Deep <deepanrajpmk@gmail.com> 1763657355 +0530	commit: check deploy
+4bc341992e0d8cdec937f88de904fe6d2f15187d b9bdff56d881b9fa4882e3dec9e9099e95fa67f3 Deep <deepanrajpmk@gmail.com> 1763657562 +0530	commit: fix:deploy fix
+b9bdff56d881b9fa4882e3dec9e9099e95fa67f3 69ce6528b38b6a022c78bb28aeafdd10beaf349e Deep <deepanrajpmk@gmail.com> 1763832745 +0530	commit: feat:admin dashboard with api routes
+69ce6528b38b6a022c78bb28aeafdd10beaf349e 93cc3f3b630803be8e20487067fc831d72c45e4e Deep <deepanrajpmk@gmail.com> 1763833314 +0530	commit: fix:build error cache clear
+93cc3f3b630803be8e20487067fc831d72c45e4e e249350ce95f1a9cb32181330592a4715d4bea70 Deep <deepanrajpmk@gmail.com> 1763911949 +0530	commit: style:used button comp for profile
+e249350ce95f1a9cb32181330592a4715d4bea70 dc083864e321edb191fa3f41fccb8a664410ff3e Deep <deepanrajpmk@gmail.com> 1764509830 +0530	commit: fix:file structure modify and diff log/reg
+dc083864e321edb191fa3f41fccb8a664410ff3e e15dfb09c9cff9bde7c5efcf32c889c4c079ccfd Deep <deepanrajpmk@gmail.com> 1764956995 +0530	commit: fix:changed the main landing page to c customer
+e15dfb09c9cff9bde7c5efcf32c889c4c079ccfd 13a9bb6c5e6b97c4d04a11c6b08e43c5221acee7 Deep <deepanrajpmk@gmail.com> 1765284243 +0530	commit: feat:updated customer page
+13a9bb6c5e6b97c4d04a11c6b08e43c5221acee7 725f5ef02686be6f1ae3167eeef0afd171f2f361 Deep <deepanrajpmk@gmail.com> 1765284281 +0530	commit: feat:updated api routes
+725f5ef02686be6f1ae3167eeef0afd171f2f361 5bb25cd448a56f5e7414cf0e5b65bee1a88c5acb Deep <deepanrajpmk@gmail.com> 1765284372 +0530	commit: feat:updated the prisma,hooks,libs,types and others
+5bb25cd448a56f5e7414cf0e5b65bee1a88c5acb 24115ad5358f19f998c5a9a5e7cf115de69a8a86 Deep <deepanrajpmk@gmail.com> 1765284813 +0530	commit: style:margin and shadow
+24115ad5358f19f998c5a9a5e7cf115de69a8a86 a64b6bf781ee5fd55a73500a9fadf7713d5adb36 Deep <deepanrajpmk@gmail.com> 1765285018 +0530	commit: feat:added topbar
+a64b6bf781ee5fd55a73500a9fadf7713d5adb36 820754fa6a1e35d72ddf602a512bd47b2f7790e3 Deep <deepanrajpmk@gmail.com> 1765288202 +0530	commit: fix:imageurl bug
+820754fa6a1e35d72ddf602a512bd47b2f7790e3 0a65877ee2ea4886ea5c7b57714970eca9efa428 Deep <deepanrajpmk@gmail.com> 1765290354 +0530	commit: feat:updated dashboard with essen comps
+0a65877ee2ea4886ea5c7b57714970eca9efa428 bf8bb5f3551fef859d283dea2a70b004df316d38 Deep <deepanrajpmk@gmail.com> 1765291520 +0530	commit: style:login paddings and switch cn
+bf8bb5f3551fef859d283dea2a70b004df316d38 b14de02b3c904451e881b16d6f7c9389520de089 Deep <deepanrajpmk@gmail.com> 1765292637 +0530	commit: fix:build error
+b14de02b3c904451e881b16d6f7c9389520de089 381e5220095d8516fb54802397bee30592efa51a Deep <deepanrajpmk@gmail.com> 1765293369 +0530	commit: fix:build error removed unwanded
+381e5220095d8516fb54802397bee30592efa51a 38636fd85d70affcc5b3d9eb0c224361d680cadf Deep <deepanrajpmk@gmail.com> 1765294934 +0530	commit: fix: update Next.js to patched version
+38636fd85d70affcc5b3d9eb0c224361d680cadf 31bd4d8ecd64c8ba8a465e6dd7dae843424ed942 Deep <deepanrajpmk@gmail.com> 1765307887 +0530	commit: feat:added item mangament for shopowners
+31bd4d8ecd64c8ba8a465e6dd7dae843424ed942 b9a2b65089ef5679c8782ee954a2d496c1ae8b04 Deep <deepanrajpmk@gmail.com> 1765521129 +0530	commit: style:minor ui change
+b9a2b65089ef5679c8782ee954a2d496c1ae8b04 1ab0a4b0a4fa62bc598400945ed54f7a86fb999e Deep <deepanrajpmk@gmail.com> 1765523541 +0530	commit: feat:added catogory in schema
+1ab0a4b0a4fa62bc598400945ed54f7a86fb999e 9fc88c7f93926651f00dc434ebaec52290a3db38 Deep <deepanrajpmk@gmail.com> 1765727714 +0530	commit: fix:service category
+9fc88c7f93926651f00dc434ebaec52290a3db38 e89f40172610d6201588e625d0826dfb78a6396b Deep <deepanrajpmk@gmail.com> 1765728621 +0530	commit: fix:bulid error
+e89f40172610d6201588e625d0826dfb78a6396b f9760972266c4a1f938efae73f39b2266e76b8bc Deep <deepanrajpmk@gmail.com> 1765732633 +0530	commit: fix:cart optimization
+f9760972266c4a1f938efae73f39b2266e76b8bc 455b9f108b49fd42937742284bbff89fbee6b740 Deep <deepanrajpmk@gmail.com> 1765865289 +0530	commit: feat:skeleton for cards
+455b9f108b49fd42937742284bbff89fbee6b740 bf6107f24fdd403105e8f747a65616925184a25a Deep <deepanrajpmk@gmail.com> 1765977365 +0530	commit: fix:api route to edit/delete shop items
+bf6107f24fdd403105e8f747a65616925184a25a f1f6ba4b439fd00d10d201361fda1d625f59f54e Deep <deepanrajpmk@gmail.com> 1766053390 +0530	commit: style:skeleton adjust
+f1f6ba4b439fd00d10d201361fda1d625f59f54e 5905001bc2a73c1191324e4cb4a8fba92ee57a23 Deep <deepanrajpmk@gmail.com> 1766053450 +0530	commit: feat:order page updated with suitable apis
+5905001bc2a73c1191324e4cb4a8fba92ee57a23 1bb734595501c79ae5823bd69d0061de7602a4ee Deep <deepanrajpmk@gmail.com> 1766060915 +0530	commit: fix:cart post meth optimization
+1bb734595501c79ae5823bd69d0061de7602a4ee 96ff1cacb4d4b1250093f942ad73ec1cabcae0aa Deep <deepanrajpmk@gmail.com> 1766136533 +0530	commit: style:arrowright lucide
+96ff1cacb4d4b1250093f942ad73ec1cabcae0aa 8c062b1feef9d0e54fe46815d4b3bd6c7aa349ee Deep <deepanrajpmk@gmail.com> 1767027455 +0530	commit: fix:used actions for carts
+8c062b1feef9d0e54fe46815d4b3bd6c7aa349ee 1b76bedcae8c7316f72cb9ed340617a8f58cd9b9 Deep <deepanrajpmk@gmail.com> 1767027932 +0530	commit: style:landing page section min-height
+1b76bedcae8c7316f72cb9ed340617a8f58cd9b9 0d6730372f855d019a2e785138498f540cffe645 Deep <deepanrajpmk@gmail.com> 1767106664 +0530	commit: feat:driver ui components
+0d6730372f855d019a2e785138498f540cffe645 8a6e960f501d917530a98a53dffcbe552453819c Deep <deepanrajpmk@gmail.com> 1767109844 +0530	commit: fix:redirect and button correction
+8a6e960f501d917530a98a53dffcbe552453819c 43174664c8ede3f9ddd03c1dc4eeeb5804587821 Deep <deepanrajpmk@gmail.com> 1767109907 +0530	commit: fix:type
+43174664c8ede3f9ddd03c1dc4eeeb5804587821 b9faa87f2518f469893fb814908aa348124ef1f4 Deep <deepanrajpmk@gmail.com> 1767110208 +0530	commit: feat:driver dashboard
+b9faa87f2518f469893fb814908aa348124ef1f4 3834b010682c063de1b2f9983b77e6e0d2499db0 Deep <deepanrajpmk@gmail.com> 1767110841 +0530	commit: feat:top and sidebars
+3834b010682c063de1b2f9983b77e6e0d2499db0 805325fce7857b8fa0d2bfcb712444c20af9d832 Deep <deepanrajpmk@gmail.com> 1767195778 +0530	commit: style:login padding
+805325fce7857b8fa0d2bfcb712444c20af9d832 0f0ffad06cf5d44dc838e73d2b361de04c74b80b Deep <deepanrajpmk@gmail.com> 1767198969 +0530	commit: feat:taxi category component
+0f0ffad06cf5d44dc838e73d2b361de04c74b80b f248c832cc1053e3974d1a90233219e0796d20c0 Deep <deepanrajpmk@gmail.com> 1767200095 +0530	commit: style:img for taxies
+f248c832cc1053e3974d1a90233219e0796d20c0 0cf61c26a74c5fbf664c4e362eb82cd3ddfa7484 Deep <deepanrajpmk@gmail.com> 1767273250 +0530	commit: feat:filter component
+0cf61c26a74c5fbf664c4e362eb82cd3ddfa7484 ca282fb1ef8e8e3b5be0002667b6055d857cf469 Deep <deepanrajpmk@gmail.com> 1767274903 +0530	commit: feat:left and right panels for taxi with map,pick,drop
+ca282fb1ef8e8e3b5be0002667b6055d857cf469 6faf784a89a98e2c10af1ac382c1757f0a2283c7 Deep <deepanrajpmk@gmail.com> 1767281107 +0530	commit: style:placeholders for shop reg
+6faf784a89a98e2c10af1ac382c1757f0a2283c7 10d4129ef9f7c0567fb910d1b0aa51abd552fd12 Deep <deepanrajpmk@gmail.com> 1767423306 +0530	commit: fix:removed placeholders
+10d4129ef9f7c0567fb910d1b0aa51abd552fd12 8e98ccaba02596627cc9172f8935a093f0220443 Deep <deepanrajpmk@gmail.com> 1767432997 +0530	commit: fix:name in vselector
+8e98ccaba02596627cc9172f8935a093f0220443 66eb080f5215ccebffd70c6e07c9fbc7daed3853 Deep <deepanrajpmk@gmail.com> 1767436720 +0530	commit: feat:realtime map
+66eb080f5215ccebffd70c6e07c9fbc7daed3853 8e98bfcfc881c79af0774f5f5b24f06e49ca0b06 Deep <deepanrajpmk@gmail.com> 1767436995 +0530	commit: style:bg for vselect
+8e98bfcfc881c79af0774f5f5b24f06e49ca0b06 e80258fba487d8f4a6a48aacf862cae0bc316536 Deep <deepanrajpmk@gmail.com> 1767437877 +0530	commit: fix:auto fetch api cart
+e80258fba487d8f4a6a48aacf862cae0bc316536 cc61a9078c863e569a72f96f688552c13ddce9f4 Deep <deepanrajpmk@gmail.com> 1767597205 +0530	commit: style:image size
+cc61a9078c863e569a72f96f688552c13ddce9f4 5bed67672da242eeee73b7bd4e916948e58adbe8 Deep <deepanrajpmk@gmail.com> 1767598197 +0530	commit: feat:map component
+5bed67672da242eeee73b7bd4e916948e58adbe8 f1d5cbe37074bb88b3b94e01aee88e83137354b9 Deep <deepanrajpmk@gmail.com> 1767599401 +0530	commit: feat:taxipanel update
+f1d5cbe37074bb88b3b94e01aee88e83137354b9 30ac89bbf0e79b406fb1a6b53e92ed6f8c8cccb3 Deep <deepanrajpmk@gmail.com> 1767622086 +0530	commit: fix:structure change
+30ac89bbf0e79b406fb1a6b53e92ed6f8c8cccb3 80eeb337e75b90380a09a04e6f2d378f6ea2f2d7 Deep <deepanrajpmk@gmail.com> 1767630603 +0530	commit: style:reg for driver mb,font
+80eeb337e75b90380a09a04e6f2d378f6ea2f2d7 1238c6de7c61d6855f247aa4fd3236032f378b32 Deep <deepanrajpmk@gmail.com> 1767632305 +0530	commit: feat:driver map
+1238c6de7c61d6855f247aa4fd3236032f378b32 975f0d18e54c484d615ba1457513a276929959e1 Deep <deepanrajpmk@gmail.com> 1767698824 +0530	commit: feat:booking ride
+975f0d18e54c484d615ba1457513a276929959e1 1d0036132e43d89aa6d9591ff38893dd50771d93 Deep <deepanrajpmk@gmail.com> 1767698890 +0530	commit: feat:accept ride
+1d0036132e43d89aa6d9591ff38893dd50771d93 f546085e60e8956b1af11bc8238129c5ad923f7b Deep <deepanrajpmk@gmail.com> 1767699755 +0530	commit: style:grid components
+f546085e60e8956b1af11bc8238129c5ad923f7b 4d153c8b7de5055bf3d62ee8777c136bf8fef300 Deep <deepanrajpmk@gmail.com> 1767699795 +0530	commit: feat:api and actions for driver
+4d153c8b7de5055bf3d62ee8777c136bf8fef300 9a41f4a35e681ed9041edc306c267b0ed578d8d6 Deep <deepanrajpmk@gmail.com> 1767700721 +0530	commit: style:border for pick and drop
+9a41f4a35e681ed9041edc306c267b0ed578d8d6 7dab887a3bd46445a76f604475fb2eab4982436b Deep <deepanrajpmk@gmail.com> 1767715512 +0530	commit: style:timeline for pick drop
+7dab887a3bd46445a76f604475fb2eab4982436b 6017951049d44357793f492bd4e3d8ea94cc409c Deep <deepanrajpmk@gmail.com> 1767718634 +0530	commit: style:spinner for login
+6017951049d44357793f492bd4e3d8ea94cc409c cbe4cb033ddf9e8f1f27a2ceca6aa50ad7647454 Deep <deepanrajpmk@gmail.com> 1767763878 +0530	commit: feat:login and reg update
+cbe4cb033ddf9e8f1f27a2ceca6aa50ad7647454 49b634b6acecc3814e390a8bec90a407d0f9c5ac Deep <deepanrajpmk@gmail.com> 1767777328 +0530	commit: feat:confirm status for driver
+49b634b6acecc3814e390a8bec90a407d0f9c5ac 2c29e8d55ffef5ba1e5a01b205c6e2d0d3761ed9 Deep <deepanrajpmk@gmail.com> 1767810026 +0530	commit: fix:booking
+2c29e8d55ffef5ba1e5a01b205c6e2d0d3761ed9 eef6b6a5600ebcaadb09812a33d5751c3f00c34e Deep <deepanrajpmk@gmail.com> 1767811979 +0530	commit: fix:ride flow
+eef6b6a5600ebcaadb09812a33d5751c3f00c34e 976808a5f09b6321da68a78caaf2d810072dfea9 Deep <deepanrajpmk@gmail.com> 1767889928 +0530	commit: fix:structure refactor for customer
+976808a5f09b6321da68a78caaf2d810072dfea9 95288ebccfa533072c74a757b81959f3a098be35 Deep <deepanrajpmk@gmail.com> 1767890408 +0530	commit: style:map and padd
+95288ebccfa533072c74a757b81959f3a098be35 a1dea67827400120d638bab5ec665e683a8422ef Deep <deepanrajpmk@gmail.com> 1767891809 +0530	commit: feat:map updated with mapcn
+a1dea67827400120d638bab5ec665e683a8422ef 37335048350fe32e0fcd5abb6c679893fdab57b9 Deep <deepanrajpmk@gmail.com> 1767893746 +0530	commit: fix:explore structure
+37335048350fe32e0fcd5abb6c679893fdab57b9 d86475df1ee805ed93ff74bba796b14a1217885a Deep <deepanrajpmk@gmail.com> 1767894218 +0530	commit: feat:ride page update
+d86475df1ee805ed93ff74bba796b14a1217885a 3470c0fddd1a3f7bb48af5bdf35de62accbb3d82 Deep <deepanrajpmk@gmail.com> 1767894538 +0530	commit: fix:build error in explore
+3470c0fddd1a3f7bb48af5bdf35de62accbb3d82 2bb941918c56561cd9c6dea6e8ed2631a26c103d Deep <deepanrajpmk@gmail.com> 1767935765 +0530	commit: fix:url for login and reg

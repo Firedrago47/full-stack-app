@@ -22,8 +22,7 @@ export function useRideStatus(rideId?: string) {
 
         if (
           status === RideStatus.COMPLETED ||
-          status === RideStatus.CANCELLED
-        ) {
+          status === RideStatus.CANCELLED        ) {
           return 0;
         }
 

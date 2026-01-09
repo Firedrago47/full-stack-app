@@ -24,10 +24,10 @@ const ROLE_HOME: Record<Role, string> = {
  * Login pages for each role
  */
 const ROLE_LOGIN: Record<Role, string> = {
-  CUSTOMER: "/customer/auth/login",
-  DRIVER: "/driver/auth/login",
-  SHOP_OWNER: "/shop/auth/login",
-  ADMIN: "/admin/auth/login",
+  CUSTOMER: "/customer/login",
+  DRIVER: "/driver/login",
+  SHOP_OWNER: "/shop/login",
+  ADMIN: "/admin/login",
 };
 
 export default async function ProtectedLayout({
@@ -43,7 +43,7 @@ export default async function ProtectedLayout({
     }
 
     // fallback (generic login)
-    redirect("/auth/login");
+    redirect("/login");
   }
 
 

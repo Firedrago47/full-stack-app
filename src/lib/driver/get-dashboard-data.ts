@@ -38,34 +38,19 @@ export async function getDriverDashboardData(): Promise<DriverDashboardData> {
 
   if (!driver) throw new Error("Forbidden");
 
-  // 1️⃣ Active ride already assigned to this driver
+  // ✅ ONLY driver-owned active ride
   const activeRide = await prisma.ride.findFirst({
     where: {
       driverId: driver.id,
       status: {
-        notIn: [RideStatus.COMPLETED, RideStatus.CANCELLED],
+        in: [
+          RideStatus.ASSIGNED,
+          RideStatus.ACCEPTED,
+          RideStatus.STARTED,
+        ],
       },
     },
     orderBy: { createdAt: "desc" },
-  });
-
-  if (activeRide) {
-    return {
-      driver: {
-        ...driver,
-        todayEarningsCents: await getTodayEarnings(driver.id),
-      },
-      activeRide: mapRide(activeRide),
-    };
-  }
-
-  // 2️⃣ Incoming customer request (unassigned)
-  const incomingRide = await prisma.ride.findFirst({
-    where: {
-      status: RideStatus.REQUESTED,
-      driverId: null,
-    },
-    orderBy: { createdAt: "asc" }, // FIFO
   });
 
   return {
@@ -73,7 +58,7 @@ export async function getDriverDashboardData(): Promise<DriverDashboardData> {
       ...driver,
       todayEarningsCents: await getTodayEarnings(driver.id),
     },
-    activeRide: incomingRide ? mapRide(incomingRide) : null,
+    activeRide: activeRide ? mapRide(activeRide) : null,
   };
 }
 
