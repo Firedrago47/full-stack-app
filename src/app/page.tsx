@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,7 +29,7 @@ export default function LandingPage() {
               For Shops
             </a>
             <a
-              href="/customer/auth/login"
+              href="/customer/login"
               className="ml-4 inline-flex items-center px-4 py-2 rounded-md bg-slate-900 text-white text-sm hover:opacity-90"
             >
               Login
@@ -55,7 +54,7 @@ export default function LandingPage() {
               <Button
                 size="lg"
                 className="px-8 shadow-md"
-                onClick={() => (window.location.href = "/customer/auth/login")}
+                onClick={() => (window.location.href = "/customer/login")}
               >
                 Login
               </Button>
@@ -64,7 +63,7 @@ export default function LandingPage() {
                 variant="outline"
                 className="px-8 shadow-md"
                 onClick={() =>
-                  (window.location.href = "/customer/auth/register")
+                  (window.location.href = "/customer/register")
                 }
               >
                 Get Started

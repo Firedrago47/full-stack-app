@@ -122,7 +122,7 @@ export default function CustomerRegisterPage() {
               <p className="mb-2 text-center text-sm text-muted-foreground">
                 Already have an account?{" "}
                 <a
-                  href="/customer/auth/login"
+                  href="/customer/login"
                   className="text-blue-600 underline"
                 >
                   Login
