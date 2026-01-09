@@ -16,7 +16,7 @@ export default async function RideDetailsPage({ params }: PageProps) {
   if (!rideId) notFound();
 
   const user = await getCurrentUser();
-  if (!user) redirect("/customer/auth/login");
+  if (!user) redirect("/customer/login");
 
   const ride = await prisma.ride.findUnique({
     where: { id: rideId },

@@ -8,7 +8,7 @@ export default function FoodDashboardPage() {
   return (
     <DashboardShell>
         <CategoryCarousel active="food"/>
-      <div className="grid grid-cols-1 lg:grid-cols-4 mt-6 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 mt-6 gap-4">
         <Filter category="food"/>
         <section className="lg:col-span-3 space-y-4">
           <ItemsSection category="food"/>

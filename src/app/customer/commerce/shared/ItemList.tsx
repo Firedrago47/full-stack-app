@@ -44,7 +44,7 @@ export default function ItemList({
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 mx-4 gap-4">
       {items.map((item) => (
         <Card
           key={item.id}

@@ -35,8 +35,13 @@ const STATUS_UI: Record<
     description: "This may take up to 1 minute",
     showSpinner: true,
   },
-  ACCEPTED: {
+  ASSIGNED: {
     title: "Driver Assigned",
+    showSpinner: false,
+    showConfirm: true,
+  },
+  ACCEPTED: {
+    title: "Ride Accepted",
     showSpinner: false,
     showConfirm: true,
   },

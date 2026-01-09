@@ -36,9 +36,10 @@ const STATUS_CONFIG: Record<
   }
 > = {
   REQUESTED: { label: "Looking for a driver…", showSpinner: true },
+  ASSIGNED: { label: "Driver Assigned for ride", showSpinner: true },
   ACCEPTED: { label: "Driver accepted your ride", showSpinner: true },
   CONFIRMED: { label: "Driver is on the way", showSpinner: true },
-  STARTED: { label: "Ride in progress 🚗", showSpinner: true },
+  STARTED: { label: "Ride in progress", showSpinner: true },
   COMPLETED: { label: "Ride completed", showSpinner: false },
   CANCELLED: { label: "Ride cancelled", showSpinner: false },
 };
