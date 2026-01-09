@@ -45,7 +45,7 @@ export default function RideDashboardPage() {
             </p>
 
             <Link href="/customer/ride/book">
-              <Button className="w-full">Book a Ride</Button>
+              <Button className="w-full cursor-pointer">Book a Ride</Button>
             </Link>
           </CardContent>
         </Card>
@@ -59,7 +59,7 @@ export default function RideDashboardPage() {
                 View past trips and receipts.
               </p>
               <Link href="/customer/ride/history">
-                <Button variant="outline" size="sm">
+                <Button className="cursor-pointer" variant="outline" size="sm">
                   View History
                 </Button>
               </Link>
@@ -72,7 +72,7 @@ export default function RideDashboardPage() {
               <p className="text-sm text-muted-foreground">
                 Emergency contacts and support.
               </p>
-              <Button variant="outline" size="sm">
+              <Button className="cursor-pointer" variant="outline" size="sm">
                 Safety Center
               </Button>
             </CardContent>

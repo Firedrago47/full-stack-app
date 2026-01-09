@@ -81,7 +81,7 @@ export default function ItemList({
 
               <Button
                 size="sm"
-                className="w-full"
+                className="w-full cursor-pointer"
                 onClick={() => addToCart(item.id)}
               >
                {loading ? (

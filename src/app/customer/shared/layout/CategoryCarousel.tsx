@@ -36,7 +36,7 @@ export default function CategoryCarousel({ active = "default" }: Props) {
               <button
                 key={c.id}
                 onClick={() => router.push(`/customer/dashboard/${c.id}`)}
-                className="flex flex-col items-center min-w-[90px] space-y-2"
+                className="flex flex-col items-center min-w-[90px] cursor-pointer space-y-2"
               >
                 <div
                   className={cn(
@@ -79,7 +79,7 @@ export default function CategoryCarousel({ active = "default" }: Props) {
               key={c.id}
               onClick={() => router.push(`/customer/dashboard/${c.id}`)}
               className={cn(
-                "flex items-center gap-4 rounded-xl px-4 py-2 shadow-sm border transition-all",
+                "flex items-center gap-4 rounded-xl px-4 py-2 shadow-sm border cursor-pointer transition-all",
                 isActive
                   ? "border-primary bg-primary/10 shadow-md"
                   : "border-gray-200 bg-white hover:shadow-md"
