@@ -23,14 +23,14 @@ export default function DriverLandingPage() {
           </p>
 
           <div className="mt-6 flex gap-4">
-            <Button size="lg" className="px-8" onClick={() => window.location.href = "/driver/auth/register"}>
+            <Button size="lg" className="px-8" onClick={() => window.location.href = "/driver/register"}>
               Start Driving
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="px-8"
-              onClick={() => window.location.href = "/driver/auth/login"}
+              onClick={() => window.location.href = "/driver/login"}
             >
               Login
             </Button>
@@ -93,7 +93,7 @@ export default function DriverLandingPage() {
           <Button
             size="lg"
             className="px-10 py-6 text-lg"
-            onClick={() => window.location.href = "/driver/auth/register"}
+            onClick={() => window.location.href = "/driver/register"}
           >
             Become a Driver Today
           </Button>

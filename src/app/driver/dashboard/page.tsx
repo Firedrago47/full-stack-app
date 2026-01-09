@@ -1,14 +1,15 @@
-// app/driver/dashboard/page.tsx
-import DashboardShell from "../components/DashboardShell";
-import DriverDashboardClient from "../components/DriverDashboardClient";
+import DashboardShell from "../shared/layout/DashboardShell";
+import DriverDashboard from "./DriverDashboard";
 import { getDriverDashboardData } from "@/lib/driver/get-dashboard-data";
+import type { DriverDashboardData } from "../types";
 
 export default async function DriverDashboardPage() {
-  const initialData = await getDriverDashboardData();
+  const initialData =
+    (await getDriverDashboardData()) as DriverDashboardData;
 
   return (
     <DashboardShell>
-      <DriverDashboardClient initialData={initialData} />
+      <DriverDashboard initialData={initialData} />
     </DashboardShell>
   );
 }
