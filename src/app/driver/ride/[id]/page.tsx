@@ -14,15 +14,12 @@ interface Props {
 }
 
 export default async function DriverRidePage({ params }: Props) {
-  // 1️⃣ Auth (user)
   const user = await getCurrentUser();
   if (!user) redirect("/driver/login");
 
-  // 2️⃣ Resolve params (Next.js 15+)
   const { id: rideId } = await params;
   if (!rideId) notFound();
 
-  // 3️⃣ Load driver record
   const driver = await prisma.driver.findUnique({
     where: { userId: user.id },
     select: { id: true },
@@ -30,19 +27,16 @@ export default async function DriverRidePage({ params }: Props) {
 
   if (!driver) notFound();
 
-  // 4️⃣ Load ride
   const ride = await prisma.ride.findUnique({
     where: { id: rideId },
   });
 
   if (!ride) notFound();
 
-  // 5️⃣ Ownership check (CORRECT)
   if (ride.driverId !== driver.id) {
     notFound();
   }
 
-  // 6️⃣ Invalid terminal states
   if (
     ride.status === RideStatus.COMPLETED ||
     ride.status === RideStatus.CANCELLED
@@ -50,7 +44,6 @@ export default async function DriverRidePage({ params }: Props) {
     redirect("/driver/dashboard");
   }
 
-  // 7️⃣ Render
   return (
     <DashboardShell>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

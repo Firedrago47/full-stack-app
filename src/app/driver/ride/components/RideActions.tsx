@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function RideActions({ ride }: Props) {
-  if (ride.status === RideStatus.ACCEPTED) {
+  if (ride.status === RideStatus.CONFIRMED) {
     return (
       <Button
         className="w-full"
@@ -27,6 +27,15 @@ export default function RideActions({ ride }: Props) {
         onClick={() => completeRide(ride.id)}
       >
         Complete Ride
+      </Button>
+    );
+  }
+  if (ride.status === RideStatus.COMPLETED) {
+    return (
+      <Button
+        className="w-full bg-green"
+      >
+        Ride Completed
       </Button>
     );
   }
