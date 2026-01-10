@@ -23,13 +23,13 @@ export default function DriverLandingPage() {
           </p>
 
           <div className="mt-6 flex gap-4">
-            <Button size="lg" className="px-8" onClick={() => window.location.href = "/driver/register"}>
+            <Button size="lg" className="px-8 shadow-md hover:shadow-lg" onClick={() => window.location.href = "/driver/register"}>
               Start Driving
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="px-8"
+              className="px-8 shadow-md hover:shadow-lg"
               onClick={() => window.location.href = "/driver/login"}
             >
               Login

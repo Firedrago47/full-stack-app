@@ -6,9 +6,8 @@ interface Props {
 
 export default function EmptyState({ text }: Props) {
   return (
-    <div className="bg-white border rounded-xl p-6 text-center">
-              <Package className="h-10 w-10 text-muted-foreground" />
-
+    <div className="flex flex-row gap-6 bg-white justify-center border rounded-xl p-6 text-center">
+      <Package className="text-muted-foreground" />
       <p className="text-sm text-muted-foreground">
         {text}
       </p>

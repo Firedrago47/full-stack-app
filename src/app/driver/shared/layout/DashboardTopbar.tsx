@@ -25,7 +25,6 @@ export default function DashboardTopbar() {
     <>
       <header className="w-full border-b bg-white px-4 md:px-6 py-3 flex items-center justify-between sticky top-0 z-20 shadow-sm">
 
-        {/* ---------- LEFT: MENU + LOGO ---------- */}
         <div className="flex items-center gap-3">
 
           {/* Hamburger → opens sidebar */}
@@ -53,7 +52,6 @@ export default function DashboardTopbar() {
           </Link>
         </div>
 
-        {/* ---------- MIDDLE: SEARCH BAR (Desktop only) ---------- */}
         <div className="hidden md:flex items-center w-[380px]">
           <div className="relative w-full">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
@@ -64,15 +62,13 @@ export default function DashboardTopbar() {
           </div>
         </div>
 
-        {/* ---------- RIGHT: CART + PROFILE ---------- */}
         <div className="flex items-center gap-4">
 
-          {/* Mobile search icon */}
           <button className="md:hidden p-2 rounded hover:bg-gray-100">
             <Search size={20} />
           </button>
 
-          {/* Cart Icon */}
+          {/* Cart Icon
           <Button variant="ghost" onClick={() => setCartOpen(true)} className="relative">
             <ShoppingCart size={22} />
             {items.length > 0 && (
@@ -80,7 +76,7 @@ export default function DashboardTopbar() {
                 {items.length}
               </span>
             )}
-          </Button>
+          </Button> */}
 
           {/* Profile Avatar */}
           <Link href="/customer/profile">

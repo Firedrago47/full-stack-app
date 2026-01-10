@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 const MENU = [
-  { id:"dashboard", name: "Overview", href: "/driver/dashboard", icon: Home },
+  { id: "dashboard", name: "Overview", href: "/driver/dashboard", icon: Home },
   {
     id: "ride",
     name: "Active Ride",
@@ -27,19 +27,22 @@ const MENU = [
     href: "/driver/earnings",
     icon: Wallet,
   },
-  { id:"support",name: "Support", href: "/driver/support", icon: HelpCircle },
-  { id:"settings", name: "Settings", href: "/driver/settings", icon: Settings },
+  { id: "support", name: "Support", href: "/driver/support", icon: HelpCircle },
+  {
+    id: "settings",
+    name: "Settings",
+    href: "/driver/settings",
+    icon: Settings,
+  },
 ];
-
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
 
   return (
     <aside className="bg-white">
-
       <nav className="p-4 space-y-1">
-        {MENU.map(({ id,name, href, icon: Icon }) => {
+        {MENU.map(({ id, name, href, icon: Icon }) => {
           const active = pathname === href;
 
           return (

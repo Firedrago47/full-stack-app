@@ -26,7 +26,7 @@ export default function DriverDashboard({ initialData }: Props) {
     fetcher,
     {
       fallbackData: initialData,
-      refreshInterval: 10000,
+      refreshInterval: 0,
       revalidateOnFocus: false,
     }
   );
