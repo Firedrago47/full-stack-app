@@ -44,7 +44,6 @@ const STATUS_CONFIG: Record<
   CANCELLED: { label: "Ride cancelled", showSpinner: false },
 };
 
-
 export default function RideStatusView({ rideId, initialRide }: Props) {
   const { data } = useRideStatus(rideId);
 
@@ -53,14 +52,38 @@ export default function RideStatusView({ rideId, initialRide }: Props) {
   const config = STATUS_CONFIG[ride.status];
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
-      {/* Header */}
+    <div className="">
       <header className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Your Ride</h1>
         <Badge>{ride.status}</Badge>
       </header>
 
-      {/* Status line */}
+
+      <div className="grid grid-cols-3 gap-10 mx-auto mt-6 ">
+        <div className="flex flex-col gap-6">
+          <div className="bg-white border rounded-xl p-4 space-y-2">
+            <div>
+              <p className="text-sm font-semibold">Pickup</p>
+              <p className="text-sm text-muted-foreground">
+                {ride.pickupAddress}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold">Drop</p>
+              <p className="text-sm text-muted-foreground">
+                {ride.dropAddress ?? "Not set"}
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white border rounded-xl p-4 space-y-2">
+
+          <RideTimeline status={ride.status} />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-6">
       <StatusLine
         text={
           ride.status === RideStatus.ACCEPTED && ride.driver
@@ -69,52 +92,24 @@ export default function RideStatusView({ rideId, initialRide }: Props) {
         }
         spinning={config.showSpinner}
       />
-
-      {/* Map */}
-      <RideLiveMap />
-
-      {/* Timeline */}
-      <RideTimeline status={ride.status} />
-
-      {/* Driver */}
-      {ride.driver && <DriverProfile driver={ride.driver} />}
-
-      {/* Fare */}
-      <FareDetails base={80} distance={120} tax={18} />
-
-      {/* Safety */}
-      <SafetyPanel />
-
-      {/* Cancel */}
-      <CancelRideButton rideId={rideId} status={ride.status} />
-
-      {/* Addresses */}
-      <div className="bg-white border rounded-xl p-4 space-y-2">
-        <div>
-          <p className="text-sm font-semibold">Pickup</p>
-          <p className="text-sm text-muted-foreground">
-            {ride.pickupAddress}
-          </p>
+          <RideLiveMap />
         </div>
 
-        <div>
-          <p className="text-sm font-semibold">Drop</p>
-          <p className="text-sm text-muted-foreground">
-            {ride.dropAddress ?? "Not set"}
-          </p>
+        <div className="flex flex-col gap-6">
+          {ride.driver && <DriverProfile driver={ride.driver} />}
+
+          <FareDetails base={80} distance={120} tax={18} />
+
+          <SafetyPanel />
+
+          <CancelRideButton rideId={rideId} status={ride.status} />
         </div>
       </div>
     </div>
   );
 }
 
-function StatusLine({
-  text,
-  spinning,
-}: {
-  text: string;
-  spinning: boolean;
-}) {
+function StatusLine({ text, spinning }: { text: string; spinning: boolean }) {
   return (
     <div className="flex items-center gap-3 text-sm text-muted-foreground">
       {spinning && <Loader2 className="h-4 w-4 animate-spin" />}
