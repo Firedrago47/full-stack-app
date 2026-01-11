@@ -79,7 +79,7 @@ export default function ShopItemList({ items, shopId }: Props) {
                 </td>
 
                 <td className="p-3">{item.name}</td>
-                <td className="p-3">₹{item.priceCents}</td>
+                <td className="p-3">₹{(item.priceCents / 100).toFixed(2)}</td>
                 <td className="p-3">{item.stock}</td>
 
                 <td className="p-3 text-right">

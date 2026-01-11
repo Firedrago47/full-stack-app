@@ -7,7 +7,7 @@ import { RideStatus } from "@prisma/client";
  */
 export async function assignRideToDriver(driverId: string) {
   return prisma.$transaction(async (tx) => {
-    // 1️⃣ Ensure driver has NO active ride
+    // Ensure driver has NO active ride
     const existing = await tx.ride.findFirst({
       where: {
         driverId,
@@ -24,7 +24,7 @@ export async function assignRideToDriver(driverId: string) {
 
     if (existing) return null;
 
-    // 2️⃣ Find oldest unassigned ride
+    // Find oldest unassigned ride
     const candidate = await tx.ride.findFirst({
       where: {
         status: RideStatus.REQUESTED,
@@ -36,7 +36,7 @@ export async function assignRideToDriver(driverId: string) {
 
     if (!candidate) return null;
 
-    // 3️⃣ Atomically claim the ride (race-safe)
+    // Atomically claim the ride (race-safe)
     const result = await tx.ride.updateMany({
       where: {
         id: candidate.id,
@@ -54,7 +54,7 @@ export async function assignRideToDriver(driverId: string) {
       return null;
     }
 
-    // 4️⃣ Fetch and return the assigned ride
+    // Fetch and return the assigned ride
     return tx.ride.findUnique({
       where: { id: candidate.id },
     });

@@ -9,10 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  CreateItemSchema,
-  ItemInput,
-} from "@/lib/validation/item";
+import { CreateItemSchema, ItemInput } from "@/lib/validation/item";
 
 interface Props {
   open: boolean;
@@ -21,11 +18,11 @@ interface Props {
 }
 
 export default function AddItemDialog({ open, onOpenChange, shopId }: Props) {
-  const [form, setForm] = useState<ItemInput>({
+  const [form, setForm] = useState({
     shopId,
     name: "",
-    priceCents: undefined as unknown as number,
-    stock: undefined as unknown as number,
+    priceRupees: "",
+    stock: "",
     imageUrl: "",
   });
 
@@ -33,14 +30,28 @@ export default function AddItemDialog({ open, onOpenChange, shopId }: Props) {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    const parsed = CreateItemSchema.safeParse(form);
+    const price = Number(form.priceRupees);
+
+    if (!form.name || isNaN(price) || price <= 0) {
+      alert("Invalid input");
+      return;
+    }
+
+    const payload: ItemInput = {
+      shopId: form.shopId,
+      name: form.name,
+      priceCents: Math.round(price * 100),
+      stock: Number(form.stock),
+      imageUrl: form.imageUrl,
+    };
+
+    const parsed = CreateItemSchema.safeParse(payload);
     if (!parsed.success) {
-      alert("Invalid input, please fill properly.");
+      alert("Invalid input");
       return;
     }
 
     setLoading(true);
-
     await fetch("/api/shop/items", {
       method: "POST",
       body: JSON.stringify(parsed.data),
@@ -85,9 +96,11 @@ export default function AddItemDialog({ open, onOpenChange, shopId }: Props) {
             <label className="text-sm font-medium">Price (₹)</label>
             <Input
               type="number"
-              placeholder="Enter price"
-              value={form.priceCents ?? ""}
-              onChange={(e) => updateField("priceCents", e.target.value)}
+              placeholder="Enter price in ₹"
+              value={form.priceRupees}
+              onChange={(e) =>
+                setForm((p) => ({ ...p, priceRupees: e.target.value }))
+              }
             />
           </div>
 
@@ -96,9 +109,11 @@ export default function AddItemDialog({ open, onOpenChange, shopId }: Props) {
             <label className="text-sm font-medium">Stock Available</label>
             <Input
               type="number"
-              placeholder="Ex: 30"
-              value={form.stock ?? ""}
-              onChange={(e) => updateField("stock", e.target.value)}
+              placeholder="Enter price in ₹"
+              value={form.priceRupees}
+              onChange={(e) =>
+                setForm((p) => ({ ...p, priceRupees: e.target.value }))
+              }
             />
           </div>
 
