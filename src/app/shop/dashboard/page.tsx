@@ -1,10 +1,10 @@
 import { getCurrentUser } from "@/lib/auth/current-user";
-import DashboardShell from "../components/DashboardShell";
+import DashboardShell from "../shared/layout/DashboardShell";
 
-import ShopStats from "../components/ShopStats";
-import ShopQuickActions from "../components/ShopQuickActions";
-import ShopRecentOrders from "../components/ShopRecentOrders";
-import ShopStatusCard from "../components/ShopStatusCard";
+import ShopStats from "./components/ShopStats";
+import ShopQuickActions from "./components/ShopQuickActions";
+import ShopRecentOrders from "./components/ShopRecentOrders";
+import ShopStatusCard from "./components/ShopStatusCard";
 
 export default async function ShopDashboard() {
   const user = await getCurrentUser();

@@ -4,7 +4,7 @@ import ProtectedLayout from "@/components/ProtectedLayout";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import prisma from "@/lib/prisma";
 import ShopItemsPageClient from "./ShopItemsPageClient";
-import DashboardTopbar from "../components/DashboardTopbar";
+import DashboardTopbar from "../shared/layout/DashboardTopbar";
 
 export default async function ShopItemsPage() {
   const user = await getCurrentUser();

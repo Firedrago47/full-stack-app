@@ -12,7 +12,7 @@ import {
   SheetHeader,
 } from "@/components/ui/sheet";
 
-import DashboardSidebar from "../components/DashboardSidebar";
+import DashboardSidebar from "./DashboardSidebar";
 
 export default function DashboardTopbar() {
 

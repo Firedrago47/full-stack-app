@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import AddItemDialog from "../components/items/AddItemDialog";
-import ShopItemList from "../components/items/ShopItemsList";
+import AddItemDialog from "./components/AddItemDialog";
+import ShopItemList from "./components/ShopItemsList";
 import { Item, Shop } from "@prisma/client";
 
 interface Props {
