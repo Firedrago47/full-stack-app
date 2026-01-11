@@ -68,7 +68,7 @@ export default function DashboardTopbar() {
           </button>
 
           {/* Profile Avatar */}
-          <Link href="/customer/profile">
+          <Link href="/shop/profile">
             <div className="h-9 w-9 rounded-full bg-gray-200 border shadow-sm cursor-pointer flex items-center justify-center">
               <span className="text-sm font-semibold text-gray-700">D</span>
             </div>
