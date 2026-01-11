@@ -17,7 +17,7 @@ const MENU = [
   { id: "dashboard", name: "Overview", href: "/driver/dashboard", icon: Home },
   {
     id: "ride",
-    name: "Active Ride",
+    name: "Rides",
     href: "/driver/ride",
     icon: Car,
   },
