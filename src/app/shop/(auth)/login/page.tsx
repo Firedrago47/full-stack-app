@@ -131,7 +131,7 @@ export default function ShopLoginPage() {
               <p className="mb-2 text-center text-sm text-muted-foreground">
                 Don’t have an account?{" "}
                 <a
-                  href="/shop/auth/register"
+                  href="/shop/register"
                   className="text-blue-600 underline"
                 >
                   Register

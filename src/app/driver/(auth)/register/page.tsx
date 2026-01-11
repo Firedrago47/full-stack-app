@@ -133,7 +133,7 @@ export default function DriverRegisterPage() {
               <p className="mb-2 text-center text-sm text-muted-foreground">
                 Already have an account?{" "}
                 <a
-                  href="/driver/auth/login"
+                  href="/driver/login"
                   className="text-blue-600 underline"
                 >
                   Login

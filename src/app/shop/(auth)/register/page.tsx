@@ -47,7 +47,7 @@ export default function ShopRegisterPage() {
       return;
     }
     
-    router.push("/shop/auth/login");
+    router.push("/shop/login");
     setLoading(false);
   };
 
@@ -137,7 +137,7 @@ export default function ShopRegisterPage() {
 
               <p className="mb-2 text-center text-sm text-muted-foreground">
                 Already have an account?{" "}
-                <a href="/shop/auth/login" className="text-blue-600 underline">
+                <a href="/shop/login" className="text-blue-600 underline">
                   Login
                 </a>
               </p>

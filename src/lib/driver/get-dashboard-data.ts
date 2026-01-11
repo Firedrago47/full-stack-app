@@ -38,7 +38,6 @@ export async function getDriverDashboardData(): Promise<DriverDashboardData> {
 
   if (!driver) throw new Error("Forbidden");
 
-  // ✅ ONLY driver-owned active ride
   const activeRide = await prisma.ride.findFirst({
     where: {
       driverId: driver.id,
