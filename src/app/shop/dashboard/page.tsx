@@ -12,8 +12,8 @@ export default async function ShopDashboard() {
 
   return (
       <DashboardShell>
-        <div className="space-y-8 p-4">
-          <h1 className="text-3xl font-bold">Shop Dashboard</h1>
+        <div className="space-y-6 p-4">
+          <h2 className="text-3xl font-bold">Shop Dashboard</h2>
           <p className="text-muted-foreground">
             Manage items, view orders and track your shop performance.
           </p>
