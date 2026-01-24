@@ -26,7 +26,7 @@ export default function ShopLandingPage() {
             <Button
               size="lg"
               className="px-8 shadow-md"
-              onClick={() => (window.location.href = "/shop/auth/register")}
+              onClick={() => (window.location.href = "/shop/register")}
             >
               Register Shop
             </Button>
@@ -34,7 +34,7 @@ export default function ShopLandingPage() {
               size="lg"
               variant="outline"
               className="px-8 shadow-md"
-              onClick={() => (window.location.href = "/shop/auth/login")}
+              onClick={() => (window.location.href = "/shop/login")}
             >
               Login
             </Button>
@@ -97,7 +97,7 @@ export default function ShopLandingPage() {
           <Button
             size="lg"
             className="px-10 py-6 text-lg"
-            onClick={() => (window.location.href = "/shop/auth/register")}
+            onClick={() => (window.location.href = "/shop/register")}
           >
             Become a Partner Today
           </Button>
