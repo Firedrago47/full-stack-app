@@ -46,7 +46,7 @@ export default function DriverRegisterPage() {
       return;
     }
 
-    router.push("/driver/auth/login");
+    router.push("/driver/login");
     setLoading(false);
   };
 

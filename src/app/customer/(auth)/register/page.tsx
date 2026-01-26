@@ -44,7 +44,7 @@ export default function CustomerRegisterPage() {
       return;
     }
 
-    router.push("/customer/auth/login");
+    router.push("/customer/login");
     setLoading(false);
   };
 
