@@ -7,6 +7,7 @@ import {
   updateCartItem,
   removeCartItem,
 } from "@/app/actions/cart";
+import { redirect } from "next/navigation";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -48,7 +49,7 @@ export function useCart() {
       if(!res.ok){
         return {ok:false,error:data.error ?? "Checkout Failed"};
       }
-  
+      redirect("/customer/orders")
       mutate();
       return {ok:true,order:data.order};
     }
