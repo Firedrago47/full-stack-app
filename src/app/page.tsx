@@ -1,186 +1,255 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  ChevronRight,
+  Truck,
+  Store,
+  Bike,
+  MapPin,
+  Clock,
+  ShieldCheck,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function LandingPage() {
   return (
     <div className="bg-gradient-to-b from-white to-gray-50 text-slate-900">
-      <div className="min-h-screen">
-        <header className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold">
-              F
-            </div>
-            <div className="font-semibold text-lg">Full-Stack Delivery</div>
+      {/* ================= HEADER ================= */}
+      <header className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold">
+            D
           </div>
-          <nav className="flex items-center gap-4">
-            <a
-              href="/driver"
-              className="text-sm text-slate-700 hover:text-slate-900"
-            >
-              For Drivers
-            </a>
-            <a
-              href="/shop"
-              className="text-sm text-slate-700 hover:text-slate-900"
-            >
-              For Shops
-            </a>
-            <a
-              href="/customer/login"
-              className="ml-4 inline-flex items-center px-4 py-2 rounded-md bg-slate-900 text-white text-sm hover:opacity-90"
-            >
+          <div className="font-semibold text-lg">Devsync Delivery</div>
+        </div>
+
+        <nav className="flex items-center gap-5">
+          <Link href="/driver" className="text-sm hover:underline">
+            For Drivers
+          </Link>
+          <Link href="/shop" className="text-sm hover:underline">
+            For Shops
+          </Link>
+          <Link href="/customer/login">
+            <Button size="sm">Login</Button>
+          </Link>
+        </nav>
+      </header>
+
+      {/* ================= HERO ================= */}
+      <section className="max-w-7xl mx-auto mt-15 px-6 pt-16 pb-24 text-center">
+        <Badge className="mb-4">All-in-One Local Commerce Platform</Badge>
+
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+          Food, Groceries & Rides —
+          <span className="text-primary block mt-2">
+            Everything delivered fast.
+          </span>
+        </h1>
+
+        <p className="mt-6 text-lg text-muted-foreground max-w-3xl mx-auto">
+          One platform to order food, groceries, essentials, or book rides.
+          Built for customers, drivers, and local shops.
+        </p>
+
+        <div className="mt-10 flex justify-center gap-4">
+          <Link href="/customer/register">
+            <Button size="lg" className="px-8">
+              Get Started
+            </Button>
+          </Link>
+          <Link href="/customer/login">
+            <Button size="lg" variant="outline" className="px-8">
               Login
-            </a>
-          </nav>
-        </header>
+            </Button>
+          </Link>
+        </div>
+      </section>
 
-        <main className="ax-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-          {/* -------------------- HERO SECTION -------------------- */}
-          <section className="px-6 md:px-16 pt-16 pb-16 text-center">
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
-              Everything you need,{" "}
-              <span className="text-primary">delivered fast.</span>
-            </h1>
-            <p className="mt-4 text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto">
-              Order groceries, hot food, essentials, or book a ride — all in one
-              app.
-            </p>
+      {/* ================= CATEGORIES ================= */}
+      <section className="max-w-7xl mx-auto mt-20 px-6 pb-24">
+        <h2 className="text-3xl font-bold mb-6 text-center">
+          What can you do?
+        </h2>
 
-            {/* CTA Buttons */}
-            <div className="mt-8 flex justify-center gap-4">
-              <Button
-                size="lg"
-                className="px-8 shadow-md"
-                onClick={() => (window.location.href = "/customer/login")}
-              >
-                Login
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="px-8 shadow-md"
-                onClick={() =>
-                  (window.location.href = "/customer/register")
-                }
-              >
-                Get Started
-              </Button>
-            </div>
-          </section>
-
-          {/* -------------------- CATEGORIES -------------------- */}
-          <section className="sm:px-4 md:px-6">
-            <h2 className="text-3xl font-bold mb-4">
-              What are you looking for?
-            </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {/* GROCERIES */}
-              <Link href={`/customer?category=groceries`}>
-                <div className="group rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer">
-                  {/* IMAGE BLOCK */}
-                  <div className="relative h-44 w-full">
-                    <Image
-                      src="/images/cat-groceries.png"
-                      alt="Groceries"
-                      fill
-                      className="object-cover group-hover:scale-110 transition duration-500"
-                    />
-                  </div>
-
-                  {/* TEXT BLOCK */}
-                  <div className="p-4 flex items-center justify-between bg-white">
-                    <h3 className="font-semibold text-lg">Groceries</h3>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                  </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            {
+              title: "Groceries",
+              img: "/images/cat-groceries.png",
+              href: "/customer?category=groceries",
+            },
+            {
+              title: "Food Delivery",
+              img: "/images/cat-food.png",
+              href: "/customer?category=food",
+            },
+            {
+              title: "Rides & Taxi",
+              img: "/images/cat-taxi.png",
+              href: "/customer?category=taxi",
+            },
+          ].map((c) => (
+            <Link key={c.title} href={c.href}>
+              <Card className="group overflow-hidden hover:shadow-xl transition cursor-pointer">
+                <div className="relative h-44 px-25 py-3 justify-center items-center">
+                  <Image
+                    src={c.img}
+                    alt={c.title}
+                    height={200}
+                    width={200}
+                    className=" group-hover:scale-105 transition duration-500"
+                  />
                 </div>
-              </Link>
+                <CardContent className="p-4 flex items-center justify-between">
+                  <h3 className="font-semibold text-lg">{c.title}</h3>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
 
-              {/* FOOD */}
-              <Link href={`/customer?category=food`}>
-                <div className="group rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer">
-                  <div className="relative h-44 w-full">
-                    <Image
-                      src="/images/cat-food.png"
-                      alt="Food Delivery"
-                      fill
-                      className="object-cover group-hover:scale-110 transition duration-500"
-                    />
-                  </div>
+      {/* ================= WHO IS IT FOR ================= */}
+      <section className="bg-white border py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Built for everyone
+          </h2>
 
-                  <div className="p-4 flex items-center justify-between bg-white">
-                    <h3 className="font-semibold text-lg">Food</h3>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                  </div>
-                </div>
-              </Link>
-
-              {/* TAXI */}
-              <Link href={`/customer?category=taxi`}>
-                <div className="group rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer">
-                  <div className="relative h-44 w-full">
-                    <Image
-                      src="/images/cat-taxi.png"
-                      alt="Taxi"
-                      fill
-                      className="object-cover group-hover:scale-110 transition duration-500"
-                    />
-                  </div>
-
-                  <div className="p-4 flex items-center justify-between bg-white">
-                    <h3 className="font-semibold text-lg">Rides & Taxi</h3>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                  </div>
-                </div>
-              </Link>
-            </div>
-          </section>
-        </main>
-      </div>
-      {/* -------------------- WHY US SECTION -------------------- */}
-      <section className="px-6 md:px-16 pb-24 bg-white border-t">
-        <h2 className="text-3xl font-bold m-10 text-center">Why choose us?</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-          <div>
-            <h3 className="text-xl font-semibold">Fast Delivery</h3>
-            <p className="text-muted-foreground mt-2">
-              Under 30 minutes for most orders.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-semibold">Wide Selection</h3>
-            <p className="text-muted-foreground mt-2">
-              Thousands of groceries, meals, and stores.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-semibold">Best Prices</h3>
-            <p className="text-muted-foreground mt-2">
-              Frequent offers & discounts.
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <RoleCard
+              icon={<Truck />}
+              title="Customers"
+              desc="Order food, groceries, essentials, or book rides — all from one app."
+            />
+            <RoleCard
+              icon={<Bike />}
+              title="Drivers"
+              desc="Accept nearby ride & delivery requests and earn consistently."
+            />
+            <RoleCard
+              icon={<Store />}
+              title="Shop Owners"
+              desc="List your shop, manage items, and receive online orders."
+            />
           </div>
         </div>
       </section>
 
-      <footer className="max-w-7xl mx-auto px-6 py-8 text-sm text-slate-600">
+      {/* ================= HOW IT WORKS ================= */}
+      <section className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            How it works
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <Step
+              icon={<MapPin />}
+              title="Choose Service"
+              desc="Select food, grocery, or ride."
+            />
+            <Step
+              icon={<Clock />}
+              title="Real-time Tracking"
+              desc="Track orders and rides live."
+            />
+            <Step
+              icon={<ShieldCheck />}
+              title="Safe & Reliable"
+              desc="Verified drivers & secure payments."
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CTA ================= */}
+      <section className="bg-primary text-white py-20">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold">
+            Ready to get started?
+          </h2>
+          <p className="mt-4 text-primary-foreground/90">
+            Join as a customer, driver, or shop today.
+          </p>
+
+          <div className="mt-8 flex justify-center gap-4">
+            <Link href="/customer/register">
+              <Button size="lg" variant="secondary" className="hover:scale-102 cursor-pointer">
+                Join as Customer
+              </Button>
+            </Link>
+            <Link href="/driver/register">
+              <Button size="lg" className="border cursor-pointer hover:scale-102">
+                Join as Driver
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FOOTER ================= */}
+      <footer className="max-w-7xl mx-auto px-6 py-8 text-sm text-muted-foreground">
+        <Separator className="mb-6" />
         <div className="flex items-center justify-between">
-          <div>© {new Date().getFullYear()} Devsync Delivery</div>
-          <div className="flex items-center gap-4">
-            <a href="/terms" className="hover:underline">
-              Terms
-            </a>
-            <a href="/privacy" className="hover:underline">
-              Privacy
-            </a>
+          <div>© {new Date().getFullYear()} Devsync</div>
+          <div className="flex gap-4">
+            <Link href="/terms">Terms</Link>
+            <Link href="/privacy">Privacy</Link>
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+/* ================= SMALL COMPONENTS ================= */
+
+function RoleCard({
+  icon,
+  title,
+  desc,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <Card className="text-center">
+      <CardContent className="p-6 space-y-4">
+        <div className="mx-auto w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary">
+          {icon}
+        </div>
+        <h3 className="font-semibold text-lg">{title}</h3>
+        <p className="text-sm text-muted-foreground">{desc}</p>
+      </CardContent>
+    </Card>
+  );
+}
+
+function Step({
+  icon,
+  title,
+  desc,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="space-y-3">
+      <div className="mx-auto w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary">
+        {icon}
+      </div>
+      <h3 className="font-semibold">{title}</h3>
+      <p className="text-sm text-muted-foreground">{desc}</p>
     </div>
   );
 }
