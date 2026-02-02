@@ -11,12 +11,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
+import { PasswordStrength } from "@/components/auth/password-strength";
+import { PasswordInput } from "@/components/auth/password-input";
 
 export default function CustomerRegisterPage() {
   const router = useRouter();
   const [serverError, setServerError] = useState("");
-    const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<RegisterInput>({
     resolver: zodResolver(RegisterSchema),
@@ -28,6 +29,7 @@ export default function CustomerRegisterPage() {
       role: "CUSTOMER",
     },
   });
+  const password = form.watch("password");
 
   const onSubmit = async (data: RegisterInput) => {
     setServerError("");
@@ -85,25 +87,45 @@ export default function CustomerRegisterPage() {
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-md">
           <AuthCard title="Create Account">
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-1">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4 p-1"
+            >
               <div>
                 <Label className="mb-2 font-semibold ">Name</Label>
-                <Input placeholder="Enter the Name" {...form.register("name")} />
+                <Input
+                  placeholder="Enter the Name"
+                  {...form.register("name")}
+                />
               </div>
 
               <div>
                 <Label className="mb-2 font-semibold">Phone</Label>
-                <Input placeholder="Enter the Phone Number" {...form.register("phone")} />
+                <Input
+                  placeholder="Enter the Phone Number"
+                  {...form.register("phone")}
+                />
               </div>
 
               <div>
                 <Label className="mb-2 font-semibold ">Email</Label>
-                <Input type="email" placeholder="Enter the Email"{...form.register("email")} />
+                <Input
+                  type="email"
+                  placeholder="Enter the Email"
+                  {...form.register("email")}
+                />
               </div>
 
               <div>
-                <Label className="mb-2 font-semibold ">Password</Label>
-                <Input type="password" placeholder="Enter the Password" {...form.register("password")}/>
+                <Label className="mb-2 font-semibold">Password</Label>
+
+                <PasswordInput
+                className="mb-2"
+                  placeholder="Enter the Password"
+                  {...form.register("password")}
+                />
+
+                <PasswordStrength password={password ?? ""} />
               </div>
 
               {serverError && <p className="text-red-500">{serverError}</p>}
@@ -121,10 +143,7 @@ export default function CustomerRegisterPage() {
 
               <p className="mb-2 text-center text-sm text-muted-foreground">
                 Already have an account?{" "}
-                <a
-                  href="/customer/login"
-                  className="text-blue-600 underline"
-                >
+                <a href="/customer/login" className="text-blue-600 underline">
                   Login
                 </a>
               </p>
