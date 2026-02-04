@@ -9,7 +9,7 @@ export default function ShopStatusCard() {
   const [online, setOnline] = useState(true);
 
   return (
-    <Card className="p-2 border">
+    <Card className="max-w-4xl mx-auto p-3 border">
       <CardHeader className="flex justify-between items-center">
         <h3 className="text-xl font-semibold">Shop Status</h3>
         <Badge className="font-medium">
