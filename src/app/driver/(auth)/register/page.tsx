@@ -11,12 +11,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { PasswordInput } from "@/components/auth/password-input";
+import { PasswordStrength } from "@/components/auth/password-strength";
 
 export default function DriverRegisterPage() {
   const router = useRouter();
   const [serverError, setServerError] = useState("");
-    const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<RegisterInput>({
     resolver: zodResolver(RegisterSchema),
@@ -30,6 +31,7 @@ export default function DriverRegisterPage() {
       vehicleNumber: "",
     },
   });
+  const password = form.watch("password");
 
   const onSubmit = async (data: RegisterInput) => {
     setServerError("");
@@ -89,32 +91,55 @@ export default function DriverRegisterPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <Label className="font-semibold mb-2">Name</Label>
-                <Input placeholder="Enter the Name"{...form.register("name")} />
+                <Input
+                  placeholder="Enter the Name"
+                  {...form.register("name")}
+                />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Phone</Label>
-                <Input placeholder="Enter the Phone Number" {...form.register("phone")} />
+                <Input
+                  placeholder="Enter the Phone Number"
+                  {...form.register("phone")}
+                />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Email</Label>
-                <Input type="email" placeholder="Enter the Email"{...form.register("email")} />
+                <Input
+                  type="email"
+                  placeholder="Enter the Email"
+                  {...form.register("email")}
+                />
               </div>
 
               <div>
-                <Label className="font-semibold mb-2">Password</Label>
-                <Input type="password" placeholder="Enter the Password"{...form.register("password")} />
+                <Label className="mb-2 font-semibold">Password</Label>
+
+                <PasswordInput
+                  className="mb-2"
+                  placeholder="Enter the Password"
+                  {...form.register("password")}
+                />
+
+                <PasswordStrength password={password ?? ""} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">License Number</Label>
-                <Input placeholder="Enter the License Number"{...form.register("licenseNumber")} />
+                <Input
+                  placeholder="Enter the License Number"
+                  {...form.register("licenseNumber")}
+                />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Vehicle Number</Label>
-                <Input placeholder="Enter the Vehicle Number"{...form.register("vehicleNumber")} />
+                <Input
+                  placeholder="Enter the Vehicle Number"
+                  {...form.register("vehicleNumber")}
+                />
               </div>
 
               {serverError && <p className="text-red-500">{serverError}</p>}
@@ -132,10 +157,7 @@ export default function DriverRegisterPage() {
 
               <p className="mb-2 text-center text-sm text-muted-foreground">
                 Already have an account?{" "}
-                <a
-                  href="/driver/login"
-                  className="text-blue-600 underline"
-                >
+                <a href="/driver/login" className="text-blue-600 underline">
                   Login
                 </a>
               </p>

@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
+import { PasswordInput } from "@/components/auth/password-input";
 
 export default function DriverLoginPage() {
   const router = useRouter();
@@ -107,8 +108,7 @@ export default function DriverLoginPage() {
 
               <div>
                 <Label className="mb-2 font-bold">Password</Label>
-                <Input
-                  type="password"
+                <PasswordInput
                   placeholder="Enter the Password"
                   {...register("password")}
                 />

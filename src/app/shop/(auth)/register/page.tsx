@@ -12,12 +12,13 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { fa } from "zod/v4/locales";
+import { PasswordInput } from "@/components/auth/password-input";
+import { PasswordStrength } from "@/components/auth/password-strength";
 
 export default function ShopRegisterPage() {
   const router = useRouter();
   const [serverError, setServerError] = useState("");
-    const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<RegisterInput>({
     resolver: zodResolver(RegisterSchema),
@@ -31,6 +32,7 @@ export default function ShopRegisterPage() {
       shopAddress: "",
     },
   });
+  const password = form.watch("password");
 
   const onSubmit = async (data: RegisterInput) => {
     setServerError("");
@@ -46,7 +48,7 @@ export default function ShopRegisterPage() {
       setLoading(false);
       return;
     }
-    
+
     router.push("/shop/login");
     setLoading(false);
   };
@@ -94,32 +96,55 @@ export default function ShopRegisterPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <Label className="font-semibold mb-2">Name</Label>
-                <Input placeholder="Enter the Name"{...form.register("name")} />
+                <Input
+                  placeholder="Enter the Name"
+                  {...form.register("name")}
+                />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Phone</Label>
-                <Input placeholder="Enter the Phone Number"{...form.register("phone")} />
+                <Input
+                  placeholder="Enter the Phone Number"
+                  {...form.register("phone")}
+                />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Email</Label>
-                <Input type="email" placeholder="Enter the Email"{...form.register("email")} />
+                <Input
+                  type="email"
+                  placeholder="Enter the Email"
+                  {...form.register("email")}
+                />
               </div>
 
               <div>
-                <Label className="font-semibold mb-2">Password</Label>
-                <Input type="password" placeholder="Enter the Password"{...form.register("password")} />
+                <Label className="mb-2 font-semibold">Password</Label>
+
+                <PasswordInput
+                  className="mb-2"
+                  placeholder="Enter the Password"
+                  {...form.register("password")}
+                />
+
+                <PasswordStrength password={password ?? ""} />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Shop Name</Label>
-                <Input placeholder="Enter the Shop Name"{...form.register("shopName")} />
+                <Input
+                  placeholder="Enter the Shop Name"
+                  {...form.register("shopName")}
+                />
               </div>
 
               <div>
                 <Label className="font-semibold mb-2">Shop Address</Label>
-                <Input placeholder="Enter the Address"{...form.register("shopAddress")} />
+                <Input
+                  placeholder="Enter the Address"
+                  {...form.register("shopAddress")}
+                />
               </div>
 
               {serverError && <p className="text-red-500">{serverError}</p>}
