@@ -24,7 +24,7 @@ export default function DashboardTopbar() {
 
   return (
     <>
-      <header className="w-full border-b bg-white px-4 md:px-6 py-3 flex items-center justify-between sticky top-0 z-20 shadow-sm">
+      <header className="w-full border-b bg-white px-4 md:px-6 py-3 flex items-center justify-between sticky top-0 z-20 shadow-xs">
 
         {/* ---------- LEFT: MENU + LOGO ---------- */}
         <div className="flex items-center gap-3">
