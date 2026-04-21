@@ -25,6 +25,7 @@
     "clsx": "^2.1.1",
     "cookie": "^1.0.2",
     "date-fns": "^4.1.0",
+    "framer-motion": "^12.33.0",
     "humanize-plus": "^1.8.2",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
