@@ -1,100 +1,131 @@
-# Devsync Delivery (full-stack-app)
+# EasyCity (Full-Stack)
 
-A multi-role commerce and mobility platform built with Next.js App Router.
+A full-stack multi-role platform for commerce and mobility, built with Next.js App Router.
 
-This project supports:
-- Customer flows: food and grocery browsing, cart and checkout, order tracking, and taxi ride booking.
-- Driver flows: onboarding, live dashboard, ride assignment/accept/reject/start/complete lifecycle.
-- Shop owner flows: onboarding, dashboard, and item management.
-- Admin flows: analytics, user/driver/shop listing, driver verification, and CSV exports.
+Devsync Delivery supports four user roles in one codebase:
+- Customer: browse food/grocery items, manage cart, checkout, track orders, and book rides
+- Driver: receive assignments, accept/reject rides, and complete trip lifecycle actions
+- Shop Owner: manage shop profile and catalog items
+- Admin: view analytics, manage users/drivers/shops, verify drivers, and export CSV reports
+
+## Why This Project
+
+This project demonstrates how to build a role-based product with:
+- A single Next.js app that serves frontend + backend
+- Clear separation of route groups and API handlers
+- Shared domain model across customer, driver, shop, and admin flows
+
+## Features
+
+- Role-based authentication (JWT in secure httpOnly cookie)
+- Food + grocery catalog browsing
+- Cart and checkout workflow
+- Customer order history and cancellation (status-based)
+- Ride booking and live ride status polling
+- Driver assignment and ride lifecycle management
+- Shop item CRUD APIs
+- Admin analytics, moderation flows, and CSV export
 
 ## Tech Stack
+
 - Next.js 16 (App Router)
 - React 19 + TypeScript
 - Prisma ORM + PostgreSQL
-- Tailwind CSS v4 + Radix UI components
+- Tailwind CSS v4 + Radix UI
 - SWR for client data fetching
-- JSON Web Token auth via `session` cookie
+- Zod for request validation
 - MapLibre + OpenStreetMap/Nominatim for map/location features
 
-## Repository Layout
+## Project Structure
 
 ```text
-src/app/                 Next.js routes (pages, layouts, API routes, server actions)
-src/components/          Shared UI and domain components
-src/lib/                 Prisma client, auth, validation, domain helpers
-src/hooks/               Client hooks (SWR + workflow helpers)
-prisma/schema.prisma     Data model
-prisma/migrations/       SQL migrations history
-public/images/           Static assets
-docs/                    Project documentation
+src/app/                 App Router pages, layouts, API routes, server actions
+src/components/          Reusable UI and feature components
+src/lib/                 Auth, Prisma client, validation, domain helpers
+src/hooks/               SWR hooks and feature hooks
+prisma/schema.prisma     Database schema
+docs/                    Architecture, API, and route docs
 ```
 
-## Prerequisites
+## Getting Started
+
+### Prerequisites
+
 - Node.js 20+
 - npm 10+
 - PostgreSQL 14+
 
-## Quick Start
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Create environment file:
-   ```bash
-   cp .env.example .env
-   ```
-3. Set environment variables (see section below).
-4. Apply database migrations:
-   ```bash
-   npx prisma migrate dev
-   ```
-5. Start the app:
-   ```bash
-   npm run dev
-   ```
-6. Open `http://localhost:3000`.
+### 1) Install dependencies
 
-## Environment Variables
-Create `.env` with:
+```bash
+npm install
+```
+
+### 2) Configure environment variables
+
+```bash
+cp .env.example .env
+```
+
+Set values in `.env`:
 
 ```env
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DB_NAME?schema=public"
 JWT_SECRET="replace-with-a-long-random-secret"
 ```
 
-Notes:
-- `DATABASE_URL` is required by Prisma datasource.
-- `JWT_SECRET` is required at runtime for login and session verification.
-- `NODE_ENV` is optional and controlled by Next.js (`development`/`production`).
+### 3) Run database migrations
 
-## Scripts
-- `npm run dev` - start development server
-- `npm run build` - build for production
-- `npm run start` - run production server
-- `npm run lint` - run ESLint
+```bash
+npx prisma migrate dev
+```
+
+### 4) Start development server
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+## Available Scripts
+
+- `npm run dev`: start development server
+- `npm run build`: production build
+- `npm run start`: run production server
+- `npm run lint`: run ESLint checks
 
 ## Authentication and Roles
-Auth is cookie-based JWT (`session`, httpOnly, 7-day expiry).
 
-Supported roles in registration:
-- `CUSTOMER`
-- `DRIVER`
-- `SHOP_OWNER`
+- Session cookie: `session` (httpOnly, 7-day expiry)
+- Public registration roles: `CUSTOMER`, `DRIVER`, `SHOP_OWNER`
+- `ADMIN` is supported in the system but not enabled in public registration validation
 
-`ADMIN` users are supported by the system but not exposed in public registration validation. Create admin users directly in the database when needed.
+## API and Architecture Docs
 
-## Main Documentation
-- Architecture and domain model: `docs/ARCHITECTURE.md`
-- API reference: `docs/API_REFERENCE.md`
-- App route map: `docs/ROUTES.md`
+- [Architecture](docs/ARCHITECTURE.md)
+- [API Reference](docs/API_REFERENCE.md)
+- [Route Map](docs/ROUTES.md)
+- [Interview Preparation Notes](docs/INTERVIEW_PREPARATION.md)
 
-## Development Notes
-- Path alias `@/*` resolves to `src/*`.
-- Prisma client logs queries in development via `src/lib/prisma.ts`.
-- Item and auth payloads are validated with Zod schemas in `src/lib/validation/*`.
+## Current Status and Known Constraints
 
-## Current Gaps / Known Constraints
-- No automated test suite is currently committed.
-- Cart logic allows mixing items across shops unless constrained at higher layers.
-- `src/app/middleware.ts` protects `/dashboard/*`, while the app uses role-prefixed routes (`/customer/*`, `/driver/*`, `/shop/*`, `/admin/*`), so route protection is primarily handled in server components and API guards.
+- No automated test suite is currently committed
+- Middleware matcher currently targets `/dashboard/*` and not all role-prefixed route trees
+- Cart constraints (for example multi-shop restrictions) depend on higher-layer handling
+- Nominatim search is currently country-scoped for India (`in`) in the existing implementation
+
+## Contributing
+
+Contributions are welcome.
+
+If you want to contribute:
+1. Fork the repository
+2. Create a feature branch
+3. Make focused changes with clear commit messages
+4. Open a pull request with context, screenshots (if UI), and testing notes
+
+## License
+
+No license file is currently present in this repository.
+Add a `LICENSE` before distributing or accepting external contributions at scale.
